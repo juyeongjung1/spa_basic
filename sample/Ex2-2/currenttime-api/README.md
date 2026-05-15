@@ -23,7 +23,7 @@ npm start
 ## API
 
 ```text
-GET http://localhost:8080/currenttime
+GET http://localhost:3000/currenttime
 ```
 
 レスポンス例です。
