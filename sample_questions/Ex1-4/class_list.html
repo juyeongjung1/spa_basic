@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>classListで見た目を切り替える</title>
+    <style>
+        /* 普段のスタイル（ライトモード） */
+        .box {
+            padding: 20px;
+            background-color: white;
+            color: black;
+            border: 1px solid #ccc;
+        }
+
+        /* 【問題1】ダークモード用のクラス名 dark-mode を指定してください。 */
+        .          {
+            background-color: #333;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- 【問題2】JavaScriptから取得するためのidと、通常時の見た目を指定するclassを設定してください。 -->
+    <div id="" class="">
+        <p>ここの見た目が切り替わります。</p>
+    </div>
+
+    <!-- 【問題3】それぞれのボタンに、JavaScriptから取得するためのidを設定してください。 -->
+    <button id="">ダークモードにする</button>
+    <button id="">ライトモードに戻す</button>
+    <button id="">モード切替</button>
+
+    <script>
+        // 【問題4】見た目を切り替える対象の要素を取得し、変数targetに代入してください。
+        let target =
+
+        // 【問題5】addBtnボタンにクリックイベントを割り当ててください。
+        document.getElementById('').addEventListener('click', function() {
+            // 【問題6】classListのaddメソッドを使って、dark-modeクラスを追加してください。
+            target.classList.        ;
+        });
+
+        // 【問題7】removeBtnボタンにクリックイベントを割り当ててください。
+        document.getElementById('').addEventListener('click', function() {
+            // 【問題8】classListのremoveメソッドを使って、dark-modeクラスを削除してください。
+            target.classList.        ;
+        });
+
+        // 【問題9】toggleBtnボタンにクリックイベントを割り当ててください。
+        document.getElementById('').addEventListener('click', function() {
+            // 【問題10】classListのtoggleメソッドを使って、dark-modeクラスを付け外ししてください。
+            target.classList.        ;
+        });
+    </script>
+</body>
+</html>
