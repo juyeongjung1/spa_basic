@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>基本的な関数の定義と呼び出し</title>
+</head>
+<body>
+<script>
+
+showMessage(); // "こんにちは、JavaScript!"と表示
+
+// 関数宣言を使用した例(どこからでも呼び出せる)
+function showMessage() {
+    document.write("こんにちは JavaScript!!!");
+    document.write("<br>");
+}
+
+// 関数式を使用した例(この行以降でしか呼び出せない)
+let showAnotherMessage = function() {
+    document.write("関数式を使ってみました!");
+};
+
+showAnotherMessage(); // "関数式を使ってみました!"と表示
+
+</script>   
+</body>
+</html>
+

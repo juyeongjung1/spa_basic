@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>初期画面</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <meta charset="UTF-8">
+</head>
+
+<body>
+    <div id ="wrapper">
+        <h1>商品管理システム</h1>
+        <input type = "text" id = "searchName" placeholder="商品名">
+        <button id = "searchBtn">検索</button>
+        <button onclick="navigateToRegister()">登録</button>
+        <table>
+            <thead>
+                <tr>
+                    <th>商品番号</th>
+                    <th>商品名</th>
+                    <th>価格</th>
+                </tr>
+            </thead>
+            <tbody id="product_list">
+                <!--ここにデータが挿入されます-->
+            </tbody>
+        </table>`;
+
+    </div>
+<script src="router.js"></script>
+<script>
+function navigateToRegister(usePushState = true) {
+    if (usePushState) {
+        window.history.pushState({ page: 'productRegister' }, null, '/products/register');
+    }
+    document.getElementById('wrapper').innerHTML = `
+        <h1>商品登録</h1>
+        商品名：<input type="text" id="inputName"><br>
+        価　格：<input type="number" id="inputPrice"><br>
+        <button type="button" onclick="submitNewProduct()">登録</button>
+        <button type="button" onclick="loadProductList()">戻る</button>
+    `;
+}
+//==========＜商品リスト表示機能＞==========
+document.addEventListener('DOMContentLoaded', function() {
+    loadProductList();
+ });
+
+function submitNewProduct(){
+    let name = document.getElementById('inputName').value;
+    let price = document.getElementById('inputPrice').value;
+
+    axios.post('http://localhost:8080/api/v333/products', {
+        name: name,
+        price: price
+    })
+    .then(response => {
+        alert('商品が登録されました');
+        loadProductList();
+    })
+    .catch(error => console.error('商品登録に失敗しました:', error));
+};
+
+function loadProductList(){
+    window.history.pushState({ page: 'productList' }, null, '/products');
+    document.getElementById('wrapper').innerHTML = `
+    <h1>商品管理システム</h1>
+    <input type = "text" id = "searchName" placeholder="商品名">
+    <button id = "searchBtn">検索</button>
+    <button onclick="navigateToRegister()">登録</button>
+    <table>
+        <thead>
+            <tr>
+                <th>商品番号</th>
+                <th>商品名</th>
+                <th>価格</th>
+            </tr>
+        </thead>
+        <tbody id="product_list">
+            <!--ここにデータが挿入されます-->
+        </tbody>
+    </table>`;
+    axios.get('http://localhost:8080/api/v332/products')
+
+    .then(response => {
+    let productList = document.getElementById('product_list');
+    productList.innerHTML = ''; //既存のテーブルデータを初期化
+    let products = response.data; // この行を追加
+
+    products.forEach(product => {
+        let productHtml = `
+        <tr>
+            <td>${product.id}</td><td>${product.name}</td><td>${product.price}</td>
+            <td><button onclick="deleteProduct(${product.id})">削除</button></td>
+        </tr>`;
+        productList.insertAdjacentHTML('beforeend', productHtml);
+    });
+})
+ .catch(error => console.error('エラーが発生しました:', error));
+}
+
+//========この下は、既存のコードです。========
+//==========＜商品名検索機能＞==========
+document.getElementById('searchBtn').addEventListener('click', function() {
+    let name = document.getElementById('searchName').value;
+    axios.get(`http://localhost:8080/api/v332/products/${name}`
+)
+.then(response => {
+    loadProductList();
+})
+.catch(error => console.error('エラーが発生しました:', error));
+});
+
+
+
+//商品リストを表示する関数
+function showProductList(products){
+    
+}
+
+//削除機能のための関数
+function deleteProduct(id) {
+    axios.delete(`http://localhost:8080/api/v334/products/${id}`)
+        .then(response => {
+            alert('削除が完了しました');
+            showProductList(response.data);
+        })
+        .catch(error => {
+            console.error('削除エラーが発生しました:', error);
+        });
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="jp">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Bootstrap Registration Form Example</title>
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+            rel="stylesheet">
+    </head>
+    <body class="bg-light p-4">
+
+        <div class="container"> <!-- START container -->
+            <form class="row justify-content-center"> <!--➀ カラムを中央寄せしていることを確認してください。 -->
+                <div class="col-md-4"> <!--➁　カラムの範囲を画面全体ではなく、4割のみに限定していることを確認してください。 -->
+                    <h2 class="mb-4">登録フォーム</h2>
+
+                    <div class="mb-3"> <!--テキストフォーム-->
+                        <label for=" XXX " class=" XXX  ">氏名</label> <!--➂ラベルの部分を修正してください。-->
+                        <input type="text" class=" XXX " id="inputName" placeholder="氏名を入力"> 
+                                   <!--➃　↑ テキストフォームに付与するクラスはを書いてください-->
+                    </div>
+
+                    <div class="mb-3"> <!--➄ パスワードの部分も同様に修正してください。-->
+                        <label for=" XXX " class=" XXX ">パスワード</label>
+                        <input type="password" class=" XXX "
+                            id="inputPassword" placeholder="パスワードを入力">
+                    </div>
+
+                    <div class="mb-3"> <!--ラジオボタン-->
+                        <label class="form-label">性別</label><br>
+                        <div class="XXX YYY"> <!--➅ ラジオボタンのグループに適用するクラスに修正してください-->
+                            <input type="radio" class=" XXX " id="genderMale" name="gender" value="male">
+                            <label for="genderMale"
+                                class="form-check-label">男性</label> <!--➆ 項目ごとのラベルが、どのidを参照するのか確認してください。-->
+                        </div>
+                        <div class=" XXX YYY ">
+                            <input type="radio" class=" XXX "
+                                id="genderFemale" name="gender" value="female"> <!--➇同様に修正してください。-->
+                            <label for="genderFemale"
+                                class="form-check-label">女性</label>
+                        </div>
+                    </div>
+
+                    <div class="mb-3"> <!--➈チェックボックスも、ラジオボタンと同じようなクラスだということを確認してください。-->
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input"
+                                id="subscribeNewsletter">
+                            <label for="subscribeNewsletter"
+                                class="form-check-label">ニュースレターを購読する</label>
+                        </div>
+                    </div>
+
+                    <div class="mb-3"> <!--セレクトメニュー-->
+                        <label for="department" class="form-label">部署</label>
+                        <select class=" XXX " id="department"> <!--➉セレクトメニューに適用するクラスに修正してください -->
+                            <option value="hr">人事部</option>
+                            <option value="finance">経理部</option>
+                            <option value="sales">営業部</option>➉
+                        </select>
+                    </div>
+
+                    <button type="submit" class="XXX YYY">登録</button> <!--⑾ 青いボタンのデザインを適用してください-->
+                </div> <!-- END form column -->
+            </form> <!-- END form row -->
+        </div> <!-- END container -->
+
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    </body>
+</html>

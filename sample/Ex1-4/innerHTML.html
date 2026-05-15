@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>innerHTML</title>
+</head>
+<body>
+
+  <div id = "content">ここが変更されます。</div>
+  <button id = "changeButton">テキストを変更</button>
+
+<script>
+// ボタンの要素を選択
+let btn = document.getElementById('changeButton');
+
+// ボタンがクリックされた時のイベントリスナーを追加
+btn.addEventListener('click', function() {
+    // コンテンツを変更する要素を選択
+    let content = document.getElementById('content');
+    // innerHTMLを使って内容を更新
+    content.innerHTML = '<strong>テキストが変更されました！</strong>';
+});
+
+</script>
+</body>
+</html>
+

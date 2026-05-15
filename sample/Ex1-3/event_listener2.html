@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>イベントリスナーの定義と割り当てを同時に</title>
+</head>
+<body>
+
+<form>
+  <input type = "button" id = "myBtn" value = "クリック">
+</form>
+<script>
+
+  //DOM要素の選択
+  let btn = document.getElementById('myBtn');
+  
+  //イベントリスナーの定義と、イベント割り当てを同時に
+  btn.addEventListener('click', function(){
+    alert('ボタンがクリックされました!');
+  });
+  
+</script>
+</body>
+</html>
+

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>fetch</title>
+</head>
+<body>
+  <h1 id = "showTime">時間はここに表示されます。</h1>
+  <button id="clockBtn">APIから現在時間を取得</button>
+  
+<script>
+
+document.getElementById('clockBtn').addEventListener('click', function() {
+  //➀　ボタンをクリックしたら、時間を表示する部分のDOM要素を確認してください。  
+  let result = document.getElementById('showTime'); 
+
+// ➁ 'http://localhost:8080/currenttime'のURLを指定してください。
+fetch(     ) 
+  .then(response => response.json()) 
+  .then(data => { 
+    //➂「data」オブジェクトの中身をコンソールに出力してください。
+    
+    //➃一旦実行し、コンソールでdataの中身にどんなプロパティがあるのか確認してください
+    
+    //➄resultの要素のコンテンツを、data.(中のプロパティ名)で置き換えしてください。
+   
+    
+  }) 
+  .catch(error => console.error('エラーが発生しました:', error)); 
+});
+
+</script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>axios</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+  <input type="number" id="number1" placeholder="数値1">
+  <input type="number" id="number2" placeholder="数値2">
+  <button id="calculateBtn">計算する</button>
+  <div id="result"></div>
+
+<script>
+document.getElementById('calculateBtn').addEventListener('click', function() {
+    //➀　number1と、number2のForm内の入力値を取得するコードです。確認してください。
+    let number1 = document.getElementById('number1').value;
+    let number2 = document.getElementById('number2').value;
+
+    //➁以下に、axiosのget方式で、http://localhost:8080/calculate/${number1}/${number2}へデータを送信してください。
+    axios.xxx(`URL`
+    )
+.then(response => {
+    //➂　response.dataで、応答されたデータを確認するコードです。実行し、ブラウザから確認してください。
+    console.log(response.data);
+    document.getElementById('result').innerHTML = 
+    //➃ここに、掛け算と足し算の結果のキーをxxxの代わりに入れてください。 
+    `積: ${response.data.xxx } <br>
+     和: ${response.data.xxx } `;
+})
+.catch(error => console.error('エラーが発生しました:', error));
+});
+
+</script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>初期画面</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <meta charset="UTF-8">
+</head>
+
+<body>
+    <input type = "text" id = "searchName" placeholder="商品名">
+    <button id = "searchBtn">検索</button>
+    <table>
+        <thead>
+            <tr>
+                <th>商品番号</th>
+                <th>商品名</th>
+                <th>価格</th>
+            </tr>
+        </thead>
+        <tbody id="product_list">
+            <!--ここにデータが挿入されます-->
+        </tbody>
+    </table>
+    
+<script>
+document.getElementById('searchBtn').addEventListener('click', function() {
+    let name = document.getElementById('searchName').value;
+    axios.get(`http://localhost:8080/api/v332/products/${name}`
+)
+//【作業手順➃】はこの下のコードからです
+.then(response => {
+    showProductList(response.data);
+})
+.catch(error => console.error('エラーが発生しました:', error));
+});
+
+
+//========この下は、既存のコードです。========
+document.addEventListener('DOMContentLoaded', function() {
+    axios.get('http://localhost:8080/api/v332/products')
+
+.then(response => {
+    showProductList(response.data);
+})
+.catch(error => console.error('エラーが発生しました:', error));
+});
+
+//商品リストを表示する関数
+function showProductList(products){
+    let productList = document.getElementById('product_list');
+    productList.innerHTML = ''; //既存のテーブルデータを初期化
+
+    products.forEach(product => {
+        let productHtml = `
+        <tr>
+            <td>${product.id}<td>${product.name}</td><td>${product.price}</td>
+        </tr>`;
+        productList.insertAdjacentHTML('beforeend', productHtml);
+    });
+}
+</script>
+</body>
+</html>

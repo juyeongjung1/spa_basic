@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>insertAdjacentHTML</title>
+</head>
+<body>
+  <!--➀ HTMLを挿入する基準は、myTableだということを確認してください-->
+  <table id="myTable" border="1">
+    <tr>
+        <th>No</th>
+        <th>名前</th>
+        <th>年齢</th>
+    </tr>
+</table>
+<!--➁ イベントを割り当てるボタンのidを確認してください-->
+<button id="addRow">行を追加</button>
+
+<script>
+//➂行番号をカウントする変数を確認してください
+let rowCount = 1;
+
+//➃ addRowのDOM選択と、clickイベントの割り当てを同時にしていることを確認してください　
+document.getElementById('addRow').addEventListener('click', function() {
+    
+    //➄myTable要素をDOM選択し、「table」変数に代入していることを確認してください
+    let table = document.getElementById('myTable');
+
+    /*➅tableの'beforeend'の位置に、HTMLを挿入してください。
+    テンプレートリテラルの書き方で、以下のようにテーブルの行を挿入してください
+    ===================================
+    No列：rowCount変数を変数式で代入
+    名前列：「新しい名前」
+    年齢列：「新しい年齢」
+    ===================================*/
+    
+
+
+
+    //行を追加するたびに行番号をインクリメント
+    rowCount++;
+});
+
+</script>
+</body>
+</html>
+

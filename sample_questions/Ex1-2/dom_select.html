@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>DOM選択</title>
+</head>
+<body>
+ <!-- id属性を持つ要素の例 -->
+ <div id="myId">IDを持つ要素</div>
+    
+ <!-- class属性を持つ要素の例 -->
+ <p class="myClass">クラスを持つ要素</p>
+
+  <!-- タグのみの要素の例 -->
+ <button>ボタン1</button><br>
+ <button>ボタン2</button><br>
+
+<script>
+//➀上記のHTML要素を参考し、下記に要素を選択してください
+let element =  _____; //ここに、id「myId」で選択
+let element2 = _____; //ここに、「myClass」のクラスセレクタで選択
+let buttons =  _____; //ここに、「button」タイプセレクタで複数選択
+
+console.log(element.textContent);
+console.log(element2.textContent);
+buttons.forEach(function(button) {
+   console.log(button.textContent);
+});
+
+</script>   
+</body>
+</html>
+

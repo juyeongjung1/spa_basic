@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>アロー関数(ラムダ式)</title>
+</head>
+<body>
+<script>
+//従来の関数式
+let sum = function(a, b) { 
+  return a + b; 
+}; 
+
+//アロー関数式①(functionを省略できる。引数の右に=>)
+let sum2 = (a, b, c) => { 
+  return a + b + c; 
+}; 
+
+//アロー関数式②(引数がない場合)
+let sum3 = () => { 
+  return 10 + 5; 
+}; 
+
+//アロー関数式③(引数が1つの場合、引数の丸括弧を省略可能)
+let sum4 = a => { 
+  return a + 5; 
+}; 
+
+// let sum = function(a, b) { 
+//   return a + b; 
+// }; 
+
+//アロー関数式④(関数内の処理がreturnを含めて1行のみ)
+//returnキーワードも省略でき、1行にまとめることが可能
+let sum5 = (a, b) => a + b; 
+
+let result = sum5(4, 10); 
+document.write("計算結果：" + result);
+
+
+</script>   
+</body>
+</html>
+

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>insertAdjacentHTML</title>
+</head>
+<body>
+  <table id="myTable" border="1">
+    <tr>
+        <th>No</th>
+        <th>名前</th>
+        <th>年齢</th>
+    </tr>
+</table>
+<button id="addRow">行を追加</button>
+
+<script>
+// 行番号をカウントする変数を定義
+let rowCount = 1;
+
+document.getElementById('addRow').addEventListener('click', function() {
+    let table = document.getElementById('myTable');
+    // テンプレートリテラルを使用して、行番号、名前、年齢を含む新しい行を挿入
+    table.insertAdjacentHTML('beforeend', 
+        `<tr>
+            <td>${rowCount}</td>
+            <td>新しい名前</td>
+            <td>新しい年齢</td>
+        </tr>`);
+    // 行を追加するたびに行番号をインクリメント
+    rowCount++;
+});
+
+/*
+// 行番号をカウントする変数を定義
+let rowCount = 1;
+
+document.getElementById('addRow').addEventListener('click', function() {
+    let table = document.getElementById('myTable');
+    // 文字列の連結を使用して、行番号、名前、年齢を含む新しい行を挿入
+    table.insertAdjacentHTML('beforeend', 
+        '<tr>' +
+        '<td>' + rowCount + '</td>' +
+        '<td>新しい名前</td>' +
+        '<td>新しい年齢</td>' +
+        '</tr>');
+    // 行を追加するたびに行番号をインクリメント
+    rowCount++;
+});
+*/
+
+
+</script>
+</body>
+</html>
+

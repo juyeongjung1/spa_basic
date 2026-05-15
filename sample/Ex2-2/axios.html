@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>axios</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+  <input type="number" id="number1" placeholder="数値1">
+  <input type="number" id="number2" placeholder="数値2">
+  <button id="calculateBtn">計算する</button>
+  <div id="result"></div>
+
+<script>
+document.getElementById('calculateBtn').addEventListener('click', function() {
+    let number1 = document.getElementById('number1').value;
+    let number2 = document.getElementById('number2').value;
+    axios.get(`http://localhost:8080/calculate/${number1}/${number2}`
+)
+.then(response => {
+    console.log(response.data);
+    document.getElementById('result').innerHTML = 
+    `積: ${response.data.multiply}<br>
+     和: ${response.data.sum}`;
+})
+.catch(error => console.error('エラーが発生しました:', error));
+});
+
+</script>
+</body>
+</html>

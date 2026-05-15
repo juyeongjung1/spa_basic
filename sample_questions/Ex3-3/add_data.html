@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>初期画面</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <meta charset="UTF-8">
+</head>
+
+<body>
+    <h1>商品管理システム</h1>
+    <input type = "text" id = "searchName" placeholder="商品名">
+    <button id = "searchBtn">検索</button>
+    <table>
+        <thead>
+            <tr>
+                <th>商品番号</th>
+                <th>商品名</th>
+                <th>価格</th>
+            </tr>
+        </thead>
+        <tbody id="product_list">
+            <!--ここにデータが挿入されます-->
+        </tbody>
+    </table>
+    <!--➀ 入力フォームと、ボタンのid属性値を覚えてください。-->
+    <h2>データ登録</h2>
+    商品名：<input type = "text" id = "inputName"><br>
+    価　格：<input type = "number" id = "inputPrice"><br>
+    <button id = "registBtn">登録</button>
+    
+<script>
+document.getElementById('registBtn').addEventListener('click', function() {
+    //➁　商品名と価格をDOMから取得して、変数に代入していることを確認してください。
+    let name = document.getElementById('inputName').value;
+    let price = document.getElementById('inputPrice').value;
+
+    //➂　登録処理のために、下記を修正してください。
+    axios.xxx('http://localhost:8080/api/v333/productsQ', {
+        name: xxx,
+        price: xxx
+    })
+    //➃ rest_sample_3/controller/chap3_3_3/ProductController3Q@addProductメソッドの問題を解いてから戻ってください。
+    
+    //➄　更新したリストデータを出力するため、定義済みの関数を呼び出していることを確認してください。
+    .then(response => {
+        alert('商品が登録されました');
+        showProductList(response.data);
+    })
+    .catch(error => console.error('商品登録に失敗しました:', error));
+
+    //➅　このHTMLを実行して動作確認をしてください。
+});
+
+
+//========この下は、既存のコードです。========
+//==========＜商品名検索機能＞==========
+document.getElementById('searchBtn').addEventListener('click', function() {
+    let name = document.getElementById('searchName').value;
+    axios.get(`http://localhost:8080/api/v332/products/${name}`
+)
+.then(response => {
+    showProductList(response.data);
+})
+.catch(error => console.error('エラーが発生しました:', error));
+});
+
+//==========＜商品リスト表示機能＞==========
+document.addEventListener('DOMContentLoaded', function() {
+    axios.get('http://localhost:8080/api/v332/products')
+
+.then(response => {
+    showProductList(response.data);
+})
+.catch(error => console.error('エラーが発生しました:', error));
+});
+
+//商品リストを表示する関数
+function showProductList(products){
+    let productList = document.getElementById('product_list');
+    productList.innerHTML = ''; //既存のテーブルデータを初期化
+
+    products.forEach(product => {
+        let productHtml = `
+        <tr>
+            <td>${product.id}<td>${product.name}</td><td>${product.price}</td>
+        </tr>`;
+        productList.insertAdjacentHTML('beforeend', productHtml);
+    });
+}
+</script>
+</body>
+</html>
