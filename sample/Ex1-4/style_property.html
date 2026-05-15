@@ -10,7 +10,6 @@
             background-color: white;
             color: black;
             border: 1px solid #ccc;
-            transition: all 0.3s ease;
         }
 
         /* 追加されるスタイル（ダークモード用） */
@@ -24,15 +23,27 @@
     <div id="targetArea" class="box">
         <p>ここの見た目が切り替わります。</p>
     </div>
+
+    <button id="addBtn">ダークモードにする</button>
+    <button id="removeBtn">ライトモードに戻す</button>
     <button id="toggleBtn">モード切替</button>
 
     <script>
-        // ボタンがクリックされたときの処理
-        document.getElementById('toggleBtn').addEventListener('click', function() {
-            // 1. 対象となる要素を取得
-            let target = document.getElementById('targetArea');
+        // 対象となる要素を取得
+        let target = document.getElementById('targetArea');
 
-            // 2. toggleメソッドで 'dark-mode' クラスを付け外しする
+        // addメソッドで 'dark-mode' クラスを追加する
+        document.getElementById('addBtn').addEventListener('click', function() {
+            target.classList.add('dark-mode');
+        });
+
+        // removeメソッドで 'dark-mode' クラスを削除する
+        document.getElementById('removeBtn').addEventListener('click', function() {
+            target.classList.remove('dark-mode');
+        });
+
+        // toggleメソッドで 'dark-mode' クラスを付け外しする
+        document.getElementById('toggleBtn').addEventListener('click', function() {
             target.classList.toggle('dark-mode');
         });
     </script>
