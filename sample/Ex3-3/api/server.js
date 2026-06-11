@@ -15,60 +15,6 @@ app.use(cors());
 // SQLiteデータベースへの接続
 const db = new sqlite3.Database('../db/products.db');
 
-function getAllProducts(res) {
-    db.all('SELECT * FROM products', [], (err, rows) => {
-        if (err) {
-            console.error(err);
-            res.status(500).json({ error: 'Database error' });
-            return;
-        }
-        res.json(rows);
-    });
-}
-
-function searchProducts(req, res) {
-    const name = req.params.name;
-
-    db.all('SELECT * FROM products WHERE name LIKE ?', [`%${name}%`], (err, rows) => {
-        if (err) {
-            console.error(err);
-            res.status(500).json({ error: 'Database error' });
-            return;
-        }
-        res.json(rows);
-    });
-}
-
-function insertProduct(req, res) {
-    const name = req.body.name;
-    const price = req.body.price;
-
-    if (!name || !price) {
-        res.status(400).json({ error: 'データに誤りがあります' });
-        return;
-    }
-
-    db.run('INSERT INTO products (name, price, category) VALUES (?, ?, ?)', [name, price, '未分類'], (err) => {
-        if (err) {
-            console.error(err);
-            res.status(500).json({ error: 'Database error' });
-            return;
-        }
-        getAllProducts(res);
-    });
-}
-
-function deleteProduct(req, res) {
-    db.run('DELETE FROM products WHERE id = ?', [req.params.id], (err) => {
-        if (err) {
-            console.error(err);
-            res.status(500).json({ error: 'Database error' });
-            return;
-        }
-        getAllProducts(res);
-    });
-}
-
 // 動作確認用のAPI
 app.get('/api/test', (req, res) => {
     res.json({ status: 'ok', message: 'APIサーバー稼働中！' });
@@ -76,42 +22,83 @@ app.get('/api/test', (req, res) => {
 
 // 3-3-1 商品一覧
 app.get('/api/v331/products', (req, res) => {
-    getAllProducts(res);
+    const sql = 'SELECT * FROM products';
+
+    db.all(sql, [], (err, rows) => {
+        if (err) {
+            console.error(err);
+            res.status(500).json({ error: 'Database error' });
+            return;
+        }
+
+        res.json(rows);
+    });
 });
 
-// 3-3-2 商品一覧・商品名検索
+// 3-3-2 商品一覧
 app.get('/api/v332/products', (req, res) => {
-    getAllProducts(res);
+    const sql = 'SELECT * FROM products';
+
+    db.all(sql, [], (err, rows) => {
+        if (err) {
+            console.error(err);
+            res.status(500).json({ error: 'Database error' });
+            return;
+        }
+
+        res.json(rows);
+    });
 });
 
-app.get('/api/v332/products/:name', searchProducts);
+// 3-3-2 商品名検索
+app.get('/api/v332/products/:name', (req, res) => {
+    const name = req.params.name;
+    const sql = 'SELECT * FROM products WHERE name LIKE ?';
 
-// 3-3-3 商品一覧・商品名検索・登録
+    db.all(sql, [`%${name}%`], (err, rows) => {
+        if (err) {
+            console.error(err);
+            res.status(500).json({ error: 'Database error' });
+            return;
+        }
+
+        res.json(rows);
+    });
+});
+
+// 3-3-3 商品一覧
 app.get('/api/v333/products', (req, res) => {
-    getAllProducts(res);
+    const sql = 'SELECT * FROM products';
+
+    db.all(sql, [], (err, rows) => {
+        if (err) {
+            console.error(err);
+            res.status(500).json({ error: 'Database error' });
+            return;
+        }
+
+        res.json(rows);
+    });
 });
 
-app.get('/api/v333/products/:name', searchProducts);
+// 3-3-3 商品名検索
+app.get('/api/v333/products/:name', (req, res) => {
+    const name = req.params.name;
+    const sql = 'SELECT * FROM products WHERE name LIKE ?';
 
-app.post('/api/v333/products', insertProduct);
+    db.all(sql, [`%${name}%`], (err, rows) => {
+        if (err) {
+            console.error(err);
+            res.status(500).json({ error: 'Database error' });
+            return;
+        }
 
-// 3-3-4 商品一覧・商品名検索・登録・削除
-app.get('/api/v334/products', (req, res) => {
-    getAllProducts(res);
+        res.json(rows);
+    });
 });
 
-app.get('/api/v334/products/:name', searchProducts);
-
-app.post('/api/v334/products', insertProduct);
-
-app.delete('/api/v334/products/:id', deleteProduct);
-
-// 3-3-5 商品一覧・更新・削除
-app.get('/api/v335/products', (req, res) => {
-    getAllProducts(res);
-});
-
-app.put('/api/v335/products/:id', (req, res) => {
+// 3-3-3 商品登録
+app.post('/api/v333/products', (req, res) => {
     const name = req.body.name;
     const price = req.body.price;
 
@@ -120,17 +107,183 @@ app.put('/api/v335/products/:id', (req, res) => {
         return;
     }
 
-    db.run('UPDATE products SET name = ?, price = ? WHERE id = ?', [name, price, req.params.id], (err) => {
+    const sql = 'INSERT INTO products (name, price, category) VALUES (?, ?, ?)';
+
+    db.run(sql, [name, price, '未分類'], (err) => {
         if (err) {
             console.error(err);
             res.status(500).json({ error: 'Database error' });
             return;
         }
-        getAllProducts(res);
+
+        db.all('SELECT * FROM products', [], (err, rows) => {
+            if (err) {
+                console.error(err);
+                res.status(500).json({ error: 'Database error' });
+                return;
+            }
+
+            res.json(rows);
+        });
     });
 });
 
-app.delete('/api/v335/products/:id', deleteProduct);
+// 3-3-4 商品一覧
+app.get('/api/v334/products', (req, res) => {
+    const sql = 'SELECT * FROM products';
+
+    db.all(sql, [], (err, rows) => {
+        if (err) {
+            console.error(err);
+            res.status(500).json({ error: 'Database error' });
+            return;
+        }
+
+        res.json(rows);
+    });
+});
+
+// 3-3-4 商品名検索
+app.get('/api/v334/products/:name', (req, res) => {
+    const name = req.params.name;
+    const sql = 'SELECT * FROM products WHERE name LIKE ?';
+
+    db.all(sql, [`%${name}%`], (err, rows) => {
+        if (err) {
+            console.error(err);
+            res.status(500).json({ error: 'Database error' });
+            return;
+        }
+
+        res.json(rows);
+    });
+});
+
+// 3-3-4 商品登録
+app.post('/api/v334/products', (req, res) => {
+    const name = req.body.name;
+    const price = req.body.price;
+
+    if (!name || !price) {
+        res.status(400).json({ error: 'データに誤りがあります' });
+        return;
+    }
+
+    const sql = 'INSERT INTO products (name, price, category) VALUES (?, ?, ?)';
+
+    db.run(sql, [name, price, '未分類'], (err) => {
+        if (err) {
+            console.error(err);
+            res.status(500).json({ error: 'Database error' });
+            return;
+        }
+
+        db.all('SELECT * FROM products', [], (err, rows) => {
+            if (err) {
+                console.error(err);
+                res.status(500).json({ error: 'Database error' });
+                return;
+            }
+
+            res.json(rows);
+        });
+    });
+});
+
+// 3-3-4 商品削除
+app.delete('/api/v334/products/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = 'DELETE FROM products WHERE id = ?';
+
+    db.run(sql, [id], (err) => {
+        if (err) {
+            console.error(err);
+            res.status(500).json({ error: 'Database error' });
+            return;
+        }
+
+        db.all('SELECT * FROM products', [], (err, rows) => {
+            if (err) {
+                console.error(err);
+                res.status(500).json({ error: 'Database error' });
+                return;
+            }
+
+            res.json(rows);
+        });
+    });
+});
+
+// 3-3-5 商品一覧
+app.get('/api/v335/products', (req, res) => {
+    const sql = 'SELECT * FROM products';
+
+    db.all(sql, [], (err, rows) => {
+        if (err) {
+            console.error(err);
+            res.status(500).json({ error: 'Database error' });
+            return;
+        }
+
+        res.json(rows);
+    });
+});
+
+// 3-3-5 商品更新
+app.put('/api/v335/products/:id', (req, res) => {
+    const id = req.params.id;
+    const name = req.body.name;
+    const price = req.body.price;
+
+    if (!name || !price) {
+        res.status(400).json({ error: 'データに誤りがあります' });
+        return;
+    }
+
+    const sql = 'UPDATE products SET name = ?, price = ? WHERE id = ?';
+
+    db.run(sql, [name, price, id], (err) => {
+        if (err) {
+            console.error(err);
+            res.status(500).json({ error: 'Database error' });
+            return;
+        }
+
+        db.all('SELECT * FROM products', [], (err, rows) => {
+            if (err) {
+                console.error(err);
+                res.status(500).json({ error: 'Database error' });
+                return;
+            }
+
+            res.json(rows);
+        });
+    });
+});
+
+// 3-3-5 商品削除
+app.delete('/api/v335/products/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = 'DELETE FROM products WHERE id = ?';
+
+    db.run(sql, [id], (err) => {
+        if (err) {
+            console.error(err);
+            res.status(500).json({ error: 'Database error' });
+            return;
+        }
+
+        db.all('SELECT * FROM products', [], (err, rows) => {
+            if (err) {
+                console.error(err);
+                res.status(500).json({ error: 'Database error' });
+                return;
+            }
+
+            res.json(rows);
+        });
+    });
+});
 
 // ポート番号 8080 でサーバーを起動
 app.listen(8080, () => {
