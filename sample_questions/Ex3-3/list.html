@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>初期画面</title>
+    <title>商品一覧</title>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <meta charset="UTF-8">
 </head>
 
 <body>
-    <table>
-<!--➀テーブルの表示が固定される<thead>と、動的に変わる<tbody>に分かれていることを確認してください-->
+    <!-- 【穴埋め】商品データを表示するテーブルには id="product_table" を指定します。 -->
+    <!-- 【穴埋め】theadは列の見出しを固定的に表示する場所です。 -->
+    <!-- 【穴埋め】tbody id="product_list" は、JavaScriptから商品データを動的に挿入する場所です。 -->
+    <table id="product_table">
         <thead>
             <tr>
                 <th>商品番号</th>
@@ -16,46 +18,50 @@
                 <th>価格</th>
             </tr>
         </thead>
-<!-- ➁<tbody>のid属性の値を確認してください。-->
         <tbody id="product_list">
-            <!--ここにデータが挿入されます-->
+            <!-- ここに商品データが挿入されます -->
         </tbody>
     </table>
-    
+
 <script>
+// 【穴埋め】DOMContentLoadedは、HTMLの読み込みが完了した時に発火するイベントです。
+// 【穴埋め】画面表示直後に商品一覧を取得したいので、この中でAPIを呼び出します。
 document.addEventListener('DOMContentLoaded', function() {
-    //➂　呼び出すAPIのURLを確認してください。
-    axios.get('http://localhost:8080/api/v331/productsQ')
-
-    
-//➃ rest_sample_3/controller/chap3_3_1/ProductController1Q@searchProductメソッドの問題を解いてから戻ってください。
-
-.then(response => {
-    //➅　showProductList関数にresponse.dataを引数に入れ実行してください。
-    //(先に➄のshowProductList関数を確認してください。)
-    
-})
-.catch(error => console.error('エラーが発生しました:', error));
+    // 【穴埋め】一覧データの検索なので、GET方式でREST APIを呼び出します。
+    axios.get('http://localhost:8080/api/v331/products')
+    // 【穴埋め】非同期通信が成功した場合、thenの中の処理が実行されます。
+    .then(response => {
+        // 【穴埋め】response.dataには、APIから取得したJSONデータが入っています。
+        // 【穴埋め】showProductList関数へ渡すことで、テーブルに一覧を表示します。
+        showProductList(response.data);
+    })
+    .catch(error => console.error('エラーが発生しました:', error));
 });
 
-//商品リストを表示する関数
-//➄　showProductListのコードを確認してください。
+// 商品リストを表示する関数
+// 【穴埋め】この処理は一覧表示・検索後・登録後などで使い回すため、関数化しています。
 function showProductList(products){
+    // 【穴埋め】tbody id="product_list" を選択し、商品データの挿入先にします。
     let productList = document.getElementById('product_list');
-    productList.innerHTML = ''; //既存のテーブルデータを初期化
+    productList.innerHTML = '';
 
-    //リスト.forEach(変数 => {   })  は、Thymeleafのth:eachのようなものです。
+    // 【穴埋め】forEachは、配列のデータを1件ずつ取り出して処理するメソッドです。
+    // 【構文】リスト変数.forEach(変数 => { 処理 });
     products.forEach(product => {
-    //複数の行のデータを、1行ずつ<tr>を生成して挿入していきます。
+        // 【穴埋め】productは、配列productsの中から取り出された1件分の商品データです。
+        // 【穴埋め】テンプレートリテラル ` ` を使うと、複数行のHTMLを文字列として書けます。
         let productHtml = `
         <tr>
-            <td>${product.id}<td>${product.name}</td><td>${product.price}</td>
+            <td>${product.id}</td>
+            <td>${product.name}</td>
+            <td>${product.price}</td>
         </tr>`;
-        //<tbody>の要素の<tr>の後ろに挿入し続けてます
+
+        // 【穴埋め】insertAdjacentHTMLの第1引数で挿入位置、第2引数で挿入するHTMLを指定します。
+        // 【穴埋め】beforeendは、tbodyの最後にHTMLを追加する指定です。
         productList.insertAdjacentHTML('beforeend', productHtml);
     });
 }
-//➆　このHTMLを実行して動作確認をしてください。
 </script>
 </body>
 </html>
