@@ -7,9 +7,9 @@
 </head>
 
 <body>
-    <!-- ➀ 商品データを表示するテーブルを定義してください。id属性は product_table にしてください。 -->
+    <!-- ➀ 商品データを表示するテーブルを定義してください。id属性は product_table にしてください。
+         theadには固定の見出し、tbody id="product_list" にはJavaScriptで取得した商品データを挿入します。 -->
     <table id="______">
-        <!-- ➁ theadには、ページ操作で変更されない見出し（商品番号、商品名、価格、カテゴリ）を定義してください。 -->
         <thead>
             <tr>
                 <th>商品番号</th>
@@ -18,38 +18,37 @@
                 <th>カテゴリ</th>
             </tr>
         </thead>
-        <!-- ➂ 商品データをJavaScriptから挿入するtbodyです。id属性の値を確認してください。 -->
         <tbody id="______">
             <!-- ここに商品データが挿入されます -->
         </tbody>
     </table>
 
 <script>
-// ➃ HTMLの読み込みが完了した時に実行されるイベントを指定してください。
+// ➁ HTMLの読み込みが完了した時に実行されるイベントを指定してください。
 document.addEventListener('______', function() {
-    // ➄ 初期画面の一覧データをGET方式で取得してください。
+    // ➂ 初期画面の一覧データをGET方式で取得してください。
     //    URLは http://localhost:8080/api/v331/products です。
-    //    このURLが呼ばれたら、次は api/server.js の➅〜⑫を確認してください。
+    //    ここまで書いたら、次は api/server.js の➃〜➉を確認してください。
     axios.xxx('URL')
 
-    // ⑬ 【api/server.jsの⑫から戻る】非同期通信が成功した場合、thenの中が実行されます。
+    // ⑪ 【api/server.jsの➉から戻る】非同期通信が成功した場合、thenの中が実行されます。
     .then(response => {
-        // ⑭ response.dataをshowProductList関数に渡してください。
+        // ⑫ response.dataをshowProductList関数に渡してください。
         ______(response.data);
     })
     .catch(error => console.error('エラーが発生しました:', error));
 });
 
 // 商品リストを表示する関数
-// ⑮ productsを引数に持つshowProductList関数を完成させてください。
+// ⑬ productsを引数に持つshowProductList関数を完成させてください。
 function ______(products){
-    // ⑯ 商品データを挿入するtbody要素を取得してください。
+    // ⑭ 商品データを挿入するtbody要素を取得してください。
     let productList = document.getElementById('______');
     productList.innerHTML = '';
 
-    // ⑰ products配列から1件ずつproductを取り出してください。
+    // ⑮ products配列から1件ずつproductを取り出してください。
     products.xxx(product => {
-        // ⑱ product.id、product.name、product.price、product.categoryを使って1行分のHTMLを作成してください。
+        // ⑯ product.id、product.name、product.price、product.categoryを使って1行分のHTMLを作成してください。
         let productHtml = `
         <tr>
             <td>${product.xxx}</td>
@@ -58,7 +57,7 @@ function ______(products){
             <td>${product.xxx}</td>
         </tr>`;
 
-        // ⑲ tbodyの最後にproductHtmlを追加してください。
+        // ⑰ tbodyの最後にproductHtmlを追加してください。
         productList.xxx('beforeend', productHtml);
     });
 }

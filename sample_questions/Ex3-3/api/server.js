@@ -3,7 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const sqlite3 = require('sqlite3').verbose();
 
-// ➅ 【list.htmlの➄から移動】expressの機能を利用するため、appを初期化してください。
+// ➃ 【list.htmlの➂から移動】expressの機能を利用するため、appを初期化してください。
 const app = ______;
 
 // JSONデータを扱うための設定
@@ -12,7 +12,7 @@ app.use(express.json());
 // CORS（他のサーバーからの通信を許可）
 app.use(cors());
 
-// ➆ SQLiteデータベースファイル(products.db)を開いてください。
+// ➄ SQLiteデータベースファイル(products.db)を開いてください。
 //    dbフォルダはapiフォルダの1つ外側にあります。
 const db = new sqlite3.Database('______');
 
@@ -21,31 +21,31 @@ app.get('/api/test', (req, res) => {
     res.json({ status: 'ok', message: 'APIサーバー稼働中！' });
 });
 
-// ➇ HTTPのGETメソッドで「/api/v331/products」にアクセスされた時に実行する処理を定義してください。
+// ➅ HTTPのGETメソッドで「/api/v331/products」にアクセスされた時に実行する処理を定義してください。
 //    list.htmlのaxios.get('http://localhost:8080/api/v331/products')から呼び出されます。
 app.xxx('______', (req, res) => {
-    // ➈ 全件検索をするため、WHERE句がないSQL文を設定してください。
+    // ➆ 全件検索をするため、WHERE句がないSQL文を設定してください。
     const sql = '______';
 
-    // ➉ db.allを使い、複数行の検索結果を配列として受け取ってください。
+    // ➇ db.allを使い、複数行の検索結果を配列として受け取ってください。
     //    第1引数はSQL文、第2引数はSQLに渡す値、第3引数はcallback関数です。
     db.xxx(sql, [], (err, rows) => {
-        // ⑪ errには、エラーが発生した時の情報が入ります。
+        // ➈ errには、エラーが発生した時の情報が入ります。
         if (err) {
             console.error(err);
             res.status(500).json({ error: 'Database error' });
             return;
         }
 
-        // ⑫ rowsには、検索結果が配列の形で入ります。
+        // ➉ rowsには、検索結果が配列の形で入ります。
         //    rowsをJSON形式で呼び出し元(list.html)へ返してください。
-        //    ここまで確認したら、list.htmlの⑬へ戻ってください。
+        //    ここまで確認したら、list.htmlの⑪へ戻ってください。
         res.xxx(rows);
     });
 });
 
 // ここから下は、別画面で利用するAPIです。
-// 今回のlist.htmlの流れでは、まず➀〜⑲を優先して確認してください。
+// 今回のlist.htmlの流れでは、まず➀〜⑰を優先して確認してください。
 
 // 3-3-2 商品一覧
 app.get('/api/v332/products', (req, res) => {
