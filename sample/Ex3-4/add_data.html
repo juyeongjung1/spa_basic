@@ -9,6 +9,10 @@
 <body>
     <h1>商品管理システム</h1>
 
+    <input type="text" id="searchName" placeholder="商品名">
+    <button id="searchBtn">検索</button>
+    <button id="listBtn">一覧表示</button>
+
     <table>
         <thead>
             <tr>
@@ -33,7 +37,7 @@ document.getElementById('registBtn').addEventListener('click', function() {
     let name = document.getElementById('inputName').value;
     let price = document.getElementById('inputPrice').value;
 
-    axios.post('http://localhost:3005/api/v341/products', {
+    axios.post('http://localhost:3005/api/v34/products', {
         name: name,
         price: price
     })
@@ -45,7 +49,25 @@ document.getElementById('registBtn').addEventListener('click', function() {
 });
 
 document.addEventListener('DOMContentLoaded', function() {
-    axios.get('http://localhost:3005/api/v341/products')
+    axios.get('http://localhost:3005/api/v34/products')
+    .then(response => {
+        showProductList(response.data);
+    })
+    .catch(error => console.error('エラーが発生しました:', error));
+});
+
+document.getElementById('searchBtn').addEventListener('click', function() {
+    let name = document.getElementById('searchName').value;
+
+    axios.get(`http://localhost:3005/api/v34/products?keyword=${name}`)
+    .then(response => {
+        showProductList(response.data);
+    })
+    .catch(error => console.error('エラーが発生しました:', error));
+});
+
+document.getElementById('listBtn').addEventListener('click', function() {
+    axios.get('http://localhost:3005/api/v34/products')
     .then(response => {
         showProductList(response.data);
     })

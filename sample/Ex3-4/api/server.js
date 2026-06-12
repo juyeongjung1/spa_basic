@@ -20,11 +20,18 @@ app.get('/api/test', (req, res) => {
     res.json({ status: 'ok', message: 'APIサーバー稼働中！' });
 });
 
-// 3-4-1 商品一覧
-app.get('/api/v341/products', (req, res) => {
-    const sql = 'SELECT * FROM products';
+// 3-4 商品一覧・キーワード検索
+app.get('/api/v34/products', (req, res) => {
+    const keyword = req.query.keyword;
+    let sql = 'SELECT * FROM products';
+    let params = [];
 
-    db.all(sql, [], (err, rows) => {
+    if (keyword) {
+        sql = 'SELECT * FROM products WHERE name LIKE ?';
+        params = [`%${keyword}%`];
+    }
+
+    db.all(sql, params, (err, rows) => {
         if (err) {
             console.error(err);
             res.status(500).json({ error: 'Database error' });
@@ -35,8 +42,8 @@ app.get('/api/v341/products', (req, res) => {
     });
 });
 
-// 3-4-1 商品登録
-app.post('/api/v341/products', (req, res) => {
+// 3-4 商品登録
+app.post('/api/v34/products', (req, res) => {
     const name = req.body.name;
     const price = req.body.price;
     const sql = 'INSERT INTO products (name, price, category) VALUES (?, ?, ?)';

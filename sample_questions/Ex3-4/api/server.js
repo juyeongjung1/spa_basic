@@ -3,8 +3,8 @@ const express = require('express');
 const cors = require('cors');
 const sqlite3 = require('sqlite3').verbose();
 
-// ➄ expressの機能を利用するため、appを初期化してください。
-const app = ______;
+// Expressアプリの作成
+const app = express();
 
 // JSONデータを扱うための設定
 app.use(express.json());
@@ -12,20 +12,26 @@ app.use(express.json());
 // CORS（他のサーバーからの通信を許可）
 app.use(cors());
 
-// ➅ SQLiteデータベースファイル(products.db)を開いてください。
-//    dbフォルダはapiフォルダの1つ外側にあります。
-const db = new sqlite3.Database('______');
+// SQLiteデータベースへの接続
+const db = new sqlite3.Database('../db/products.db');
 
 // 動作確認用のAPI
 app.get('/api/test', (req, res) => {
     res.json({ status: 'ok', message: 'APIサーバー稼働中！' });
 });
 
-// 既存の商品一覧表示API
-app.get('/api/v341/products', (req, res) => {
-    const sql = 'SELECT * FROM products';
+// v332までに学習した商品一覧・キーワード検索API
+app.get('/api/v34/products', (req, res) => {
+    const keyword = req.query.keyword;
+    let sql = 'SELECT * FROM products';
+    let params = [];
 
-    db.all(sql, [], (err, rows) => {
+    if (keyword) {
+        sql = 'SELECT * FROM products WHERE name LIKE ?';
+        params = [`%${keyword}%`];
+    }
+
+    db.all(sql, params, (err, rows) => {
         if (err) {
             console.error(err);
             res.status(500).json({ error: 'Database error' });
@@ -37,16 +43,16 @@ app.get('/api/v341/products', (req, res) => {
 });
 
 // 【作業手順③】商品登録APIを作ります。
-// ➆ HTTPのPOSTメソッドで「/api/v341/products」にアクセスされた時に実行する処理を定義してください。
+// ➄ HTTPのPOSTメソッドで「/api/v34/products」にアクセスされた時に実行する処理を定義してください。
 app.xxx('______', (req, res) => {
-    // ➇ リクエストボディから商品名と価格を取得してください。
+    // ➅ リクエストボディから商品名と価格を取得してください。
     const name = req.body.xxx;
     const price = req.body.xxx;
 
-    // ➈ productsテーブルへ商品名・価格・カテゴリを登録するSQL文を設定してください。
+    // ➆ productsテーブルへ商品名・価格・カテゴリを登録するSQL文を設定してください。
     const sql = '______';
 
-    // ➉ db.runを使い、INSERT文を実行してください。
+    // ➇ db.runを使い、INSERT文を実行してください。
     //    カテゴリは今回は固定で「未分類」を登録します。
     db.xxx(sql, [name, price, '未分類'], (err) => {
         if (err) {
@@ -55,7 +61,7 @@ app.xxx('______', (req, res) => {
             return;
         }
 
-        // ⑪ 登録後の一覧を取得し直してください。
+        // ➈ 登録後の一覧を取得し直してください。
         db.xxx('SELECT * FROM products', [], (err, rows) => {
             if (err) {
                 console.error(err);
@@ -63,7 +69,7 @@ app.xxx('______', (req, res) => {
                 return;
             }
 
-            // ⑫ 登録後の商品一覧をJSON形式で返してください。
+            // ➉ 登録後の商品一覧をJSON形式で返してください。
             res.xxx(rows);
         });
     });

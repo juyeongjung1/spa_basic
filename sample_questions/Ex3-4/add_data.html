@@ -9,6 +9,10 @@
 <body>
     <h1>商品管理システム</h1>
 
+    <input type="text" id="searchName" placeholder="商品名">
+    <button id="searchBtn">検索</button>
+    <button id="listBtn">一覧表示</button>
+
     <table>
         <thead>
             <tr>
@@ -30,6 +34,34 @@
     <button id="registBtn">登録</button>
 
 <script>
+//========ここから下は、v332までに学習した完成コードです。========
+document.addEventListener('DOMContentLoaded', function() {
+    axios.get('http://localhost:3005/api/v34/products')
+    .then(response => {
+        showProductList(response.data);
+    })
+    .catch(error => console.error('エラーが発生しました:', error));
+});
+
+document.getElementById('searchBtn').addEventListener('click', function() {
+    let name = document.getElementById('searchName').value;
+
+    axios.get(`http://localhost:3005/api/v34/products?keyword=${name}`)
+    .then(response => {
+        showProductList(response.data);
+    })
+    .catch(error => console.error('エラーが発生しました:', error));
+});
+
+document.getElementById('listBtn').addEventListener('click', function() {
+    axios.get('http://localhost:3005/api/v34/products')
+    .then(response => {
+        showProductList(response.data);
+    })
+    .catch(error => console.error('エラーが発生しました:', error));
+});
+
+//========ここから下が、今回の新しい穴埋め問題です。========
 // 【作業手順②】登録ボタンがクリックされた時の処理を作ります。
 // ➀ 登録ボタンの正しいidを指定してください。
 document.getElementById('xxxx').addEventListener('click', function() {
@@ -38,27 +70,18 @@ document.getElementById('xxxx').addEventListener('click', function() {
     let price = document.getElementById('xxxxx').value;
 
     // ➂ POST方式で登録APIへ送信してください。
-    axios.xxx('http://localhost:3005/api/v341/products', {
+    axios.xxx('http://localhost:3005/api/v34/products', {
         name: xxx,
         price: xxx
     })
 
-    // 【作業手順④】api/server.jsの「3-4-1 商品登録API」の問題を解いてから戻ってください。
+    // 【作業手順④】api/server.jsの「3-4 商品登録API」の問題を解いてから戻ってください。
     .then(response => {
         alert('商品が登録されました');
         // ➃ 登録後に返ってきた一覧データを画面に表示してください。
         xxxxx(response.data);
     })
     .catch(error => console.error('商品登録に失敗しました:', error));
-});
-
-//========この下は、既存のコードです。========
-document.addEventListener('DOMContentLoaded', function() {
-    axios.get('http://localhost:3005/api/v341/products')
-    .then(response => {
-        showProductList(response.data);
-    })
-    .catch(error => console.error('エラーが発生しました:', error));
 });
 
 function showProductList(products){
