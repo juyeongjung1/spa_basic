@@ -16,6 +16,7 @@
                 <th>商品番号</th>
                 <th>商品名</th>
                 <th>価格</th>
+                <th>カテゴリ</th>
             </tr>
         </thead>
         <tbody id="product_list">
@@ -75,7 +76,7 @@ function showProductList(products){
     products.forEach(product => {
         let productHtml = `
         <tr>
-            <td>${product.id}<td>${product.name}</td><td>${product.price}</td>
+            <td>${product.id}</td><td>${product.name}</td><td>${product.price}</td><td>${product.category}</td>
             <td><button onclick ="xxxxxxxx">削除</button></td>
         </tr>`;
         productList.insertAdjacentHTML('beforeend', productHtml);

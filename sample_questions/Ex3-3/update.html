@@ -16,6 +16,7 @@
                 <th>商品番号</th>
                 <th>商品名</th>
                 <th>価格</th>
+                <th>カテゴリ</th>
             </tr>
         </thead>
         <tbody id="product_list">
@@ -80,6 +81,7 @@ function showProductList(products) {
             <td>${product.id}</td>
             <td id="name-${product.id}">${product.name}</td>
             <td id="price-${product.id}">${product.price}</td> 
+            <td id="category-${product.id}">${product.category}</td>
             <td><button onclick="editProduct(${product.id})">更新</button></td>
             <td><button onclick="deleteProduct(${product.id})">削除</button></td>
         </tr>`;
@@ -91,11 +93,13 @@ function editProduct(productId) {
     let row = document.getElementById(`row-${productId}`);
     let name = document.getElementById(`name-${productId}`).textContent;
     let price = document.getElementById(`price-${productId}`).textContent;
+    let category = document.getElementById(`category-${productId}`).textContent;
 
     let editHtml = `
     <td>${productId}</td>
     <td><input type='text' value='${name}' id='edit-name-${productId}'></td>
     <td><input type='number' value='${price}' id='edit-price-${productId}'></td>
+    <td>${category}</td>
     <td><button onclick="saveProduct(${productId})">保存</button></td>
     <td><button onclick="cancelEdit(${productId})">キャンセル</button></td>`; 
     row.innerHTML = editHtml; 

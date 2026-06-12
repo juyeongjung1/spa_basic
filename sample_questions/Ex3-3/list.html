@@ -9,12 +9,13 @@
 <body>
     <!-- ➀ 商品データを表示するテーブルを定義してください。id属性は product_table にしてください。 -->
     <table id="______">
-        <!-- ➁ theadには、ページ操作で変更されない見出し（商品番号、商品名、価格）を定義してください。 -->
+        <!-- ➁ theadには、ページ操作で変更されない見出し（商品番号、商品名、価格、カテゴリ）を定義してください。 -->
         <thead>
             <tr>
                 <th>商品番号</th>
                 <th>商品名</th>
                 <th>価格</th>
+                <th>カテゴリ</th>
             </tr>
         </thead>
         <!-- ➂ 商品データをJavaScriptから挿入するtbodyです。id属性の値を確認してください。 -->
@@ -48,9 +49,10 @@ function ______(products){
 
     // ⑰ products配列から1件ずつproductを取り出してください。
     products.xxx(product => {
-        // ⑱ product.id、product.name、product.priceを使って1行分のHTMLを作成してください。
+        // ⑱ product.id、product.name、product.price、product.categoryを使って1行分のHTMLを作成してください。
         let productHtml = `
         <tr>
+            <td>${product.xxx}</td>
             <td>${product.xxx}</td>
             <td>${product.xxx}</td>
             <td>${product.xxx}</td>
