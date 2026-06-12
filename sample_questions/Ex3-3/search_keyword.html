@@ -7,9 +7,10 @@
 </head>
 
 <body>
-    <!--➀ テキストフォームと、ボタンのid属性を確認してください。-->
+    <!--➀ テキストフォーム、検索ボタン、一覧表示ボタンのid属性を確認してください。-->
     <input type = "text" id = "searchName" placeholder="商品名">
     <button id = "searchBtn">検索</button>
+    <button id = "listBtn">一覧表示</button>
     <table>
         <thead>
             <tr>
@@ -40,11 +41,22 @@ document.getElementById('xxxx').addEventListener('click', function() {
 })
 .catch(error => console.error('エラーが発生しました:', error));
 });
-//➅　このHTMLを実行して動作確認をしてください。
+
+//➅　検索後にもう一度一覧を表示するため、正しいidを指定してください。
+document.getElementById('xxxx').addEventListener('click', function() {
+    //➆　一覧取得APIの正しいURLに修正してください。
+    axios.get('http://localhost:8080/api/v332/productsQ')
+
+.then(response => {
+    showProductList(response.data);
+})
+.catch(error => console.error('エラーが発生しました:', error));
+});
+//➇　このHTMLを実行して動作確認をしてください。
 
 //========この下は、既存のコードです。＝＝＝＝＝＝＝＝＝＝＝＝
 document.addEventListener('DOMContentLoaded', function() {
-    axios.get('http://localhost:8080/api/v2/products')
+    axios.get('http://localhost:8080/api/v332/products')
 
 .then(response => {
     showProductList(response.data);
