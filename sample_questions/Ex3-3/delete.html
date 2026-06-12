@@ -29,26 +29,11 @@
     <button id = "registBtn">登録</button>
     
 <script>
-
-//削除機能のための関数
-function deleteProduct(id) {
-    axios.delete(`http://localhost:8080/api/v334/products/${id}`)
-        .then(response => {
-            alert('削除が完了しました');
-            showProductList(response.data);
-        })
-        .catch(error => {
-            console.error('削除エラーが発生しました:', error);
-        });
-}
-
-//========この下は、既存のコードです。========
-//==========＜商品名登録機能＞==========
 document.getElementById('registBtn').addEventListener('click', function() {
     let name = document.getElementById('inputName').value;
     let price = document.getElementById('inputPrice').value;
 
-    axios.post('http://localhost:8080/api/v334/products', {
+    axios.post('http://localhost:8080/api/v333/products', {
         name: name,
         price: price
     })
@@ -61,10 +46,9 @@ document.getElementById('registBtn').addEventListener('click', function() {
 
 
 //==========＜商品名検索機能＞==========
-
 document.getElementById('searchBtn').addEventListener('click', function() {
     let name = document.getElementById('searchName').value;
-    axios.get(`http://localhost:8080/api/v334/products/${name}`
+    axios.get(`http://localhost:8080/api/v332/products/${name}`
 )
 .then(response => {
     showProductList(response.data);
@@ -74,7 +58,7 @@ document.getElementById('searchBtn').addEventListener('click', function() {
 
 //==========＜商品リスト表示機能＞==========
 document.addEventListener('DOMContentLoaded', function() {
-    axios.get('http://localhost:8080/api/v334/products')
+    axios.get('http://localhost:8080/api/v332/products')
 
 .then(response => {
     showProductList(response.data);
@@ -86,18 +70,34 @@ document.addEventListener('DOMContentLoaded', function() {
 function showProductList(products){
     let productList = document.getElementById('product_list');
     productList.innerHTML = ''; //既存のテーブルデータを初期化
-
+    
+    //➀　xxxxxxxを修正してください。(deleteProduct関数をproduct.idを入れて呼び出す)
     products.forEach(product => {
         let productHtml = `
         <tr>
             <td>${product.id}<td>${product.name}</td><td>${product.price}</td>
-            <td><button onclick ="deleteProduct(${product.id})">削除</button></td>
+            <td><button onclick ="xxxxxxxx">削除</button></td>
         </tr>`;
         productList.insertAdjacentHTML('beforeend', productHtml);
     });
 }
 
-
+//➁削除専用の関数を定義していることを確認してください。
+function deleteProduct(id) {
+    //➂　以下の部分を修正してください。
+    axios.xxxxxx(`http://localhost:8080/api/v334/productsQ/${xx}`)
+        .then(response => {
+    //➃ rest_sample_3/controller/chap3_3_4/ProductController4Q@deleteProductメソッドの問題を解いてから戻ってください。
+    
+    //➄　更新したリストデータを出力するため、定義済みの関数を呼び出していることを確認してください。
+            alert('削除が完了しました');
+            showProductList(response.data);
+        })
+        .catch(error => {
+            console.error('削除エラーが発生しました:', error);
+        });
+}
+//➅　このHTMLを実行して動作確認をしてください。
 </script>
 </body>
 </html>

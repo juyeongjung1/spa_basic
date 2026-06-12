@@ -7,6 +7,7 @@
 </head>
 
 <body>
+    <!--➀ テキストフォームと、ボタンのid属性を確認してください。-->
     <input type = "text" id = "searchName" placeholder="商品名">
     <button id = "searchBtn">検索</button>
     <table>
@@ -23,21 +24,26 @@
     </table>
     
 <script>
-document.getElementById('searchBtn').addEventListener('click', function() {
-    let name = document.getElementById('searchName').value;
-    axios.get(`http://localhost:8080/api/v332/products/${name}`
+//➁　正しいidを指定してください。
+document.getElementById('xxxx').addEventListener('click', function() {
+    //➂　テキストフォームの入力値を取得し、変数nameへ代入してください。
+    
+    //➃　正しいURLに修正してください。
+    axios.get(`http://localhost:8080/api/v332/productsQ/${xxxxx}`
 )
-//【作業手順➃】はこの下のコードからです
+
+//➄ rest_sample_3/controller/chap3_3_2/ProductController2Q@searchProductByNameメソッドの問題を解いてから戻ってください。
+
 .then(response => {
     showProductList(response.data);
 })
 .catch(error => console.error('エラーが発生しました:', error));
 });
+//➅　このHTMLを実行して動作確認をしてください。
 
-
-//========この下は、既存のコードです。========
+//========この下は、既存のコードです。＝＝＝＝＝＝＝＝＝＝＝＝
 document.addEventListener('DOMContentLoaded', function() {
-    axios.get('http://localhost:8080/api/v332/products')
+    axios.get('http://localhost:8080/api/v2/products')
 
 .then(response => {
     showProductList(response.data);

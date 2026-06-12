@@ -3,8 +3,8 @@ const express = require('express');
 const cors = require('cors');
 const sqlite3 = require('sqlite3').verbose();
 
-// Expressアプリの作成
-const app = express();
+// ➅ 【list.htmlの➄から移動】expressの機能を利用するため、appを初期化してください。
+const app = ______;
 
 // JSONデータを扱うための設定
 app.use(express.json());
@@ -12,39 +12,40 @@ app.use(express.json());
 // CORS（他のサーバーからの通信を許可）
 app.use(cors());
 
-// SQLiteデータベースへの接続
-const db = new sqlite3.Database('../db/products.db');
+// ➆ SQLiteデータベースファイル(products.db)を開いてください。
+//    dbフォルダはapiフォルダの1つ外側にあります。
+const db = new sqlite3.Database('______');
 
 // 動作確認用のAPI
 app.get('/api/test', (req, res) => {
     res.json({ status: 'ok', message: 'APIサーバー稼働中！' });
 });
 
-// 【穴埋め】7行目でexpressの機能を使うために app を初期化しています。
-// 【穴埋め】HTTPのGETメソッドで「/api/v331/products」にアクセスされた時、この中の関数が実行されます。
-// 【穴埋め】app.get の第1引数にはURL、第2引数には実行する処理を書きます。
+// ➇ HTTPのGETメソッドで「/api/v331/products」にアクセスされた時に実行する処理を定義してください。
+//    list.htmlのaxios.get('http://localhost:8080/api/v331/products')から呼び出されます。
+app.xxx('______', (req, res) => {
+    // ➈ 全件検索をするため、WHERE句がないSQL文を設定してください。
+    const sql = '______';
 
-// 【3.3.1 全件検索】商品一覧取得API
-app.get('/api/v331/products', (req, res) => {
-    const sql = 'SELECT * FROM products';
-
-    // 【穴埋め】全件検索なので、WHERE句がないSQL文を実行します。
-    // 【穴埋め】db.allは、複数行の検索結果を配列で受け取るsqlite3専用メソッドです。
-    // 【穴埋め】第1引数 sql、第2引数 [] は実行前に渡す値です。
-    // 【穴埋め】第3引数の (err, rows) はcallback関数で、実行後の戻り値を受け取ります。
-    db.all(sql, [], (err, rows) => {
-        // 【穴埋め】errには、エラーが発生した時の情報が入ります。
+    // ➉ db.allを使い、複数行の検索結果を配列として受け取ってください。
+    //    第1引数はSQL文、第2引数はSQLに渡す値、第3引数はcallback関数です。
+    db.xxx(sql, [], (err, rows) => {
+        // ⑪ errには、エラーが発生した時の情報が入ります。
         if (err) {
             console.error(err);
             res.status(500).json({ error: 'Database error' });
             return;
         }
 
-        // 【穴埋め】rowsには、検索結果が配列の形で入ります。
-        // 【穴埋め】rowsをJSON形式で呼び出し元のJavaScriptへ返します。
-        res.json(rows);
+        // ⑫ rowsには、検索結果が配列の形で入ります。
+        //    rowsをJSON形式で呼び出し元(list.html)へ返してください。
+        //    ここまで確認したら、list.htmlの⑬へ戻ってください。
+        res.xxx(rows);
     });
 });
+
+// ここから下は、別画面で利用するAPIです。
+// 今回のlist.htmlの流れでは、まず➀〜⑲を優先して確認してください。
 
 // 3-3-2 商品一覧
 app.get('/api/v332/products', (req, res) => {

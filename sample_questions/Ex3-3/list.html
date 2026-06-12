@@ -7,10 +7,9 @@
 </head>
 
 <body>
-    <!-- 【穴埋め】商品データを表示するテーブルには id="product_table" を指定します。 -->
-    <!-- 【穴埋め】theadは列の見出しを固定的に表示する場所です。 -->
-    <!-- 【穴埋め】tbody id="product_list" は、JavaScriptから商品データを動的に挿入する場所です。 -->
-    <table id="product_table">
+    <!-- ➀ 商品データを表示するテーブルを定義してください。id属性は product_table にしてください。 -->
+    <table id="______">
+        <!-- ➁ theadには、ページ操作で変更されない見出し（商品番号、商品名、価格）を定義してください。 -->
         <thead>
             <tr>
                 <th>商品番号</th>
@@ -18,48 +17,47 @@
                 <th>価格</th>
             </tr>
         </thead>
-        <tbody id="product_list">
+        <!-- ➂ 商品データをJavaScriptから挿入するtbodyです。id属性の値を確認してください。 -->
+        <tbody id="______">
             <!-- ここに商品データが挿入されます -->
         </tbody>
     </table>
 
 <script>
-// 【穴埋め】DOMContentLoadedは、HTMLの読み込みが完了した時に発火するイベントです。
-// 【穴埋め】画面表示直後に商品一覧を取得したいので、この中でAPIを呼び出します。
-document.addEventListener('DOMContentLoaded', function() {
-    // 【穴埋め】一覧データの検索なので、GET方式でREST APIを呼び出します。
-    axios.get('http://localhost:8080/api/v331/products')
-    // 【穴埋め】非同期通信が成功した場合、thenの中の処理が実行されます。
+// ➃ HTMLの読み込みが完了した時に実行されるイベントを指定してください。
+document.addEventListener('______', function() {
+    // ➄ 初期画面の一覧データをGET方式で取得してください。
+    //    URLは http://localhost:8080/api/v331/products です。
+    //    このURLが呼ばれたら、次は api/server.js の➅〜⑫を確認してください。
+    axios.xxx('URL')
+
+    // ⑬ 【api/server.jsの⑫から戻る】非同期通信が成功した場合、thenの中が実行されます。
     .then(response => {
-        // 【穴埋め】response.dataには、APIから取得したJSONデータが入っています。
-        // 【穴埋め】showProductList関数へ渡すことで、テーブルに一覧を表示します。
-        showProductList(response.data);
+        // ⑭ response.dataをshowProductList関数に渡してください。
+        ______(response.data);
     })
     .catch(error => console.error('エラーが発生しました:', error));
 });
 
 // 商品リストを表示する関数
-// 【穴埋め】この処理は一覧表示・検索後・登録後などで使い回すため、関数化しています。
-function showProductList(products){
-    // 【穴埋め】tbody id="product_list" を選択し、商品データの挿入先にします。
-    let productList = document.getElementById('product_list');
+// ⑮ productsを引数に持つshowProductList関数を完成させてください。
+function ______(products){
+    // ⑯ 商品データを挿入するtbody要素を取得してください。
+    let productList = document.getElementById('______');
     productList.innerHTML = '';
 
-    // 【穴埋め】forEachは、配列のデータを1件ずつ取り出して処理するメソッドです。
-    // 【構文】リスト変数.forEach(変数 => { 処理 });
-    products.forEach(product => {
-        // 【穴埋め】productは、配列productsの中から取り出された1件分の商品データです。
-        // 【穴埋め】テンプレートリテラル ` ` を使うと、複数行のHTMLを文字列として書けます。
+    // ⑰ products配列から1件ずつproductを取り出してください。
+    products.xxx(product => {
+        // ⑱ product.id、product.name、product.priceを使って1行分のHTMLを作成してください。
         let productHtml = `
         <tr>
-            <td>${product.id}</td>
-            <td>${product.name}</td>
-            <td>${product.price}</td>
+            <td>${product.xxx}</td>
+            <td>${product.xxx}</td>
+            <td>${product.xxx}</td>
         </tr>`;
 
-        // 【穴埋め】insertAdjacentHTMLの第1引数で挿入位置、第2引数で挿入するHTMLを指定します。
-        // 【穴埋め】beforeendは、tbodyの最後にHTMLを追加する指定です。
-        productList.insertAdjacentHTML('beforeend', productHtml);
+        // ⑲ tbodyの最後にproductHtmlを追加してください。
+        productList.xxx('beforeend', productHtml);
     });
 }
 </script>
