@@ -47,27 +47,34 @@ app.xxx('______', (req, res) => {
 // ここから下は、別画面で利用するAPIです。
 // 今回のlist.htmlの流れでは、まず➀〜⑰を優先して確認してください。
 
-// 3-3-2 商品一覧・キーワード検索
-app.get('/api/v332/products', (req, res) => {
-    //➀ クエリパラメータkeywordを取得してください。
+// 【作業手順④】キーワード検索と一覧表示を同じAPIで処理します。
+// ➇ HTTPのGETメソッドで「/api/v332/products」にアクセスされた時に実行する処理を定義してください。
+app.xxx('______', (req, res) => {
+    // ➈ クエリパラメータkeywordを取得してください。
+    //    search_keyword.htmlのaxios.get(`...?keyword=${name}`)から送られてきます。
     const keyword = req.query.xxx;
+
+    // keywordがない場合は、全件検索を行います。
     let sql = 'SELECT * FROM products';
     let params = [];
 
-    //➁ keywordがある場合だけ、商品名の部分一致検索を行うSQLに変更してください。
+    // ➉ keywordがある場合だけ、商品名の部分一致検索を行うSQLに変更してください。
     if (keyword) {
         sql = '______';
-        params = [`%${keyword}%`];
+        // ⑪ 前後に%を付けたキーワードをparamsに設定してください。
+        params = [______];
     }
 
-    //➂ sqlとparamsを使って、検索結果を取得してください。
+    // ⑫ db.allを使い、sqlとparamsで検索結果を取得してください。
     db.xxx(sql, params, (err, rows) => {
+        // errには、エラーが発生した時の情報が入ります。
         if (err) {
             console.error(err);
             res.status(500).json({ error: 'Database error' });
             return;
         }
 
+        // ⑬ rowsをJSON形式で呼び出し元(search_keyword.html)へ返してください。
         res.xxx(rows);
     });
 });

@@ -7,7 +7,8 @@
 </head>
 
 <body>
-    <!--➀ テキストフォーム、検索ボタン、一覧表示ボタンのid属性を確認してください。-->
+    <!-- 【作業手順①】HTML要素の準備 -->
+    <!-- 検索フォーム、検索ボタン、一覧表示ボタンのid属性を確認してください。 -->
     <input type = "text" id = "searchName" placeholder="商品名">
     <button id = "searchBtn">検索</button>
     <button id = "listBtn">一覧表示</button>
@@ -26,33 +27,38 @@
     </table>
     
 <script>
-//➁　正しいidを指定してください。
+// 【作業手順②】キーワードをAPI側へ送信しながら呼び出し
+// ➀ 検索ボタンの正しいidを指定してください。
 document.getElementById('xxxx').addEventListener('click', function() {
-    //➂　テキストフォームの入力値を取得し、変数nameへ代入してください。
+    // ➁ テキストフォームの入力値を取得し、変数nameへ代入してください。
     
-    //➃　クエリパラメータkeywordを使う正しいURLに修正してください。
+    // ➂ クエリパラメータkeywordを使う正しいURLに修正してください。
     axios.get(`http://localhost:8080/api/v332/productsQ?keyword=${xxxxx}`
 )
 
-//➄ api/server.jsの3-3-2 商品一覧・キーワード検索APIの問題を解いてから戻ってください。
+// 【作業手順④】api/server.jsの「3-3-2 商品一覧・キーワード検索API」の問題を解いてから戻ってください。
 
 .then(response => {
-    showProductList(response.data);
+    // 【作業手順⑤】APIから戻ったデータを画面に表示します。
+    // ➅ response.dataをshowProductList関数に渡してください。
+    xxxxx(response.data);
 })
 .catch(error => console.error('エラーが発生しました:', error));
 });
 
-//➅　検索後にもう一度一覧を表示するため、正しいidを指定してください。
+// 【作業手順③】一覧表示をするボタンのJavaScript
+// ➃ 検索後にもう一度一覧を表示するため、一覧表示ボタンの正しいidを指定してください。
 document.getElementById('xxxx').addEventListener('click', function() {
-    //➆　一覧取得APIの正しいURLに修正してください。
+    // ➄ 一覧取得APIの正しいURLに修正してください。
+    //    キーワード検索と同じAPIですが、keywordパラメータは付けません。
     axios.get('http://localhost:8080/api/v332/productsQ')
 
 .then(response => {
-    showProductList(response.data);
+    // ➆ 一覧表示でも、APIから戻ったデータをshowProductList関数に渡してください。
+    xxxxx(response.data);
 })
 .catch(error => console.error('エラーが発生しました:', error));
 });
-//➇　このHTMLを実行して動作確認をしてください。
 
 //========この下は、既存のコードです。＝＝＝＝＝＝＝＝＝＝＝＝
 document.addEventListener('DOMContentLoaded', function() {
@@ -64,6 +70,8 @@ document.addEventListener('DOMContentLoaded', function() {
 .catch(error => console.error('エラーが発生しました:', error));
 });
 
+// 【作業手順⑤】APIからのデータを動的レンダリング
+// 全件検索でもキーワード検索でも、APIから戻るリストデータをshowProductList関数に渡します。
 //商品リストを表示する関数
 function showProductList(products){
     let productList = document.getElementById('product_list');
