@@ -47,34 +47,28 @@ app.xxx('______', (req, res) => {
 // ここから下は、別画面で利用するAPIです。
 // 今回のlist.htmlの流れでは、まず➀〜⑰を優先して確認してください。
 
-// 3-3-2 商品一覧
+// 3-3-2 商品一覧・キーワード検索
 app.get('/api/v332/products', (req, res) => {
-    const sql = 'SELECT * FROM products';
+    //➀ クエリパラメータkeywordを取得してください。
+    const keyword = req.query.xxx;
+    let sql = 'SELECT * FROM products';
+    let params = [];
 
-    db.all(sql, [], (err, rows) => {
+    //➁ keywordがある場合だけ、商品名の部分一致検索を行うSQLに変更してください。
+    if (keyword) {
+        sql = '______';
+        params = [`%${keyword}%`];
+    }
+
+    //➂ sqlとparamsを使って、検索結果を取得してください。
+    db.xxx(sql, params, (err, rows) => {
         if (err) {
             console.error(err);
             res.status(500).json({ error: 'Database error' });
             return;
         }
 
-        res.json(rows);
-    });
-});
-
-// 3-3-2 商品名検索
-app.get('/api/v332/products/:name', (req, res) => {
-    const name = req.params.name;
-    const sql = 'SELECT * FROM products WHERE name LIKE ?';
-
-    db.all(sql, [`%${name}%`], (err, rows) => {
-        if (err) {
-            console.error(err);
-            res.status(500).json({ error: 'Database error' });
-            return;
-        }
-
-        res.json(rows);
+        res.xxx(rows);
     });
 });
 

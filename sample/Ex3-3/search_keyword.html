@@ -7,6 +7,7 @@
 </head>
 
 <body>
+ <!-- 3.3.2【作業手順➀】 HTML要素の準備 -->
     <input type = "text" id = "searchName" placeholder="商品名">
     <button id = "searchBtn">検索</button>
     <button id = "listBtn">一覧表示</button>
@@ -25,11 +26,12 @@
     </table>
     
 <script>
+//【作業手順➁】 キーワードをAPI側へ送信しながら呼び出し
 document.getElementById('searchBtn').addEventListener('click', function() {
     let name = document.getElementById('searchName').value;
-    axios.get(`http://localhost:8080/api/v332/products/${name}`
+    axios.get(`http://localhost:3005/api/v332/products?keyword=${name}`
 )
-//【作業手順➃】はこの下のコードからです
+//【作業手順➄】はこの下のコードからです
 .then(response => {
     showProductList(response.data);
 })
@@ -37,7 +39,7 @@ document.getElementById('searchBtn').addEventListener('click', function() {
 });
 
 document.getElementById('listBtn').addEventListener('click', function() {
-    axios.get('http://localhost:8080/api/v332/products')
+    axios.get('http://localhost:3005/api/v332/products')
 
 .then(response => {
     showProductList(response.data);
@@ -47,8 +49,9 @@ document.getElementById('listBtn').addEventListener('click', function() {
 
 //========この下は、既存のコードです。========
 document.addEventListener('DOMContentLoaded', function() {
-    axios.get('http://localhost:8080/api/v332/products')
+    axios.get('http://localhost:3005/api/v332/products')
 
+//【作業手順➅】はこの下のコードからです
 .then(response => {
     showProductList(response.data);
 })

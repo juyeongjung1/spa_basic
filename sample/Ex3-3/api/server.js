@@ -15,47 +15,45 @@ app.use(cors());
 // SQLiteデータベースへの接続
 const db = new sqlite3.Database('../db/products.db');
 
+
+
 // 動作確認用のAPI
 app.get('/api/test', (req, res) => {
     res.json({ status: 'ok', message: 'APIサーバー稼働中！' });
 });
 
-// 3-3-1 商品一覧
+
+
+
+// 【3.3.1 全件検索】商品一覧取得API（GET /api/products）
 app.get('/api/v331/products', (req, res) => {
     const sql = 'SELECT * FROM products';
 
+    // db.all は、複数行の結果を配列で取得するメソッド
     db.all(sql, [], (err, rows) => {
         if (err) {
             console.error(err);
+            // サーバー側でエラーが発生した場合は、500番エラーを返す
             res.status(500).json({ error: 'Database error' });
             return;
         }
-
+        // 正常に取得できた場合は、JSON配列として返す
         res.json(rows);
     });
 });
 
-// 3-3-2 商品一覧
+// 3-3-2 商品一覧・キーワード検索
 app.get('/api/v332/products', (req, res) => {
-    const sql = 'SELECT * FROM products';
+    const keyword = req.query.keyword;
+    let sql = 'SELECT * FROM products';
+    let params = [];
 
-    db.all(sql, [], (err, rows) => {
-        if (err) {
-            console.error(err);
-            res.status(500).json({ error: 'Database error' });
-            return;
-        }
+    if (keyword) {
+        sql = 'SELECT * FROM products WHERE name LIKE ?';
+        params = [`%${keyword}%`];
+    }
 
-        res.json(rows);
-    });
-});
-
-// 3-3-2 商品名検索
-app.get('/api/v332/products/:name', (req, res) => {
-    const name = req.params.name;
-    const sql = 'SELECT * FROM products WHERE name LIKE ?';
-
-    db.all(sql, [`%${name}%`], (err, rows) => {
+    db.all(sql, params, (err, rows) => {
         if (err) {
             console.error(err);
             res.status(500).json({ error: 'Database error' });
@@ -285,7 +283,7 @@ app.delete('/api/v335/products/:id', (req, res) => {
     });
 });
 
-// ポート番号 8080 でサーバーを起動
-app.listen(8080, () => {
-    console.log('localhost:8080 でAPIサーバーが起動しました');
+// ポート番号 3005 でサーバーを起動
+app.listen(3005, () => {
+    console.log('localhost:3005 でAPIサーバーが起動しました');
 });

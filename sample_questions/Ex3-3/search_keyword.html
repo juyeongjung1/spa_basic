@@ -30,11 +30,11 @@
 document.getElementById('xxxx').addEventListener('click', function() {
     //➂　テキストフォームの入力値を取得し、変数nameへ代入してください。
     
-    //➃　正しいURLに修正してください。
-    axios.get(`http://localhost:8080/api/v332/productsQ/${xxxxx}`
+    //➃　クエリパラメータkeywordを使う正しいURLに修正してください。
+    axios.get(`http://localhost:8080/api/v332/productsQ?keyword=${xxxxx}`
 )
 
-//➄ rest_sample_3/controller/chap3_3_2/ProductController2Q@searchProductByNameメソッドの問題を解いてから戻ってください。
+//➄ api/server.jsの3-3-2 商品一覧・キーワード検索APIの問題を解いてから戻ってください。
 
 .then(response => {
     showProductList(response.data);
