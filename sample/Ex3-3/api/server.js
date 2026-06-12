@@ -44,15 +44,24 @@ app.get('/api/v331/products', (req, res) => {
 
 // 3-3-2 商品一覧・キーワード検索
 app.get('/api/v332/products', (req, res) => {
+    // URLの「?keyword=値」から検索キーワードを取得します。
+    // 例: /api/v332/products?keyword=ノート
     const keyword = req.query.keyword;
+
+    // keywordがない場合は、商品を全件取得します。
     let sql = 'SELECT * FROM products';
     let params = [];
 
+    // keywordがある場合は、商品名にkeywordを含むデータだけを検索します。
     if (keyword) {
         sql = 'SELECT * FROM products WHERE name LIKE ?';
+        // LIKE検索では、%を前後につけることで部分一致検索になります。
+        // SQL文と値を分けることで、SQLインジェクション対策にもなります。
         params = [`%${keyword}%`];
     }
 
+    // sqlとparamsを使ってSQLiteに問い合わせます。
+    // db.allは、複数行の検索結果を配列として受け取るメソッドです。
     db.all(sql, params, (err, rows) => {
         if (err) {
             console.error(err);
@@ -60,6 +69,7 @@ app.get('/api/v332/products', (req, res) => {
             return;
         }
 
+        // 検索結果をJSON形式でブラウザ側へ返します。
         res.json(rows);
     });
 });
