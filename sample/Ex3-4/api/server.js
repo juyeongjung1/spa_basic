@@ -20,8 +20,8 @@ app.get('/api/test', (req, res) => {
     res.json({ status: 'ok', message: 'APIサーバー稼働中！' });
 });
 
-// 3-3-1 商品一覧
-app.get('/api/v331/products', (req, res) => {
+// 3-4-1 商品一覧
+app.get('/api/v341/products', (req, res) => {
     const sql = 'SELECT * FROM products';
 
     db.all(sql, [], (err, rows) => {
@@ -35,25 +35,28 @@ app.get('/api/v331/products', (req, res) => {
     });
 });
 
-// 3-3-2 商品一覧・キーワード検索
-app.get('/api/v332/products', (req, res) => {
-    const keyword = req.query.keyword;
-    let sql = 'SELECT * FROM products';
-    let params = [];
+// 3-4-1 商品登録
+app.post('/api/v341/products', (req, res) => {
+    const name = req.body.name;
+    const price = req.body.price;
+    const sql = 'INSERT INTO products (name, price, category) VALUES (?, ?, ?)';
 
-    if (keyword) {
-        sql = 'SELECT * FROM products WHERE name LIKE ?';
-        params = [`%${keyword}%`];
-    }
-
-    db.all(sql, params, (err, rows) => {
+    db.run(sql, [name, price, '未分類'], (err) => {
         if (err) {
             console.error(err);
             res.status(500).json({ error: 'Database error' });
             return;
         }
 
-        res.json(rows);
+        db.all('SELECT * FROM products', [], (err, rows) => {
+            if (err) {
+                console.error(err);
+                res.status(500).json({ error: 'Database error' });
+                return;
+            }
+
+            res.json(rows);
+        });
     });
 });
 

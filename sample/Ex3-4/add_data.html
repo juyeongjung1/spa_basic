@@ -1,15 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>初期画面</title>
+    <title>商品登録</title>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <meta charset="UTF-8">
 </head>
 
 <body>
     <h1>商品管理システム</h1>
-    <input type = "text" id = "searchName" placeholder="商品名">
-    <button id = "searchBtn">検索</button>
+
     <table>
         <thead>
             <tr>
@@ -25,16 +24,16 @@
     </table>
 
     <h2>データ登録</h2>
-    商品名：<input type = "text" id = "inputName"><br>
-    価　格：<input type = "number" id = "inputPrice"><br>
-    <button id = "registBtn">登録</button>
-    
+    商品名：<input type="text" id="inputName"><br>
+    価　格：<input type="number" id="inputPrice"><br>
+    <button id="registBtn">登録</button>
+
 <script>
 document.getElementById('registBtn').addEventListener('click', function() {
     let name = document.getElementById('inputName').value;
     let price = document.getElementById('inputPrice').value;
 
-    axios.post('http://localhost:3005/api/v333/products', {
+    axios.post('http://localhost:3005/api/v341/products', {
         name: name,
         price: price
     })
@@ -45,33 +44,17 @@ document.getElementById('registBtn').addEventListener('click', function() {
     .catch(error => console.error('商品登録に失敗しました:', error));
 });
 
-
-//========この下は、既存のコードです。========
-//==========＜商品名検索機能＞==========
-document.getElementById('searchBtn').addEventListener('click', function() {
-    let name = document.getElementById('searchName').value;
-    axios.get(`http://localhost:3005/api/v333/products/${name}`
-)
-.then(response => {
-    showProductList(response.data);
-})
-.catch(error => console.error('エラーが発生しました:', error));
-});
-
-//==========＜商品リスト表示機能＞==========
 document.addEventListener('DOMContentLoaded', function() {
-    axios.get('http://localhost:3005/api/v333/products')
-
-.then(response => {
-    showProductList(response.data);
-})
-.catch(error => console.error('エラーが発生しました:', error));
+    axios.get('http://localhost:3005/api/v341/products')
+    .then(response => {
+        showProductList(response.data);
+    })
+    .catch(error => console.error('エラーが発生しました:', error));
 });
 
-//商品リストを表示する関数
 function showProductList(products){
     let productList = document.getElementById('product_list');
-    productList.innerHTML = ''; //既存のテーブルデータを初期化
+    productList.innerHTML = '';
 
     products.forEach(product => {
         let productHtml = `
