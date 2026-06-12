@@ -22,7 +22,7 @@ app.get('/api/test', (req, res) => {
 });
 
 // ➅ HTTPのGETメソッドで「/api/v331/products」にアクセスされた時に実行する処理を定義してください。
-//    list.htmlのaxios.get('http://localhost:8080/api/v331/products')から呼び出されます。
+//    list.htmlのaxios.get('http://localhost:3005/api/v331/products')から呼び出されます。
 app.xxx('______', (req, res) => {
     // ➆ 全件検索をするため、WHERE句がないSQL文を設定してください。
     const sql = '______';
@@ -298,7 +298,7 @@ app.delete('/api/v335/products/:id', (req, res) => {
     });
 });
 
-// ポート番号 8080 でサーバーを起動
-app.listen(8080, () => {
-    console.log('localhost:8080 でAPIサーバーが起動しました');
+// ポート番号 3005 でサーバーを起動
+app.listen(3005, () => {
+    console.log('localhost:3005 でAPIサーバーが起動しました');
 });

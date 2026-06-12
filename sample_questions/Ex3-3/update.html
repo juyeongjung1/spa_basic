@@ -35,7 +35,7 @@ document.getElementById('registBtn').addEventListener('click', function() {
     let price = document.getElementById('inputPrice').value;
 
     //➀ 商品登録のため、axiosのPOST方式で正しいURLへ送信してください。
-    axios.xxx('http://localhost:8080/api/v333/productsQ', {
+    axios.xxx('http://localhost:3005/api/v333/productsQ', {
         name: xxx,
         price: xxx
     })
@@ -53,7 +53,7 @@ document.getElementById('registBtn').addEventListener('click', function() {
 document.getElementById('searchBtn').addEventListener('click', function() {
     let name = document.getElementById('searchName').value;
     //➁ 商品名検索のため、GET方式で正しいURLへ送信してください。
-    axios.xxx(`http://localhost:8080/api/v332/productsQ/${xxx}`)
+    axios.xxx(`http://localhost:3005/api/v332/productsQ/${xxx}`)
     .then(response => {
         showProductList(response.data);
     })
@@ -63,7 +63,7 @@ document.getElementById('searchBtn').addEventListener('click', function() {
 //==========＜商品リスト表示機能＞==========
 document.addEventListener('DOMContentLoaded', function() {
     //➂ 初期表示の一覧取得APIを呼び出してください。
-    axios.xxx('http://localhost:8080/api/v332/productsQ')
+    axios.xxx('http://localhost:3005/api/v332/productsQ')
     .then(response => {
         showProductList(response.data);
     })
@@ -108,7 +108,7 @@ function saveProduct(productId) {
     let newName = document.getElementById(`edit-name-${productId}`).value;
     let newPrice = document.getElementById(`edit-price-${productId}`).value;
     //➃ 商品更新のため、PUT方式で正しいURLへ送信してください。
-    axios.xxx(`http://localhost:8080/api/v335/productsQ/${xxx}`, {
+    axios.xxx(`http://localhost:3005/api/v335/productsQ/${xxx}`, {
         name: xxx,
         price: xxx
     }) 
@@ -120,7 +120,7 @@ function saveProduct(productId) {
 }
 
 function cancelEdit() {
-    axios.get('http://localhost:8080/api/v335/products')
+    axios.get('http://localhost:3005/api/v335/products')
     .then(response => {
         showProductList(response.data);
     })
@@ -132,7 +132,7 @@ function cancelEdit() {
 //削除機能のための関数
 function deleteProduct(id) {
     //➄ 商品削除のため、DELETE方式で正しいURLへ送信してください。
-    axios.xxx(`http://localhost:8080/api/v335/productsQ/${xxx}`)
+    axios.xxx(`http://localhost:3005/api/v335/productsQ/${xxx}`)
         .then(response => {
             alert('削除が完了しました');
             showProductList(response.data);

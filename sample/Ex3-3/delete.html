@@ -33,7 +33,7 @@
 
 //削除機能のための関数
 function deleteProduct(id) {
-    axios.delete(`http://localhost:8080/api/v334/products/${id}`)
+    axios.delete(`http://localhost:3005/api/v334/products/${id}`)
         .then(response => {
             alert('削除が完了しました');
             showProductList(response.data);
@@ -49,7 +49,7 @@ document.getElementById('registBtn').addEventListener('click', function() {
     let name = document.getElementById('inputName').value;
     let price = document.getElementById('inputPrice').value;
 
-    axios.post('http://localhost:8080/api/v334/products', {
+    axios.post('http://localhost:3005/api/v334/products', {
         name: name,
         price: price
     })
@@ -65,7 +65,7 @@ document.getElementById('registBtn').addEventListener('click', function() {
 
 document.getElementById('searchBtn').addEventListener('click', function() {
     let name = document.getElementById('searchName').value;
-    axios.get(`http://localhost:8080/api/v334/products/${name}`
+    axios.get(`http://localhost:3005/api/v334/products/${name}`
 )
 .then(response => {
     showProductList(response.data);
@@ -75,7 +75,7 @@ document.getElementById('searchBtn').addEventListener('click', function() {
 
 //==========＜商品リスト表示機能＞==========
 document.addEventListener('DOMContentLoaded', function() {
-    axios.get('http://localhost:8080/api/v334/products')
+    axios.get('http://localhost:3005/api/v334/products')
 
 .then(response => {
     showProductList(response.data);

@@ -33,7 +33,7 @@ document.getElementById('xxxx').addEventListener('click', function() {
     // ➁ テキストフォームの入力値を取得し、変数nameへ代入してください。
     
     // ➂ クエリパラメータkeywordを使う正しいURLに修正してください。
-    axios.get(`http://localhost:8080/api/v332/productsQ?keyword=${xxxxx}`
+    axios.get(`http://localhost:3005/api/v332/productsQ?keyword=${xxxxx}`
 )
 
 // 【作業手順④】api/server.jsの「3-3-2 商品一覧・キーワード検索API」の問題を解いてから戻ってください。
@@ -51,7 +51,7 @@ document.getElementById('xxxx').addEventListener('click', function() {
 document.getElementById('xxxx').addEventListener('click', function() {
     // ➄ 一覧取得APIの正しいURLに修正してください。
     //    キーワード検索と同じAPIですが、keywordパラメータは付けません。
-    axios.get('http://localhost:8080/api/v332/productsQ')
+    axios.get('http://localhost:3005/api/v332/productsQ')
 
 .then(response => {
     // ➆ 一覧表示でも、APIから戻ったデータをshowProductList関数に渡してください。
@@ -62,7 +62,7 @@ document.getElementById('xxxx').addEventListener('click', function() {
 
 //========この下は、既存のコードです。＝＝＝＝＝＝＝＝＝＝＝＝
 document.addEventListener('DOMContentLoaded', function() {
-    axios.get('http://localhost:8080/api/v332/products')
+    axios.get('http://localhost:3005/api/v332/products')
 
 .then(response => {
     showProductList(response.data);

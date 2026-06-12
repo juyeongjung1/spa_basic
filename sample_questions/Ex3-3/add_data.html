@@ -36,7 +36,7 @@ document.getElementById('registBtn').addEventListener('click', function() {
     let price = document.getElementById('inputPrice').value;
 
     //➂　登録処理のために、下記を修正してください。
-    axios.xxx('http://localhost:8080/api/v333/productsQ', {
+    axios.xxx('http://localhost:3005/api/v333/productsQ', {
         name: xxx,
         price: xxx
     })
@@ -57,7 +57,7 @@ document.getElementById('registBtn').addEventListener('click', function() {
 //==========＜商品名検索機能＞==========
 document.getElementById('searchBtn').addEventListener('click', function() {
     let name = document.getElementById('searchName').value;
-    axios.get(`http://localhost:8080/api/v332/products/${name}`
+    axios.get(`http://localhost:3005/api/v332/products/${name}`
 )
 .then(response => {
     showProductList(response.data);
@@ -67,7 +67,7 @@ document.getElementById('searchBtn').addEventListener('click', function() {
 
 //==========＜商品リスト表示機能＞==========
 document.addEventListener('DOMContentLoaded', function() {
-    axios.get('http://localhost:8080/api/v332/products')
+    axios.get('http://localhost:3005/api/v332/products')
 
 .then(response => {
     showProductList(response.data);
