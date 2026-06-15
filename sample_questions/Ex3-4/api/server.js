@@ -2,6 +2,7 @@
 const express = require('express');
 const cors = require('cors');
 const sqlite3 = require('sqlite3').verbose();
+const path = require('path');
 
 // Expressアプリの作成
 const app = express();
@@ -13,7 +14,7 @@ app.use(express.json());
 app.use(cors());
 
 // SQLiteデータベースへの接続
-const db = new sqlite3.Database('../db/products.db');
+const db = new sqlite3.Database(path.join(__dirname, '../db/products.db'));
 
 // 動作確認用のAPI
 app.get('/api/test', (req, res) => {
@@ -45,16 +46,17 @@ app.get('/api/v34/products', (req, res) => {
 // 【作業手順③】商品登録APIを作ります。
 // ➄ HTTPのPOSTメソッドで「/api/v34/products」にアクセスされた時に実行する処理を定義してください。
 app.xxx('______', (req, res) => {
-    // ➅ リクエストボディから商品名と価格を取得してください。
+    // ➅ リクエストボディから商品名・価格・カテゴリを取得してください。
     const name = req.body.xxx;
     const price = req.body.xxx;
+    const category = req.body.xxx;
 
     // ➆ productsテーブルへ商品名・価格・カテゴリを登録するSQL文を設定してください。
     const sql = '______';
 
     // ➇ db.runを使い、INSERT文を実行してください。
-    //    カテゴリは今回は固定で「未分類」を登録します。
-    db.xxx(sql, [name, price, '未分類'], (err) => {
+    //    第2引数には、SQL文の「?」に入れる値を配列で指定します。
+    db.xxx(sql, [name, price, category], (err) => {
         if (err) {
             console.error(err);
             res.status(500).json({ error: 'Database error' });

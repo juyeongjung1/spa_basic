@@ -2,6 +2,7 @@
 const express = require('express');
 const cors = require('cors');
 const sqlite3 = require('sqlite3').verbose();
+const path = require('path');
 
 // Expressアプリの作成
 const app = express();
@@ -13,7 +14,7 @@ app.use(express.json());
 app.use(cors());
 
 // SQLiteデータベースへの接続
-const db = new sqlite3.Database('../db/products.db');
+const db = new sqlite3.Database(path.join(__dirname, '../db/products.db'));
 
 // 動作確認用のAPI
 app.get('/api/test', (req, res) => {
@@ -46,9 +47,10 @@ app.get('/api/v34/products', (req, res) => {
 app.post('/api/v34/products', (req, res) => {
     const name = req.body.name;
     const price = req.body.price;
+    const category = req.body.category;
     const sql = 'INSERT INTO products (name, price, category) VALUES (?, ?, ?)';
 
-    db.run(sql, [name, price, '未分類'], (err) => {
+    db.run(sql, [name, price, category], (err) => {
         if (err) {
             console.error(err);
             res.status(500).json({ error: 'Database error' });

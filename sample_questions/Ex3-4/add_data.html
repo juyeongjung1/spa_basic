@@ -31,6 +31,14 @@
     <h2>データ登録</h2>
     商品名：<input type="text" id="inputName"><br>
     価　格：<input type="number" id="inputPrice"><br>
+    カテゴリ：
+    <select id="inputCategory">
+        <option value="電子機器">電子機器</option>
+        <option value="家具">家具</option>
+        <option value="文房具">文房具</option>
+        <option value="食品">食品</option>
+        <option value="未分類">未分類</option>
+    </select><br>
     <button id="registBtn">登録</button>
 
 <script>
@@ -65,14 +73,16 @@ document.getElementById('listBtn').addEventListener('click', function() {
 // 【作業手順②】登録ボタンがクリックされた時の処理を作ります。
 // ➀ 登録ボタンの正しいidを指定してください。
 document.getElementById('xxxx').addEventListener('click', function() {
-    // ➁ 商品名と価格の入力値を取得してください。
+    // ➁ 商品名・価格・カテゴリの入力値を取得してください。
     let name = document.getElementById('xxxxx').value;
     let price = document.getElementById('xxxxx').value;
+    let category = document.getElementById('xxxxx').value;
 
     // ➂ POST方式で登録APIへ送信してください。
     axios.xxx('http://localhost:3005/api/v34/products', {
         name: xxx,
-        price: xxx
+        price: xxx,
+        category: xxx
     })
 
     // 【作業手順④】api/server.jsの「3-4 商品登録API」の問題を解いてから戻ってください。

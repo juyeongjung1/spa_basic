@@ -30,16 +30,26 @@
     <h2>データ登録</h2>
     商品名：<input type="text" id="inputName"><br>
     価　格：<input type="number" id="inputPrice"><br>
+    カテゴリ：
+    <select id="inputCategory">
+        <option value="電子機器">電子機器</option>
+        <option value="家具">家具</option>
+        <option value="文房具">文房具</option>
+        <option value="食品">食品</option>
+        <option value="未分類">未分類</option>
+    </select><br>
     <button id="registBtn">登録</button>
 
 <script>
 document.getElementById('registBtn').addEventListener('click', function() {
     let name = document.getElementById('inputName').value;
     let price = document.getElementById('inputPrice').value;
+    let category = document.getElementById('inputCategory').value;
 
     axios.post('http://localhost:3005/api/v34/products', {
         name: name,
-        price: price
+        price: price,
+        category: category
     })
     .then(response => {
         alert('商品が登録されました');
