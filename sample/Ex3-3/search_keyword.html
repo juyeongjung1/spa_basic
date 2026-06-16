@@ -38,6 +38,7 @@ document.getElementById('searchBtn').addEventListener('click', function() {
 .catch(error => console.error('エラーが発生しました:', error));
 });
 
+//【作業手順➂】 一覧表示をするボタンのJavaScript
 document.getElementById('listBtn').addEventListener('click', function() {
     axios.get('http://localhost:3005/api/v332/products')
 

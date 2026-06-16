@@ -5,15 +5,12 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <meta charset="UTF-8">
 </head>
-
 <body>
     <h1>商品管理システム</h1>
-
     <!-- 検索条件を入力するフォームと、検索・一覧表示ボタンです。 -->
     <input type="text" id="searchName" placeholder="商品名">
     <button id="searchBtn">検索</button>
     <button id="listBtn">一覧表示</button>
-
     <!-- APIから取得した商品データを表示するテーブルです。 -->
     <table>
         <thead>
@@ -30,13 +27,12 @@
         </tbody>
     </table>
 
-    <!-- 商品登録用の入力フォームです。 -->
+    <!-- 【作業手順➀】商品登録用の入力フォームです。 -->
     <h2>データ登録</h2>
     <p id="errorMessage"></p>
     商品名：<input type="text" id="inputName"><br>
     価　格：<input type="number" id="inputPrice"><br>
     カテゴリ：
-    <!-- selectタグを使うと、決められた選択肢の中からカテゴリを選べます。 -->
     <select id="inputCategory">
         <option value="電子機器">電子機器</option>
         <option value="家具">家具</option>

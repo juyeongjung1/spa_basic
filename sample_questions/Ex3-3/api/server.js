@@ -44,6 +44,11 @@ app.xxx('______', (req, res) => {
     });
 });
 
+// ここから下は、別画面で利用するAPIです。
+// 今回のlist.htmlの流れでは、まず➀〜⑰を優先して確認してください。
+
+//【ここから、3.3.2の内容】
+
 // 【作業手順④】キーワード検索と一覧表示を同じAPIで処理します。
 // ➇ HTTPのGETメソッドで「/api/v332/products」にアクセスされた時に実行する処理を定義してください。
 app.xxx('______', (req, res) => {
@@ -73,6 +78,225 @@ app.xxx('______', (req, res) => {
 
         // ⑬ rowsをJSON形式で呼び出し元(search_keyword.html)へ返してください。
         res.xxx(rows);
+    });
+});
+
+// 3-3-3 商品一覧
+app.get('/api/v333/products', (req, res) => {
+    const sql = 'SELECT * FROM products';
+
+    db.all(sql, [], (err, rows) => {
+        if (err) {
+            console.error(err);
+            res.status(500).json({ error: 'Database error' });
+            return;
+        }
+
+        res.json(rows);
+    });
+});
+
+// 3-3-3 商品名検索
+app.get('/api/v333/products/:name', (req, res) => {
+    const name = req.params.name;
+    const sql = 'SELECT * FROM products WHERE name LIKE ?';
+
+    db.all(sql, [`%${name}%`], (err, rows) => {
+        if (err) {
+            console.error(err);
+            res.status(500).json({ error: 'Database error' });
+            return;
+        }
+
+        res.json(rows);
+    });
+});
+
+// 3-3-3 商品登録
+app.post('/api/v333/products', (req, res) => {
+    const name = req.body.name;
+    const price = req.body.price;
+
+    if (!name || !price) {
+        res.status(400).json({ error: 'データに誤りがあります' });
+        return;
+    }
+
+    const sql = 'INSERT INTO products (name, price, category) VALUES (?, ?, ?)';
+
+    db.run(sql, [name, price, '未分類'], (err) => {
+        if (err) {
+            console.error(err);
+            res.status(500).json({ error: 'Database error' });
+            return;
+        }
+
+        db.all('SELECT * FROM products', [], (err, rows) => {
+            if (err) {
+                console.error(err);
+                res.status(500).json({ error: 'Database error' });
+                return;
+            }
+
+            res.json(rows);
+        });
+    });
+});
+
+// 3-3-4 商品一覧
+app.get('/api/v334/products', (req, res) => {
+    const sql = 'SELECT * FROM products';
+
+    db.all(sql, [], (err, rows) => {
+        if (err) {
+            console.error(err);
+            res.status(500).json({ error: 'Database error' });
+            return;
+        }
+
+        res.json(rows);
+    });
+});
+
+// 3-3-4 商品名検索
+app.get('/api/v334/products/:name', (req, res) => {
+    const name = req.params.name;
+    const sql = 'SELECT * FROM products WHERE name LIKE ?';
+
+    db.all(sql, [`%${name}%`], (err, rows) => {
+        if (err) {
+            console.error(err);
+            res.status(500).json({ error: 'Database error' });
+            return;
+        }
+
+        res.json(rows);
+    });
+});
+
+// 3-3-4 商品登録
+app.post('/api/v334/products', (req, res) => {
+    const name = req.body.name;
+    const price = req.body.price;
+
+    if (!name || !price) {
+        res.status(400).json({ error: 'データに誤りがあります' });
+        return;
+    }
+
+    const sql = 'INSERT INTO products (name, price, category) VALUES (?, ?, ?)';
+
+    db.run(sql, [name, price, '未分類'], (err) => {
+        if (err) {
+            console.error(err);
+            res.status(500).json({ error: 'Database error' });
+            return;
+        }
+
+        db.all('SELECT * FROM products', [], (err, rows) => {
+            if (err) {
+                console.error(err);
+                res.status(500).json({ error: 'Database error' });
+                return;
+            }
+
+            res.json(rows);
+        });
+    });
+});
+
+// 3-3-4 商品削除
+app.delete('/api/v334/products/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = 'DELETE FROM products WHERE id = ?';
+
+    db.run(sql, [id], (err) => {
+        if (err) {
+            console.error(err);
+            res.status(500).json({ error: 'Database error' });
+            return;
+        }
+
+        db.all('SELECT * FROM products', [], (err, rows) => {
+            if (err) {
+                console.error(err);
+                res.status(500).json({ error: 'Database error' });
+                return;
+            }
+
+            res.json(rows);
+        });
+    });
+});
+
+// 3-3-5 商品一覧
+app.get('/api/v335/products', (req, res) => {
+    const sql = 'SELECT * FROM products';
+
+    db.all(sql, [], (err, rows) => {
+        if (err) {
+            console.error(err);
+            res.status(500).json({ error: 'Database error' });
+            return;
+        }
+
+        res.json(rows);
+    });
+});
+
+// 3-3-5 商品更新
+app.put('/api/v335/products/:id', (req, res) => {
+    const id = req.params.id;
+    const name = req.body.name;
+    const price = req.body.price;
+
+    if (!name || !price) {
+        res.status(400).json({ error: 'データに誤りがあります' });
+        return;
+    }
+
+    const sql = 'UPDATE products SET name = ?, price = ? WHERE id = ?';
+
+    db.run(sql, [name, price, id], (err) => {
+        if (err) {
+            console.error(err);
+            res.status(500).json({ error: 'Database error' });
+            return;
+        }
+
+        db.all('SELECT * FROM products', [], (err, rows) => {
+            if (err) {
+                console.error(err);
+                res.status(500).json({ error: 'Database error' });
+                return;
+            }
+
+            res.json(rows);
+        });
+    });
+});
+
+// 3-3-5 商品削除
+app.delete('/api/v335/products/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = 'DELETE FROM products WHERE id = ?';
+
+    db.run(sql, [id], (err) => {
+        if (err) {
+            console.error(err);
+            res.status(500).json({ error: 'Database error' });
+            return;
+        }
+
+        db.all('SELECT * FROM products', [], (err, rows) => {
+            if (err) {
+                console.error(err);
+                res.status(500).json({ error: 'Database error' });
+                return;
+            }
+
+            res.json(rows);
+        });
     });
 });
 

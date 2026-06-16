@@ -27,7 +27,7 @@
         </tbody>
     </table>
 
-    <!-- 【作業手順①】HTML要素の準備 -->
+    <!-- 【作業手順➀】HTML要素の準備 -->
     <!-- 入力フォーム、セレクトメニュー、登録ボタン、errorMessageのid属性を確認してください。 -->
     <h2>データ登録</h2>
     <p id="errorMessage"></p>
@@ -44,32 +44,6 @@
     <button id="registBtn">登録</button>
 
 <script>
-//========ここから下は、v332までに学習した完成コードです。========
-document.addEventListener('DOMContentLoaded', function() {
-    axios.get('http://localhost:3005/api/v34/products')
-    .then(response => {
-        showProductList(response.data);
-    })
-    .catch(error => console.error('エラーが発生しました:', error));
-});
-
-document.getElementById('searchBtn').addEventListener('click', function() {
-    let name = document.getElementById('searchName').value;
-
-    axios.get(`http://localhost:3005/api/v34/products?keyword=${name}`)
-    .then(response => {
-        showProductList(response.data);
-    })
-    .catch(error => console.error('エラーが発生しました:', error));
-});
-
-document.getElementById('listBtn').addEventListener('click', function() {
-    axios.get('http://localhost:3005/api/v34/products')
-    .then(response => {
-        showProductList(response.data);
-    })
-    .catch(error => console.error('エラーが発生しました:', error));
-});
 
 //========ここから下が、今回の新しい穴埋め問題です。========
 // 【作業手順②】JavaScriptからAPIへデータ送信
@@ -115,6 +89,33 @@ document.getElementById('xxxx').addEventListener('click', function() {
 
         console.error('商品登録に失敗しました:', error);
     });
+});
+
+//========ここから下は、v332までに学習した完成コードです。========
+document.addEventListener('DOMContentLoaded', function() {
+    axios.get('http://localhost:3005/api/v34/products')
+    .then(response => {
+        showProductList(response.data);
+    })
+    .catch(error => console.error('エラーが発生しました:', error));
+});
+
+document.getElementById('searchBtn').addEventListener('click', function() {
+    let name = document.getElementById('searchName').value;
+
+    axios.get(`http://localhost:3005/api/v34/products?keyword=${name}`)
+    .then(response => {
+        showProductList(response.data);
+    })
+    .catch(error => console.error('エラーが発生しました:', error));
+});
+
+document.getElementById('listBtn').addEventListener('click', function() {
+    axios.get('http://localhost:3005/api/v34/products')
+    .then(response => {
+        showProductList(response.data);
+    })
+    .catch(error => console.error('エラーが発生しました:', error));
 });
 
 function showProductList(products){
