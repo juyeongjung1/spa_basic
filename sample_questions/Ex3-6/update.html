@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>商品更新</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <meta charset="UTF-8">
+</head>
+
+<body>
+    <h1>商品管理システム</h1>
+
+    <input type="text" id="searchName" placeholder="商品名">
+    <button id="searchBtn">検索</button>
+    <button id="listBtn">一覧表示</button>
+
+    <table>
+        <thead>
+            <tr>
+                <th>商品番号</th>
+                <th>商品名</th>
+                <th>価格</th>
+                <th>カテゴリ</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody id="product_list">
+            <!--ここにデータが挿入されます-->
+        </tbody>
+    </table>
+
+    <h2>データ登録</h2>
+    <p id="errorMessage"></p>
+    商品名：<input type="text" id="inputName"><br>
+    価　格：<input type="number" id="inputPrice"><br>
+    カテゴリ：
+    <select id="inputCategory">
+        <option value="電子機器">電子機器</option>
+        <option value="家具">家具</option>
+        <option value="文房具">文房具</option>
+        <option value="食品">食品</option>
+        <option value="未分類">未分類</option>
+    </select><br>
+    <button id="registBtn">登録</button>
+
+    <!-- 【作業手順①】更新フォームのHTML要素を確認します。 -->
+    <h2>データ更新</h2>
+    <p id="updateMessage"></p>
+    <input type="hidden" id="updateId">
+    商品名：<input type="text" id="updateName"><br>
+    価　格：<input type="number" id="updatePrice"><br>
+    カテゴリ：
+    <select id="updateCategory">
+        <option value="電子機器">電子機器</option>
+        <option value="家具">家具</option>
+        <option value="文房具">文房具</option>
+        <option value="食品">食品</option>
+        <option value="未分類">未分類</option>
+    </select><br>
+    <button id="updateBtn">更新</button>
+
+<script>
+let productData = [];
+
+//========ここから下は、3-5までに学習した完成コードです。========
+document.getElementById('registBtn').addEventListener('click', function() {
+    let name = document.getElementById('inputName').value;
+    let price = document.getElementById('inputPrice').value;
+    let category = document.getElementById('inputCategory').value;
+    let errorMessage = document.getElementById('errorMessage');
+
+    errorMessage.innerHTML = '';
+
+    if (!name || !price || !category) {
+        errorMessage.innerHTML = 'データを入力してください。';
+        return;
+    }
+
+    axios.post('http://localhost:3005/api/v36/products', {
+        name: name,
+        price: price,
+        category: category
+    })
+    .then(response => {
+        alert('商品が登録されました');
+        errorMessage.innerHTML = '';
+        showProductList(response.data);
+    })
+    .catch(error => {
+        if (error.response && error.response.status === 400) {
+            errorMessage.innerHTML = 'データを入力してください。';
+            return;
+        }
+
+        console.error('商品登録に失敗しました:', error);
+    });
+});
+
+function deleteProduct(id) {
+    axios.delete(`http://localhost:3005/api/v36/products/${id}`)
+    .then(response => {
+        alert('削除が完了しました');
+        showProductList(response.data);
+    })
+    .catch(error => console.error('削除エラーが発生しました:', error));
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    axios.get('http://localhost:3005/api/v36/products')
+    .then(response => {
+        showProductList(response.data);
+    })
+    .catch(error => console.error('エラーが発生しました:', error));
+});
+
+document.getElementById('searchBtn').addEventListener('click', function() {
+    let name = document.getElementById('searchName').value;
+
+    axios.get(`http://localhost:3005/api/v36/products?keyword=${name}`)
+    .then(response => {
+        showProductList(response.data);
+    })
+    .catch(error => console.error('エラーが発生しました:', error));
+});
+
+document.getElementById('listBtn').addEventListener('click', function() {
+    axios.get('http://localhost:3005/api/v36/products')
+    .then(response => {
+        showProductList(response.data);
+    })
+    .catch(error => console.error('エラーが発生しました:', error));
+});
+
+//========ここから下が、今回の新しい穴埋め問題です。========
+// 【作業手順②】更新ボタンから、選択した商品のデータを更新フォームに入れます。
+function setUpdateForm(id) {
+    // ➀ productData配列から、クリックされたidと一致する商品を探してください。
+    let product = productData.find(product => product.id === xxxx);
+
+    // ➁ 取得した商品データを、更新フォームへ設定してください。
+    document.getElementById('updateId').value = product.xxx;
+    document.getElementById('updateName').value = product.xxx;
+    document.getElementById('updatePrice').value = product.xxx;
+    document.getElementById('updateCategory').value = product.xxx;
+    document.getElementById('updateMessage').innerHTML = '';
+}
+
+// 【作業手順③】更新フォームの値をAPIへ送信します。
+document.getElementById('xxxx').addEventListener('click', function() {
+    // ➂ 更新フォームから、商品番号・商品名・価格・カテゴリを取得してください。
+    let id = document.getElementById('xxxxx').value;
+    let name = document.getElementById('xxxxx').value;
+    let price = document.getElementById('xxxxx').value;
+    let category = document.getElementById('xxxxx').value;
+    let updateMessage = document.getElementById('updateMessage');
+
+    updateMessage.innerHTML = '';
+
+    // ➃ 未入力の項目がある場合は、「更新するデータを入力してください。」と表示して処理を止めてください。
+    if (!id || !name || !price || !category) {
+        updateMessage.innerHTML = '更新するデータを入力してください。';
+        return;
+    }
+
+    // ➄ PUT方式で、更新APIへ商品番号idと更新データを送信してください。
+    axios.xxx(`http://localhost:3005/api/v36/products/${xx}`, {
+        name: xxx,
+        price: xxx,
+        category: xxx
+    })
+    .then(response => {
+        alert('商品が更新されました');
+        updateMessage.innerHTML = '';
+        // ➅ 更新後に返ってきた最新の商品一覧データを画面に表示してください。
+        xxxxx(response.data);
+    })
+    .catch(error => {
+        if (error.response && error.response.status === 400) {
+            updateMessage.innerHTML = '更新するデータを入力してください。';
+            return;
+        }
+
+        console.error('更新エラーが発生しました:', error);
+    });
+});
+
+function showProductList(products){
+    // ➆ 更新ボタンで使えるように、APIから受け取った商品一覧をproductDataへ保存してください。
+    productData = xxxxx;
+
+    let productList = document.getElementById('product_list');
+    productList.innerHTML = '';
+
+    products.forEach(product => {
+        let productHtml = `
+        <tr>
+            <td>${product.id}</td><td>${product.name}</td><td>${product.price}</td><td>${product.category}</td>
+            <td>
+                <!-- ➇ 更新ボタンをクリックした時に、setUpdateForm関数へ商品番号を渡してください。 -->
+                <button onclick="xxxxxxxx">更新</button>
+                <button onclick="deleteProduct(${product.id})">削除</button>
+            </td>
+        </tr>`;
+        productList.insertAdjacentHTML('beforeend', productHtml);
+    });
+}
+</script>
+</body>
+</html>
