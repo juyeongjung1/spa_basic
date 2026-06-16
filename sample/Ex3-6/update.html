@@ -30,7 +30,7 @@
     <!-- 更新ボタンを押した商品データを、このフォームに表示してから編集します。 -->
      <h2>データ更新</h2>
     <p id="updateMessage"></p>
-    <!-- 更新対象の商品番号は画面に表示せず、hiddenで保持します。 -->
+    <!-- type="hidden"は、画面には表示されない入力欄です。更新対象の商品番号だけを内部的に保持します。 -->
     <input type="hidden" id="updateId">
     商品名：<input type="text" id="updateName"><br>
     価　格：<input type="number" id="updatePrice"><br>
@@ -59,14 +59,18 @@
     <button id="registBtn">登録</button>
 
 <script>
-// APIから取得した商品一覧を保存し、更新ボタンを押した時に商品を探せるようにします。
+// APIから取得した商品一覧を保存するための変数です。
+// 更新ボタンを押した時、この配列の中から選択された商品データを探します。
 let productData = [];
 
 function setUpdateForm(id) {
-    // 一覧の更新ボタンから受け取ったidと一致する商品を、productDataから探します。
+    // findメソッドは、配列の中から条件に合うデータを1件だけ探すメソッドです。
+    // ここでは「product.id と、クリックされた商品の id が同じ商品」を探しています。
+    // 条件に一致した商品が見つかると、その1件の商品データがproductに代入されます。
     let product = productData.find(product => product.id === id);
 
     // 見つけた商品の情報を、更新フォームの各入力欄にセットします。
+    // これにより、更新ボタンを押した商品の現在の情報がフォームに表示されます。
     document.getElementById('updateId').value = product.id;
     document.getElementById('updateName').value = product.name;
     document.getElementById('updatePrice').value = product.price;
@@ -76,6 +80,7 @@ function setUpdateForm(id) {
 
 document.getElementById('updateBtn').addEventListener('click', function() {
     // 更新フォームに入っている値を取得します。
+    // updateIdには、画面には表示されていない更新対象の商品番号が入っています。
     let id = document.getElementById('updateId').value;
     let name = document.getElementById('updateName').value;
     let price = document.getElementById('updatePrice').value;
@@ -89,7 +94,9 @@ document.getElementById('updateBtn').addEventListener('click', function() {
         return;
     }
 
-    // PUT方式で、更新対象の商品番号と更新後のデータをAPIへ送信します。
+    // PUT方式は、既存データを更新する時によく使われるHTTPメソッドです。
+    // URLの最後に商品番号idを付けることで、どの商品を更新するかをAPIへ伝えています。
+    // 第2引数には、更新後の商品名・価格・カテゴリをオブジェクト形式で渡します。
     axios.put(`http://localhost:3005/api/v36/products/${id}`, {
         name: name,
         price: price,
@@ -180,7 +187,8 @@ document.getElementById('registBtn').addEventListener('click', function() {
 });
 
 function showProductList(products){
-    // 表示中の商品一覧を保存しておくことで、更新ボタンから商品データを取り出せます。
+    // 表示中の商品一覧をproductDataへ保存しておきます。
+    // テーブルに表示するだけでなく、更新フォームへデータを入れる時にも使います。
     productData = products;
 
     let productList = document.getElementById('product_list');
@@ -192,6 +200,7 @@ function showProductList(products){
             <td>${product.id}</td><td>${product.name}</td><td>${product.price}</td><td>${product.category}</td>
             <td>
                 <!-- 商品番号をsetUpdateForm関数へ渡し、更新フォームに商品データを入れます。 -->
+                <!-- ${product.id}により、クリックした行の商品番号だけを関数へ渡せます。 -->
                 <button onclick="setUpdateForm(${product.id})">更新</button>
                 <button onclick="deleteProduct(${product.id})">削除</button>
             </td>
