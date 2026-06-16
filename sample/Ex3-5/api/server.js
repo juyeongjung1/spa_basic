@@ -20,6 +20,30 @@ app.get('/api/test', (req, res) => {
     res.json({ status: 'ok', message: 'APIサーバー稼働中！' });
 });
 
+// 【作業手順③】　データを削除するREST APIの作成
+app.delete('/api/v35/products/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = 'DELETE FROM products WHERE id = ?';
+
+    db.run(sql, [id], (err) => {
+        if (err) {
+            console.error(err);
+            res.status(500).json({ error: 'Database error' });
+            return;
+        }
+
+        db.all('SELECT * FROM products', [], (err, rows) => {
+            if (err) {
+                console.error(err);
+                res.status(500).json({ error: 'Database error' });
+                return;
+            }
+
+            res.json(rows);
+        });
+    });
+});
+
 // 3-5 商品登録
 app.post('/api/v35/products', (req, res) => {
     const name = req.body.name;
@@ -53,29 +77,7 @@ app.post('/api/v35/products', (req, res) => {
     });
 });
 
-// 3-5 商品削除
-app.delete('/api/v35/products/:id', (req, res) => {
-    const id = req.params.id;
-    const sql = 'DELETE FROM products WHERE id = ?';
 
-    db.run(sql, [id], (err) => {
-        if (err) {
-            console.error(err);
-            res.status(500).json({ error: 'Database error' });
-            return;
-        }
-
-        db.all('SELECT * FROM products', [], (err, rows) => {
-            if (err) {
-                console.error(err);
-                res.status(500).json({ error: 'Database error' });
-                return;
-            }
-
-            res.json(rows);
-        });
-    });
-});
 
 // 3-5 商品一覧・キーワード検索
 app.get('/api/v35/products', (req, res) => {

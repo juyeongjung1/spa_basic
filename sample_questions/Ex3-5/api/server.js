@@ -20,6 +20,37 @@ app.get('/api/test', (req, res) => {
     res.json({ status: 'ok', message: 'APIサーバー稼働中！' });
 });
 
+// 【作業手順③】データを削除するREST APIの作成
+// ➃ HTTPのDELETEメソッドで「/api/v35/products/:id」にアクセスされた時に実行する処理を定義してください。
+app.xxxxxx('______', (req, res) => {
+    // ➄ URLパラメータから削除対象の商品番号idを取得してください。
+    const id = req.params.xxx;
+
+    // ➅ productsテーブルから、指定されたidの商品を削除するSQL文を設定してください。
+    const sql = '______';
+
+    // ➆ db.runを使い、DELETE文を実行してください。
+    db.xxx(sql, [id], (err) => {
+        if (err) {
+            console.error(err);
+            res.status(500).json({ error: 'Database error' });
+            return;
+        }
+
+        // ➇ 削除後の一覧を取得し直してください。
+        db.xxx('SELECT * FROM products', [], (err, rows) => {
+            if (err) {
+                console.error(err);
+                res.status(500).json({ error: 'Database error' });
+                return;
+            }
+
+            // ➈ 削除後の商品一覧をJSON形式で返してください。
+            res.xxx(rows);
+        });
+    });
+});
+
 // 3-4までに学習した商品登録API
 app.post('/api/v35/products', (req, res) => {
     const name = req.body.name;
@@ -49,37 +80,6 @@ app.post('/api/v35/products', (req, res) => {
             }
 
             res.json(rows);
-        });
-    });
-});
-
-// 【作業手順②】商品削除APIを作ります。
-// ➃ HTTPのDELETEメソッドで「/api/v35/products/:id」にアクセスされた時に実行する処理を定義してください。
-app.xxxxxx('______', (req, res) => {
-    // ➄ URLパラメータから削除対象の商品番号idを取得してください。
-    const id = req.params.xxx;
-
-    // ➅ productsテーブルから、指定されたidの商品を削除するSQL文を設定してください。
-    const sql = '______';
-
-    // ➆ db.runを使い、DELETE文を実行してください。
-    db.xxx(sql, [id], (err) => {
-        if (err) {
-            console.error(err);
-            res.status(500).json({ error: 'Database error' });
-            return;
-        }
-
-        // ➇ 削除後の一覧を取得し直してください。
-        db.xxx('SELECT * FROM products', [], (err, rows) => {
-            if (err) {
-                console.error(err);
-                res.status(500).json({ error: 'Database error' });
-                return;
-            }
-
-            // ➈ 削除後の商品一覧をJSON形式で返してください。
-            res.xxx(rows);
         });
     });
 });
