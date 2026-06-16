@@ -2,7 +2,6 @@
 const express = require('express');
 const cors = require('cors');
 const sqlite3 = require('sqlite3').verbose();
-const path = require('path');
 
 // Expressアプリの作成
 const app = express();
@@ -14,7 +13,7 @@ app.use(express.json());
 app.use(cors());
 
 // SQLiteデータベースへの接続
-const db = new sqlite3.Database(path.join(__dirname, '../db/products.db'));
+const db = new sqlite3.Database('../db/products.db');
 
 // 動作確認用のAPI
 app.get('/api/test', (req, res) => {
