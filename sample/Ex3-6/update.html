@@ -27,6 +27,23 @@
         </tbody>
     </table>
 
+    <!-- 更新ボタンを押した商品データを、このフォームに表示してから編集します。 -->
+     <h2>データ更新</h2>
+    <p id="updateMessage"></p>
+    <!-- 更新対象の商品番号は画面に表示せず、hiddenで保持します。 -->
+    <input type="hidden" id="updateId">
+    商品名：<input type="text" id="updateName"><br>
+    価　格：<input type="number" id="updatePrice"><br>
+    カテゴリ：
+    <select id="updateCategory">
+        <option value="電子機器">電子機器</option>
+        <option value="家具">家具</option>
+        <option value="文房具">文房具</option>
+        <option value="食品">食品</option>
+        <option value="未分類">未分類</option>
+    </select><br>
+    <button id="updateBtn">更新</button>
+
     <h2>データ登録</h2>
     <p id="errorMessage"></p>
     商品名：<input type="text" id="inputName"><br>
@@ -41,60 +58,15 @@
     </select><br>
     <button id="registBtn">登録</button>
 
-    <h2>データ更新</h2>
-    <p id="updateMessage"></p>
-    <input type="hidden" id="updateId">
-    商品名：<input type="text" id="updateName"><br>
-    価　格：<input type="number" id="updatePrice"><br>
-    カテゴリ：
-    <select id="updateCategory">
-        <option value="電子機器">電子機器</option>
-        <option value="家具">家具</option>
-        <option value="文房具">文房具</option>
-        <option value="食品">食品</option>
-        <option value="未分類">未分類</option>
-    </select><br>
-    <button id="updateBtn">更新</button>
-
 <script>
+// APIから取得した商品一覧を保存し、更新ボタンを押した時に商品を探せるようにします。
 let productData = [];
 
-document.getElementById('registBtn').addEventListener('click', function() {
-    let name = document.getElementById('inputName').value;
-    let price = document.getElementById('inputPrice').value;
-    let category = document.getElementById('inputCategory').value;
-    let errorMessage = document.getElementById('errorMessage');
-
-    errorMessage.innerHTML = '';
-
-    if (!name || !price || !category) {
-        errorMessage.innerHTML = 'データを入力してください。';
-        return;
-    }
-
-    axios.post('http://localhost:3005/api/v36/products', {
-        name: name,
-        price: price,
-        category: category
-    })
-    .then(response => {
-        alert('商品が登録されました');
-        errorMessage.innerHTML = '';
-        showProductList(response.data);
-    })
-    .catch(error => {
-        if (error.response && error.response.status === 400) {
-            errorMessage.innerHTML = 'データを入力してください。';
-            return;
-        }
-
-        console.error('商品登録に失敗しました:', error);
-    });
-});
-
 function setUpdateForm(id) {
+    // 一覧の更新ボタンから受け取ったidと一致する商品を、productDataから探します。
     let product = productData.find(product => product.id === id);
 
+    // 見つけた商品の情報を、更新フォームの各入力欄にセットします。
     document.getElementById('updateId').value = product.id;
     document.getElementById('updateName').value = product.name;
     document.getElementById('updatePrice').value = product.price;
@@ -103,6 +75,7 @@ function setUpdateForm(id) {
 }
 
 document.getElementById('updateBtn').addEventListener('click', function() {
+    // 更新フォームに入っている値を取得します。
     let id = document.getElementById('updateId').value;
     let name = document.getElementById('updateName').value;
     let price = document.getElementById('updatePrice').value;
@@ -116,6 +89,7 @@ document.getElementById('updateBtn').addEventListener('click', function() {
         return;
     }
 
+    // PUT方式で、更新対象の商品番号と更新後のデータをAPIへ送信します。
     axios.put(`http://localhost:3005/api/v36/products/${id}`, {
         name: name,
         price: price,
@@ -124,6 +98,7 @@ document.getElementById('updateBtn').addEventListener('click', function() {
     .then(response => {
         alert('商品が更新されました');
         updateMessage.innerHTML = '';
+        // APIから返ってきた最新の商品一覧で、テーブルを表示し直します。
         showProductList(response.data);
     })
     .catch(error => {
@@ -171,7 +146,41 @@ document.getElementById('listBtn').addEventListener('click', function() {
     .catch(error => console.error('エラーが発生しました:', error));
 });
 
+document.getElementById('registBtn').addEventListener('click', function() {
+    let name = document.getElementById('inputName').value;
+    let price = document.getElementById('inputPrice').value;
+    let category = document.getElementById('inputCategory').value;
+    let errorMessage = document.getElementById('errorMessage');
+
+    errorMessage.innerHTML = '';
+
+    if (!name || !price || !category) {
+        errorMessage.innerHTML = 'データを入力してください。';
+        return;
+    }
+
+    axios.post('http://localhost:3005/api/v36/products', {
+        name: name,
+        price: price,
+        category: category
+    })
+    .then(response => {
+        alert('商品が登録されました');
+        errorMessage.innerHTML = '';
+        showProductList(response.data);
+    })
+    .catch(error => {
+        if (error.response && error.response.status === 400) {
+            errorMessage.innerHTML = 'データを入力してください。';
+            return;
+        }
+
+        console.error('商品登録に失敗しました:', error);
+    });
+});
+
 function showProductList(products){
+    // 表示中の商品一覧を保存しておくことで、更新ボタンから商品データを取り出せます。
     productData = products;
 
     let productList = document.getElementById('product_list');
@@ -182,6 +191,7 @@ function showProductList(products){
         <tr>
             <td>${product.id}</td><td>${product.name}</td><td>${product.price}</td><td>${product.category}</td>
             <td>
+                <!-- 商品番号をsetUpdateForm関数へ渡し、更新フォームに商品データを入れます。 -->
                 <button onclick="setUpdateForm(${product.id})">更新</button>
                 <button onclick="deleteProduct(${product.id})">削除</button>
             </td>
