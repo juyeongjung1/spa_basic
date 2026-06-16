@@ -29,6 +29,7 @@
 
     <!-- 【作業手順①】登録フォームのHTML要素を確認します。 -->
     <h2>データ登録</h2>
+    <p id="errorMessage"></p>
     商品名：<input type="text" id="inputName"><br>
     価　格：<input type="number" id="inputPrice"><br>
     カテゴリ：
@@ -77,8 +78,17 @@ document.getElementById('xxxx').addEventListener('click', function() {
     let name = document.getElementById('xxxxx').value;
     let price = document.getElementById('xxxxx').value;
     let category = document.getElementById('xxxxx').value;
+    let errorMessage = document.getElementById('errorMessage');
 
-    // ➂ POST方式で登録APIへ送信してください。
+    errorMessage.innerHTML = '';
+
+    // ➂ 未入力の項目がある場合は、「データを入力してください。」と表示して処理を止めてください。
+    if (!name || !price || !category) {
+        errorMessage.innerHTML = 'データを入力してください。';
+        return;
+    }
+
+    // ➃ POST方式で登録APIへ送信してください。
     axios.xxx('http://localhost:3005/api/v34/products', {
         name: xxx,
         price: xxx,
@@ -88,10 +98,19 @@ document.getElementById('xxxx').addEventListener('click', function() {
     // 【作業手順④】api/server.jsの「3-4 商品登録API」の問題を解いてから戻ってください。
     .then(response => {
         alert('商品が登録されました');
-        // ➃ 登録後に返ってきた一覧データを画面に表示してください。
+        errorMessage.innerHTML = '';
+        // ➄ 登録後に返ってきた一覧データを画面に表示してください。
         xxxxx(response.data);
     })
-    .catch(error => console.error('商品登録に失敗しました:', error));
+    .catch(error => {
+        // ➅ API側で400エラーになった時も、同じメッセージを表示してください。
+        if (error.response && error.response.status === 400) {
+            errorMessage.innerHTML = 'データを入力してください。';
+            return;
+        }
+
+        console.error('商品登録に失敗しました:', error);
+    });
 });
 
 function showProductList(products){
