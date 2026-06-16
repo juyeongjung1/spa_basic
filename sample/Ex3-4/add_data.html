@@ -9,10 +9,12 @@
 <body>
     <h1>商品管理システム</h1>
 
+    <!-- 検索条件を入力するフォームと、検索・一覧表示ボタンです。 -->
     <input type="text" id="searchName" placeholder="商品名">
     <button id="searchBtn">検索</button>
     <button id="listBtn">一覧表示</button>
 
+    <!-- APIから取得した商品データを表示するテーブルです。 -->
     <table>
         <thead>
             <tr>
@@ -22,15 +24,18 @@
                 <th>カテゴリ</th>
             </tr>
         </thead>
+        <!-- JavaScriptからtbodyを選択できるように、id属性を指定しています。 -->
         <tbody id="product_list">
             <!--ここにデータが挿入されます-->
         </tbody>
     </table>
 
+    <!-- 商品登録用の入力フォームです。 -->
     <h2>データ登録</h2>
     商品名：<input type="text" id="inputName"><br>
     価　格：<input type="number" id="inputPrice"><br>
     カテゴリ：
+    <!-- selectタグを使うと、決められた選択肢の中からカテゴリを選べます。 -->
     <select id="inputCategory">
         <option value="電子機器">電子機器</option>
         <option value="家具">家具</option>
@@ -41,11 +46,14 @@
     <button id="registBtn">登録</button>
 
 <script>
+// 登録ボタンをクリックした時に、商品登録APIを呼び出します。
 document.getElementById('registBtn').addEventListener('click', function() {
+    // 入力フォームから、商品名・価格・カテゴリを取得します。
     let name = document.getElementById('inputName').value;
     let price = document.getElementById('inputPrice').value;
     let category = document.getElementById('inputCategory').value;
 
+    // POST方式で、登録したい商品データをAPIへ送信します。
     axios.post('http://localhost:3005/api/v34/products', {
         name: name,
         price: price,
@@ -53,11 +61,13 @@ document.getElementById('registBtn').addEventListener('click', function() {
     })
     .then(response => {
         alert('商品が登録されました');
+        // 登録後にAPIから返ってきた最新の商品一覧を表示し直します。
         showProductList(response.data);
     })
     .catch(error => console.error('商品登録に失敗しました:', error));
 });
 
+// 画面を開いた時に、まず商品一覧を取得して表示します。
 document.addEventListener('DOMContentLoaded', function() {
     axios.get('http://localhost:3005/api/v34/products')
     .then(response => {
@@ -66,9 +76,11 @@ document.addEventListener('DOMContentLoaded', function() {
     .catch(error => console.error('エラーが発生しました:', error));
 });
 
+// 検索ボタンをクリックした時に、商品名をキーワードとしてAPIへ送信します。
 document.getElementById('searchBtn').addEventListener('click', function() {
     let name = document.getElementById('searchName').value;
 
+    // keywordクエリパラメータを付けることで、商品名の部分一致検索を行います。
     axios.get(`http://localhost:3005/api/v34/products?keyword=${name}`)
     .then(response => {
         showProductList(response.data);
@@ -76,6 +88,7 @@ document.getElementById('searchBtn').addEventListener('click', function() {
     .catch(error => console.error('エラーが発生しました:', error));
 });
 
+// 一覧表示ボタンをクリックした時に、検索条件なしで商品一覧を取得します。
 document.getElementById('listBtn').addEventListener('click', function() {
     axios.get('http://localhost:3005/api/v34/products')
     .then(response => {
@@ -84,15 +97,19 @@ document.getElementById('listBtn').addEventListener('click', function() {
     .catch(error => console.error('エラーが発生しました:', error));
 });
 
+// APIから受け取った商品リストを、テーブルのtbodyへ表示する関数です。
 function showProductList(products){
     let productList = document.getElementById('product_list');
+    // すでに表示されている行を消してから、新しい検索結果を表示します。
     productList.innerHTML = '';
 
+    // products配列のデータを1件ずつ取り出し、trタグを作成します。
     products.forEach(product => {
         let productHtml = `
         <tr>
             <td>${product.id}</td><td>${product.name}</td><td>${product.price}</td><td>${product.category}</td>
         </tr>`;
+        // 作成したHTMLをtbodyの末尾へ追加します。
         productList.insertAdjacentHTML('beforeend', productHtml);
     });
 }
