@@ -27,7 +27,8 @@
         </tbody>
     </table>
 
-    <!-- 【作業手順①】登録フォームのHTML要素を確認します。 -->
+    <!-- 【作業手順①】HTML要素の準備 -->
+    <!-- 入力フォーム、セレクトメニュー、登録ボタン、errorMessageのid属性を確認してください。 -->
     <h2>データ登録</h2>
     <p id="errorMessage"></p>
     商品名：<input type="text" id="inputName"><br>
@@ -71,39 +72,42 @@ document.getElementById('listBtn').addEventListener('click', function() {
 });
 
 //========ここから下が、今回の新しい穴埋め問題です。========
-// 【作業手順②】登録ボタンがクリックされた時の処理を作ります。
-// ➀ 登録ボタンの正しいidを指定してください。
+// 【作業手順②】JavaScriptからAPIへデータ送信
+// ➀ 登録ボタンがクリックされた時に処理を実行するため、正しいidを指定してください。
 document.getElementById('xxxx').addEventListener('click', function() {
-    // ➁ 商品名・価格・カテゴリの入力値を取得してください。
+    // ➁ 商品名・価格・カテゴリをDOMから取得してください。
     let name = document.getElementById('xxxxx').value;
     let price = document.getElementById('xxxxx').value;
     let category = document.getElementById('xxxxx').value;
+    // ➂ エラーメッセージを表示する要素をDOMから取得してください。
     let errorMessage = document.getElementById('errorMessage');
 
     errorMessage.innerHTML = '';
 
-    // ➂ 未入力の項目がある場合は、「データを入力してください。」と表示して処理を止めてください。
+    // ➃ 未入力の項目がある場合は、「データを入力してください。」と表示して処理を止めてください。
     if (!name || !price || !category) {
         errorMessage.innerHTML = 'データを入力してください。';
         return;
     }
 
-    // ➃ POST方式で登録APIへ送信してください。
+    // ➄ POST方式で登録APIへ送信してください。
+    //    第2引数には、APIへ送るキーと値をオブジェクト形式で指定します。
     axios.xxx('http://localhost:3005/api/v34/products', {
         name: xxx,
         price: xxx,
         category: xxx
     })
 
-    // 【作業手順④】api/server.jsの「3-4 商品登録API」の問題を解いてから戻ってください。
+    // 【作業手順③】api/server.jsの「3-4 商品登録API」の問題を解いてから戻ってください。
+    // 【作業手順④】APIからのデータを動的レンダリング
     .then(response => {
         alert('商品が登録されました');
         errorMessage.innerHTML = '';
-        // ➄ 登録後に返ってきた一覧データを画面に表示してください。
+        // ➅ 登録後に返ってきた最新の商品一覧データを画面に表示してください。
         xxxxx(response.data);
     })
     .catch(error => {
-        // ➅ API側で400エラーになった時も、同じメッセージを表示してください。
+        // ➆ API側で400エラーになった時も、同じメッセージを表示してください。
         if (error.response && error.response.status === 400) {
             errorMessage.innerHTML = 'データを入力してください。';
             return;

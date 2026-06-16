@@ -43,23 +43,24 @@ app.get('/api/v34/products', (req, res) => {
 });
 
 // 【作業手順③】商品登録APIを作ります。
-// ➄ HTTPのPOSTメソッドで「/api/v34/products」にアクセスされた時に実行する処理を定義してください。
+// ➇ HTTPのPOSTメソッドで「/api/v34/products」にアクセスされた時に実行する処理を定義してください。
 app.xxx('______', (req, res) => {
-    // ➅ リクエストボディから商品名・価格・カテゴリを取得してください。
+    // ➈ req.bodyから商品名・価格・カテゴリを取得してください。
     const name = req.body.xxx;
     const price = req.body.xxx;
     const category = req.body.xxx;
 
-    // サーバー側で必須チェックを行います。
+    // ➉ サーバー側で必須チェックを行います。
+    //    不足がある場合は400 Bad Requestを返し、returnで処理を終了します。
     if (!name || !price || !category) {
         res.status(400).json({ error: 'データに誤りがあります' });
         return;
     }
 
-    // ➆ productsテーブルへ商品名・価格・カテゴリを登録するSQL文を設定してください。
+    // ⑪ productsテーブルへ商品名・価格・カテゴリを登録するSQL文を設定してください。
     const sql = '______';
 
-    // ➇ db.runを使い、INSERT文を実行してください。
+    // ⑫ db.runを使い、INSERT文を実行してください。
     //    第2引数には、SQL文の「?」に入れる値を配列で指定します。
     db.xxx(sql, [name, price, category], (err) => {
         if (err) {
@@ -68,7 +69,7 @@ app.xxx('______', (req, res) => {
             return;
         }
 
-        // ➈ 登録後の一覧を取得し直してください。
+        // ⑬ 登録後の一覧を取得し直してください。
         db.xxx('SELECT * FROM products', [], (err, rows) => {
             if (err) {
                 console.error(err);
@@ -76,7 +77,7 @@ app.xxx('______', (req, res) => {
                 return;
             }
 
-            // ➉ 登録後の商品一覧をJSON形式で返してください。
+            // ⑭ 登録後の商品一覧をJSON形式で返してください。
             res.xxx(rows);
         });
     });
