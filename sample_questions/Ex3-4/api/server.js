@@ -50,6 +50,12 @@ app.xxx('______', (req, res) => {
     const price = req.body.xxx;
     const category = req.body.xxx;
 
+    // サーバー側で必須チェックを行います。
+    if (!name || !price || !category) {
+        res.status(400).json({ error: 'データに誤りがあります' });
+        return;
+    }
+
     // ➆ productsテーブルへ商品名・価格・カテゴリを登録するSQL文を設定してください。
     const sql = '______';
 

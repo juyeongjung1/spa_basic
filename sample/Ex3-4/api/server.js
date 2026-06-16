@@ -20,6 +20,39 @@ app.get('/api/test', (req, res) => {
     res.json({ status: 'ok', message: 'APIサーバー稼働中！' });
 });
 
+// 【3.4】新規商品登録 API（POST /api/products）
+app.post('/api/v34/products', (req, res) => {
+    const name = req.body.name;
+    const price = req.body.price;
+    const category = req.body.category;
+
+    // サーバー側で必須チェックを行います。
+    if (!name || !price || !category) {
+        res.status(400).json({ error: 'データに誤りがあります' });
+        return;
+    }
+
+    const sql = 'INSERT INTO products (name, price, category) VALUES (?, ?, ?)';
+
+    db.run(sql, [name, price, category], (err) => {
+        if (err) {
+            console.error(err);
+            res.status(500).json({ error: 'Database error' });
+            return;
+        }
+
+        db.all('SELECT * FROM products', [], (err, rows) => {
+            if (err) {
+                console.error(err);
+                res.status(500).json({ error: 'Database error' });
+                return;
+            }
+
+            res.json(rows);
+        });
+    });
+});
+
 // 3-4 商品一覧・キーワード検索
 app.get('/api/v34/products', (req, res) => {
     const keyword = req.query.keyword;
@@ -39,32 +72,6 @@ app.get('/api/v34/products', (req, res) => {
         }
 
         res.json(rows);
-    });
-});
-
-// 3-4 商品登録
-app.post('/api/v34/products', (req, res) => {
-    const name = req.body.name;
-    const price = req.body.price;
-    const category = req.body.category;
-    const sql = 'INSERT INTO products (name, price, category) VALUES (?, ?, ?)';
-
-    db.run(sql, [name, price, category], (err) => {
-        if (err) {
-            console.error(err);
-            res.status(500).json({ error: 'Database error' });
-            return;
-        }
-
-        db.all('SELECT * FROM products', [], (err, rows) => {
-            if (err) {
-                console.error(err);
-                res.status(500).json({ error: 'Database error' });
-                return;
-            }
-
-            res.json(rows);
-        });
     });
 });
 
