@@ -66,7 +66,7 @@ let productData = [];
 //========ここから下が、今回の新しい穴埋め問題です。========
 //【作業手順①】 商品リストを表示する関数の修正
 function showProductList(products){
-    // (A) 表示中の商品一覧を、更新ボタンでも使えるようにproductDataへ保存してください。
+    // ① 表示中の商品一覧を、更新ボタンでも使えるようにproductDataへ保存してください。
     productData = xxxxx;
 
     let productList = document.getElementById('product_list');
@@ -77,7 +77,7 @@ function showProductList(products){
         <tr>
             <td>${product.id}</td><td>${product.name}</td><td>${product.price}</td><td>${product.category}</td>
             <td>
-                <!-- (B) 更新ボタンをクリックした時に、setUpdateForm関数へ商品番号を渡してください。 -->
+                <!-- ② 更新ボタンをクリックした時に、setUpdateForm関数へ商品番号を渡してください。 -->
                 <button onclick="xxxxxxxx">更新</button>
                 <button onclick="deleteProduct(${product.id})">削除</button>
             </td>
@@ -88,10 +88,10 @@ function showProductList(products){
 
 //【作業手順②】 更新フォームに商品データを表示する関数の作成
 function setUpdateForm(id) {
-    // (C) productData配列から、クリックされたidと一致する商品を探してください。
+    // ③ productData配列から、クリックされたidと一致する商品を探してください。
     let product = productData.find(product => product.id === xxxx);
 
-    // (D) 取得した商品データを、更新フォームへ設定してください。
+    // ④ 取得した商品データを、更新フォームへ設定してください。
     document.getElementById('updateId').value = product.xxx;
     document.getElementById('updateName').value = product.xxx;
     document.getElementById('updatePrice').value = product.xxx;
@@ -101,7 +101,7 @@ function setUpdateForm(id) {
 
 //【作業手順③】 更新フォームの値をAPIへ送信する処理
 document.getElementById('xxxx').addEventListener('click', function() {
-    // (E) 更新フォームから、商品番号・商品名・価格・カテゴリを取得してください。
+    // ⑤ 更新フォームから、商品番号・商品名・価格・カテゴリを取得してください。
     let id = document.getElementById('xxxxx').value;
     let name = document.getElementById('xxxxx').value;
     let price = document.getElementById('xxxxx').value;
@@ -116,7 +116,7 @@ document.getElementById('xxxx').addEventListener('click', function() {
         return;
     }
 
-    // (F) PUT方式で、更新APIへ商品番号idと更新データを送信してください。
+    // ⑥ PUT方式で、更新APIへ商品番号idと更新データを送信してください。
     axios.xxx(`http://localhost:3005/api/v36/products/${xx}`, {
         name: xxx,
         price: xxx,
@@ -125,7 +125,7 @@ document.getElementById('xxxx').addEventListener('click', function() {
     .then(response => {
         alert('商品が更新されました');
         updateMessage.innerHTML = '';
-        // (G) 更新後に返ってきた最新の商品一覧データを画面に表示してください。
+        // ⑦ 更新後に返ってきた最新の商品一覧データを画面に表示してください。
         xxxxx(response.data);
     })
     .catch(error => {
