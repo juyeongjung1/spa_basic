@@ -21,27 +21,27 @@ app.get('/api/test', (req, res) => {
 });
 
 // 【作業手順④】商品更新APIを作ります。
-// ➈ HTTPのPUTメソッドで「/api/v36/products/:id」にアクセスされた時に実行する処理を定義してください。
+// (H) HTTPのPUTメソッドで「/api/v36/products/:id」にアクセスされた時に実行する処理を定義してください。
 app.xxx('______', (req, res) => {
-    // ➉ URLパラメータから更新対象の商品番号idを取得してください。
+    // (I) URLパラメータから更新対象の商品番号idを取得してください。
     const id = req.params.xxx;
 
-    // ⑪ リクエストボディから商品名・価格・カテゴリを取得してください。
+    // (J) リクエストボディから商品名・価格・カテゴリを取得してください。
     const name = req.body.xxx;
     const price = req.body.xxx;
     const category = req.body.xxx;
 
-    // ⑫ サーバー側で必須チェックを行います。
+    // サーバー側で必須チェックを行います。ここは完成コードなので、動きを確認しましょう。
     if (!id || !name || !price || !category) {
         res.status(400).json({ error: 'データに誤りがあります' });
         return;
     }
 
-    // ⑬ productsテーブルの商品名・価格・カテゴリを更新するSQL文を設定してください。
+    // (K) productsテーブルの商品名・価格・カテゴリを更新するSQL文を設定してください。
     const sql = '______';
     const params = [name, price, category, id];
 
-    // ⑭ db.runを使い、UPDATE文を実行してください。
+    // (L) db.runを使い、UPDATE文を実行してください。
     db.xxx(sql, params, (err) => {
         if (err) {
             console.error(err);
@@ -49,7 +49,7 @@ app.xxx('______', (req, res) => {
             return;
         }
 
-        // ⑮ 更新後の一覧を取得し直してください。
+        // (M) 更新後の一覧を取得し直してください。
         db.xxx('SELECT * FROM products', [], (err, rows) => {
             if (err) {
                 console.error(err);
@@ -57,7 +57,7 @@ app.xxx('______', (req, res) => {
                 return;
             }
 
-            // ⑯ 更新後の商品一覧をJSON形式で返してください。
+            // (N) 更新後の商品一覧をJSON形式で返してください。
             res.xxx(rows);
         });
     });
