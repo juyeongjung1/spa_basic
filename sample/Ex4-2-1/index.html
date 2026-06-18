@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>商品一覧とModal</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <!-- Modalを使うためにBootstrapを読み込みます。 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <h1>商品管理システム</h1>
+
+    <input type="text" id="searchName" placeholder="商品名">
+    <button id="searchBtn">検索</button>
+    <button id="listBtn">一覧表示</button>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>商品番号</th>
+                <th>商品名</th>
+                <th>価格</th>
+                <th>カテゴリ</th>
+            </tr>
+        </thead>
+        <tbody id="product_list">
+            <!-- ここに商品データが挿入されます。 -->
+        </tbody>
+    </table>
+
+    <!-- ここからBootstrapのModalです。 -->
+    <div class="modal fade" id="detailModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title">商品詳細</h5>
+                    <button type="button" data-bs-dismiss="modal">閉じる</button>
+                </div>
+
+                <div class="modal-body">
+                    <table border="1">
+                        <tr>
+                            <th>商品番号</th>
+                            <td id="detailId"></td>
+                        </tr>
+                        <tr>
+                            <th>商品名</th>
+                            <td id="detailName"></td>
+                        </tr>
+                        <tr>
+                            <th>価格</th>
+                            <td id="detailPrice"></td>
+                        </tr>
+                        <tr>
+                            <th>カテゴリ</th>
+                            <td id="detailCategory"></td>
+                        </tr>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- ここまでBootstrapのModalです。 -->
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        getProductList();
+    });
+
+    document.getElementById('searchBtn').addEventListener('click', function() {
+        let name = document.getElementById('searchName').value;
+
+        axios.get(`http://localhost:3005/api/v332/products?keyword=${name}`)
+        .then(response => {
+            showProductList(response.data);
+        })
+        .catch(error => console.error('エラーが発生しました:', error));
+    });
+
+    document.getElementById('listBtn').addEventListener('click', function() {
+        getProductList();
+    });
+
+    function getProductList() {
+        axios.get('http://localhost:3005/api/v332/products')
+        .then(response => {
+            showProductList(response.data);
+        })
+        .catch(error => console.error('エラーが発生しました:', error));
+    }
+
+    function showProductList(products) {
+        let productList = document.getElementById('product_list');
+        productList.innerHTML = '';
+
+        products.forEach(product => {
+            let productHtml = `
+            <tr>
+                <td>${product.id}</td>
+                <td>
+                    <a href="#" onclick="showProductDetail(${product.id}); return false;">
+                        ${product.name}
+                    </a>
+                </td>
+                <td>${product.price}</td>
+                <td>${product.category}</td>
+            </tr>`;
+            productList.insertAdjacentHTML('beforeend', productHtml);
+        });
+    }
+
+    function showProductDetail(id) {
+        axios.get(`http://localhost:3005/api/v42/products/${id}`)
+        .then(response => {
+            let product = response.data;
+
+            document.getElementById('detailId').textContent = product.id;
+            document.getElementById('detailName').textContent = product.name;
+            document.getElementById('detailPrice').textContent = product.price;
+            document.getElementById('detailCategory').textContent = product.category;
+
+            let modal = new bootstrap.Modal(document.getElementById('detailModal'));
+            modal.show();
+        })
+        .catch(error => console.error('エラーが発生しました:', error));
+    }
+    </script>
+</body>
+</html>
