@@ -1,20 +1,101 @@
 <!DOCTYPE html>
-<html lang="jp">
+<html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <!-- ➀以下のコードを記入することで、モバイル端末での表示を最適化できます。-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bootstrap Example</title>
-    <!-- ➁ Bootstrap CSSを読み込む -->
+    <title>Modalの基本</title>
+    <!-- BootstrapのCSSを読み込みます。 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
-    <!-- コンテンツ -->
-    <div class="container">
-        <h1>Hello, Bootstrap!</h1>
-        <button class="btn btn-primary">ボタン</button>
+<body class="bg-light">
+    <div class="container py-4">
+        <h1 class="mb-4">Modalの基本</h1>
+
+        <p>
+            商品一覧の詳細ボタンをクリックすると、同じ画面の上に商品詳細Modalが表示されます。
+        </p>
+
+        <table class="table table-bordered table-striped bg-white">
+            <thead class="table-dark">
+                <tr>
+                    <th>商品番号</th>
+                    <th>商品名</th>
+                    <th>価格</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>ノートパソコン</td>
+                    <td>120000</td>
+                    <td>
+                        <button class="btn btn-primary btn-sm" onclick="showProductDetail(1)">詳細</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>ワイヤレスマウス</td>
+                    <td>3000</td>
+                    <td>
+                        <button class="btn btn-primary btn-sm" onclick="showProductDetail(2)">詳細</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>キーボード</td>
+                    <td>8000</td>
+                    <td>
+                        <button class="btn btn-primary btn-sm" onclick="showProductDetail(3)">詳細</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#productModal">
+            空のModalを開く
+        </button>
     </div>
-    <!-- ➂ <body>の最後に、BootstrapのJSを読み込む -->
+
+    <!-- 商品詳細Modal -->
+    <div class="modal fade" id="productModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">商品詳細</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p>商品番号：<span id="detailId">未選択</span></p>
+                    <p>商品名：<span id="detailName">未選択</span></p>
+                    <p>価格：<span id="detailPrice">未選択</span></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">閉じる</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- BootstrapのJavaScriptを読み込みます。 -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+    const products = [
+        { id: 1, name: 'ノートパソコン', price: 120000 },
+        { id: 2, name: 'ワイヤレスマウス', price: 3000 },
+        { id: 3, name: 'キーボード', price: 8000 }
+    ];
+
+    function showProductDetail(id) {
+        const product = products.find(product => product.id === id);
+
+        document.getElementById('detailId').textContent = product.id;
+        document.getElementById('detailName').textContent = product.name;
+        document.getElementById('detailPrice').textContent = product.price;
+
+        const modal = new bootstrap.Modal(document.getElementById('productModal'));
+        modal.show();
+    }
+    </script>
 </body>
 </html>
