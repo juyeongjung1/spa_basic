@@ -14,7 +14,7 @@ app.get('/api/test', (req, res) => {
 });
 
 // 商品一覧・キーワード検索
-app.get('/api/v332/products', (req, res) => {
+app.get('/api/v421/products', (req, res) => {
     const keyword = req.query.keyword;
     let sql = 'SELECT * FROM products';
     let params = [];
@@ -36,7 +36,7 @@ app.get('/api/v332/products', (req, res) => {
 });
 
 // 商品詳細
-app.get('/api/v42/products/:id', (req, res) => {
+app.get('/api/v421/products/:id', (req, res) => {
     const id = req.params.id;
     const sql = 'SELECT * FROM products WHERE id = ?';
 

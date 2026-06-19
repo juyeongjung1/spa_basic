@@ -75,7 +75,7 @@
     document.getElementById('searchBtn').addEventListener('click', function() {
         let name = document.getElementById('searchName').value;
 
-        axios.get(`http://localhost:3005/api/v332/products?keyword=${name}`)
+        axios.get(`http://localhost:3005/api/v421/products?keyword=${name}`)
         .then(response => {
             showProductList(response.data);
         })
@@ -87,7 +87,7 @@
     });
 
     function getProductList() {
-        axios.get('http://localhost:3005/api/v332/products')
+        axios.get('http://localhost:3005/api/v421/products')
         .then(response => {
             showProductList(response.data);
         })
@@ -115,7 +115,7 @@
     }
 
     function showProductDetail(id) {
-        axios.get(`http://localhost:3005/api/v42/products/${id}`)
+        axios.get(`http://localhost:3005/api/v421/products/${id}`)
         .then(response => {
             let product = response.data;
 
