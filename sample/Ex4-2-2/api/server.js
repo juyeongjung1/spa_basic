@@ -89,64 +89,6 @@ app.post('/api/v422/products', (req, res) => {
     });
 });
 
-// 商品更新
-app.put('/api/v422/products/:id', (req, res) => {
-    const id = req.params.id;
-    const name = req.body.name;
-    const price = req.body.price;
-    const category = req.body.category;
-
-    if (!id || !name || !price || !category) {
-        res.status(400).json({ error: 'データに誤りがあります' });
-        return;
-    }
-
-    const sql = 'UPDATE products SET name = ?, price = ?, category = ? WHERE id = ?';
-    const params = [name, price, category, id];
-
-    db.run(sql, params, (err) => {
-        if (err) {
-            console.error(err);
-            res.status(500).json({ error: 'Database error' });
-            return;
-        }
-
-        db.all('SELECT * FROM products', [], (err, rows) => {
-            if (err) {
-                console.error(err);
-                res.status(500).json({ error: 'Database error' });
-                return;
-            }
-
-            res.json(rows);
-        });
-    });
-});
-
-// 商品削除
-app.delete('/api/v422/products/:id', (req, res) => {
-    const id = req.params.id;
-    const sql = 'DELETE FROM products WHERE id = ?';
-
-    db.run(sql, [id], (err) => {
-        if (err) {
-            console.error(err);
-            res.status(500).json({ error: 'Database error' });
-            return;
-        }
-
-        db.all('SELECT * FROM products', [], (err, rows) => {
-            if (err) {
-                console.error(err);
-                res.status(500).json({ error: 'Database error' });
-                return;
-            }
-
-            res.json(rows);
-        });
-    });
-});
-
 app.listen(3005, () => {
     console.log('localhost:3005 でAPIサーバーが起動しました');
 });
