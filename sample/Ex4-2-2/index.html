@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>【参考】登録・更新・削除のModal化</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <h1>商品管理システム</h1>
+
+    <input type="text" id="searchName" placeholder="商品名">
+    <button id="searchBtn">検索</button>
+    <button id="listBtn">一覧表示</button>
+    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#registerModal">
+        商品登録
+    </button>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>商品番号</th>
+                <th>商品名</th>
+                <th>価格</th>
+                <th>カテゴリ</th>
+            </tr>
+        </thead>
+        <tbody id="product_list">
+            <!-- ここに商品データが挿入されます。 -->
+        </tbody>
+    </table>
+
+    <!-- 商品詳細Modal -->
+    <div class="modal fade" id="detailModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">商品詳細</h5>
+                    <button type="button" data-bs-dismiss="modal" class="btn-close"></button>
+                </div>
+                <div class="modal-body">
+                    <table>
+                        <tr>
+                            <th>商品番号</th>
+                            <td id="detailId"></td>
+                        </tr>
+                        <tr>
+                            <th>商品名</th>
+                            <td id="detailName"></td>
+                        </tr>
+                        <tr>
+                            <th>価格</th>
+                            <td id="detailPrice"></td>
+                        </tr>
+                        <tr>
+                            <th>カテゴリ</th>
+                            <td id="detailCategory"></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <!-- 詳細Modalを閉じ、更新Modalへ切り替えます。 -->
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateModal">
+                        更新
+                    </button>
+                    <button type="button" class="btn btn-danger" id="deleteBtn">削除</button>
+                    <button type="button" data-bs-dismiss="modal" class="btn btn-secondary">閉じる</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 商品更新Modal -->
+    <div class="modal fade" id="updateModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">商品更新</h5>
+                    <button type="button" data-bs-dismiss="modal" class="btn-close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- 更新対象の商品番号は、画面に表示せず保持します。 -->
+                    <input type="hidden" id="updateId">
+                    商品名：<input type="text" id="updateName"><br>
+                    価　格：<input type="number" id="updatePrice"><br>
+                    カテゴリ：
+                    <select id="updateCategory">
+                        <option value="電子機器">電子機器</option>
+                        <option value="家具">家具</option>
+                        <option value="文房具">文房具</option>
+                        <option value="食品">食品</option>
+                        <option value="未分類">未分類</option>
+                    </select>
+                    <p id="updateMessage"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="updateBtn">更新</button>
+                    <button type="button" data-bs-dismiss="modal" class="btn btn-secondary">閉じる</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 商品登録Modal -->
+    <div class="modal fade" id="registerModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">商品登録</h5>
+                    <button type="button" data-bs-dismiss="modal" class="btn-close"></button>
+                </div>
+                <div class="modal-body">
+                    商品名：<input type="text" id="inputName"><br>
+                    価　格：<input type="number" id="inputPrice"><br>
+                    カテゴリ：
+                    <select id="inputCategory">
+                        <option value="電子機器">電子機器</option>
+                        <option value="家具">家具</option>
+                        <option value="文房具">文房具</option>
+                        <option value="食品">食品</option>
+                        <option value="未分類">未分類</option>
+                    </select>
+                    <p id="errorMessage"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="registBtn">登録</button>
+                    <button type="button" data-bs-dismiss="modal" class="btn btn-secondary">閉じる</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+    function showProductList(products) {
+        let productList = document.getElementById('product_list');
+        productList.innerHTML = '';
+
+        products.forEach(product => {
+            let productHtml = `
+            <tr>
+                <td>${product.id}</td>
+                <td>
+                    <a href="#" onclick="showProductDetail(${product.id}); return false;">
+                        ${product.name}
+                    </a>
+                </td>
+                <td>${product.price}</td>
+                <td>${product.category}</td>
+            </tr>`;
+            productList.insertAdjacentHTML('beforeend', productHtml);
+        });
+    }
+
+    // 商品詳細を取得し、詳細Modalと更新Modalの両方へ値を入れます。
+    function showProductDetail(id) {
+        axios.get(`http://localhost:3005/api/v422/products/${id}`)
+        .then(response => {
+            let product = response.data;
+
+            document.getElementById('detailId').innerHTML = product.id;
+            document.getElementById('detailName').innerHTML = product.name;
+            document.getElementById('detailPrice').innerHTML = product.price;
+            document.getElementById('detailCategory').innerHTML = product.category;
+
+            // 詳細Modalから更新Modalへ移動した時、現在の商品情報が入力済みになります。
+            document.getElementById('updateId').value = product.id;
+            document.getElementById('updateName').value = product.name;
+            document.getElementById('updatePrice').value = product.price;
+            document.getElementById('updateCategory').value = product.category;
+            document.getElementById('updateMessage').innerHTML = '';
+
+            let modal = new bootstrap.Modal(document.getElementById('detailModal'));
+            modal.show();
+        })
+        .catch(error => console.error('商品詳細の取得に失敗しました:', error));
+    }
+
+    // 更新Modalに入力された値を使って、選択中の商品を更新します。
+    document.getElementById('updateBtn').addEventListener('click', function() {
+        let id = document.getElementById('updateId').value;
+        let name = document.getElementById('updateName').value;
+        let price = document.getElementById('updatePrice').value;
+        let category = document.getElementById('updateCategory').value;
+        let updateMessage = document.getElementById('updateMessage');
+
+        updateMessage.innerHTML = '';
+
+        if (!id || !name || !price || !category) {
+            updateMessage.innerHTML = '更新するデータを入力してください。';
+            return;
+        }
+
+        axios.put(`http://localhost:3005/api/v422/products/${id}`, {
+            name: name,
+            price: price,
+            category: category
+        })
+        .then(response => {
+            alert('商品が更新されました');
+            showProductList(response.data);
+            bootstrap.Modal.getInstance(document.getElementById('updateModal')).hide();
+        })
+        .catch(error => {
+            if (error.response && error.response.status === 400) {
+                updateMessage.innerHTML = '更新するデータを入力してください。';
+                return;
+            }
+
+            console.error('商品更新に失敗しました:', error);
+        });
+    });
+
+    // 詳細Modalに表示されている商品番号を使って、商品を削除します。
+    document.getElementById('deleteBtn').addEventListener('click', function() {
+        let id = document.getElementById('detailId').innerHTML;
+
+        axios.delete(`http://localhost:3005/api/v422/products/${id}`)
+        .then(response => {
+            alert('商品が削除されました');
+            showProductList(response.data);
+            bootstrap.Modal.getInstance(document.getElementById('detailModal')).hide();
+        })
+        .catch(error => console.error('商品削除に失敗しました:', error));
+    });
+
+    // 登録Modalに入力された値を使って、新しい商品を登録します。
+    document.getElementById('registBtn').addEventListener('click', function() {
+        let name = document.getElementById('inputName').value;
+        let price = document.getElementById('inputPrice').value;
+        let category = document.getElementById('inputCategory').value;
+        let errorMessage = document.getElementById('errorMessage');
+
+        errorMessage.innerHTML = '';
+
+        if (!name || !price || !category) {
+            errorMessage.innerHTML = 'データを入力してください。';
+            return;
+        }
+
+        axios.post('http://localhost:3005/api/v422/products', {
+            name: name,
+            price: price,
+            category: category
+        })
+        .then(response => {
+            // alertのOKを押した後、最新の商品一覧へ表示を更新します。
+            alert('商品が登録されました');
+            showProductList(response.data);
+            bootstrap.Modal.getInstance(document.getElementById('registerModal')).hide();
+
+            document.getElementById('inputName').value = '';
+            document.getElementById('inputPrice').value = '';
+            document.getElementById('inputCategory').value = '電子機器';
+            errorMessage.innerHTML = '';
+        })
+        .catch(error => {
+            if (error.response && error.response.status === 400) {
+                errorMessage.innerHTML = 'データを入力してください。';
+                return;
+            }
+
+            console.error('商品登録に失敗しました:', error);
+        });
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        getProductList();
+    });
+
+    document.getElementById('searchBtn').addEventListener('click', function() {
+        let name = document.getElementById('searchName').value;
+
+        axios.get(`http://localhost:3005/api/v422/products?keyword=${name}`)
+        .then(response => {
+            showProductList(response.data);
+        })
+        .catch(error => console.error('エラーが発生しました:', error));
+    });
+
+    document.getElementById('listBtn').addEventListener('click', function() {
+        getProductList();
+    });
+
+    function getProductList() {
+        axios.get('http://localhost:3005/api/v422/products')
+        .then(response => {
+            showProductList(response.data);
+        })
+        .catch(error => console.error('エラーが発生しました:', error));
+    }
+    </script>
+</body>
+</html>
