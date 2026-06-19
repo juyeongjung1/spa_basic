@@ -37,11 +37,11 @@
 
                 <div class="modal-header">
                     <h5 class="modal-title">商品詳細</h5>
-                    <button type="button" data-bs-dismiss="modal">閉じる</button>
+                    <button type="button" data-bs-dismiss="modal" class="btn-close"></button>
                 </div>
 
                 <div class="modal-body">
-                    <table border="1">
+                    <table>
                         <tr>
                             <th>商品番号</th>
                             <td id="detailId"></td>
@@ -59,6 +59,11 @@
                             <td id="detailCategory"></td>
                         </tr>
                     </table>
+                </div>
+                 <div class="modal-footer">
+                    <button type="button" class ="btn btn-primary">ボタン1</button>
+                    <button type="button" class ="btn btn-danger">ボタン2</button>
+                    <button type="button" data-bs-dismiss="modal" class ="btn btn-secondary">閉じる</button>
                 </div>
 
             </div>
@@ -103,6 +108,7 @@
             <tr>
                 <td>${product.id}</td>
                 <td>
+                    <!-- 重要：商品IDをshowProductDetail関数へ渡します。 -->
                     <a href="#" onclick="showProductDetail(${product.id}); return false;">
                         ${product.name}
                     </a>
@@ -115,15 +121,18 @@
     }
 
     function showProductDetail(id) {
+        // 重要：クリックされた商品IDをURLに入れ、1件分の商品詳細を取得します。
         axios.get(`http://localhost:3005/api/v421/products/${id}`)
         .then(response => {
             let product = response.data;
 
-            document.getElementById('detailId').textContent = product.id;
-            document.getElementById('detailName').textContent = product.name;
-            document.getElementById('detailPrice').textContent = product.price;
-            document.getElementById('detailCategory').textContent = product.category;
+            // 重要：取得した商品情報を、Modal内の各表示場所へ挿入します。
+            document.getElementById('detailId').innerHTML = product.id;
+            document.getElementById('detailName').innerHTML = product.name;
+            document.getElementById('detailPrice').innerHTML = product.price;
+            document.getElementById('detailCategory').innerHTML = product.category;
 
+            // 重要：商品情報を挿入した後にModalを表示します。
             let modal = new bootstrap.Modal(document.getElementById('detailModal'));
             modal.show();
         })
