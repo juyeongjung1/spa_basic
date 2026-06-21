@@ -169,6 +169,7 @@
             <nav>
                 <a href="/">ホーム</a>
                 <a href="/products">商品一覧</a>
+                <a href="/register">商品登録</a>
             </nav>
         </aside>
 
@@ -186,6 +187,7 @@
             <nav class="mobile-menu-links">
                 <a href="/">ホーム</a>
                 <a href="/products">商品一覧</a>
+                <a href="/register">商品登録</a>
             </nav>
         </div>
     </div>
@@ -240,6 +242,11 @@
             return;
         }
 
+        if (path === '/register' || path === '/register/') {
+            showRegister();
+            return;
+        }
+
         // /products/3 の「3」に当たる商品番号を取り出します。
         let result = path.match(/^\/products\/(\d+)$/);
 
@@ -263,6 +270,16 @@
                 <h2>商品管理システムへようこそ</h2>
                 <p>メニューから商品一覧を表示し、商品の詳細を確認できます。</p>
                 <a href="/products" class="btn btn-primary">商品一覧を見る</a>
+            </div>`;
+    }
+
+    // 商品登録画面を表示します。
+    function showRegister() {
+        document.getElementById('app').innerHTML = `
+            <h1 class="page-title">商品登録</h1>
+            <div class="welcome-box">
+                <p>ここは商品登録ページです。</p>
+                <p>この章では画面遷移を中心に学習するため、登録機能の実装は割愛します。</p>
             </div>`;
     }
 

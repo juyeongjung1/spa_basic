@@ -52,6 +52,11 @@ app.get('/products', (req, res) => {
     res.sendFile(indexPath);
 });
 
+// 商品登録のURLへ直接アクセスした時も、同じindex.htmlを返します。
+app.get('/register', (req, res) => {
+    res.sendFile(indexPath);
+});
+
 // 商品詳細のURLへ直接アクセスした時も、同じindex.htmlを返します。
 app.get('/products/:id', (req, res) => {
     res.sendFile(indexPath);
