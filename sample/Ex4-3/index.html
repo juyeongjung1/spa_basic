@@ -7,32 +7,41 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
+        /* ページ全体の外側の余白をなくし、薄い灰色の背景にします。 */
         body {
             margin: 0;
             background-color: #f5f5f5;
         }
 
+        /* ヘッダー内のシステム名と三本線ボタンを横並びにします。 */
         .site-header {
+            /* display: flexを指定すると、子要素が横並びになります。 */
             display: flex;
+            /* 2つの要素をヘッダーの左右に分けて配置します。 */
             justify-content: space-between;
+            /* 要素の高さが違っても、上下の中央を揃えます。 */
             align-items: center;
             padding: 16px 24px;
             color: white;
             background-color: #0d6efd;
         }
 
+        /* ヘッダーに表示するシステム名の見た目を設定します。 */
         .site-title {
             color: white;
             font-size: 24px;
+            /* リンクの下線を消します。 */
             text-decoration: none;
         }
 
         /* サイドバーとメイン画面を横並びにします。 */
         .layout {
             display: flex;
+            /* 画面が小さくても、ある程度の高さを確保します。 */
             min-height: 75vh;
         }
 
+        /* PC画面の左側に表示するサイドバーです。 */
         .sidebar {
             width: 220px;
             padding: 24px;
@@ -40,23 +49,78 @@
             border-right: 1px solid #cccccc;
         }
 
+        /* サイドバーのリンクを、縦に並ぶメニューとして表示します。 */
         .sidebar a {
+            /* リンクを横幅いっぱいに広げます。 */
             display: block;
             padding: 10px;
             color: #333333;
             text-decoration: none;
         }
 
+        /* マウスを重ねたメニューの背景色を変更します。 */
         .sidebar a:hover {
             background-color: #eeeeee;
         }
 
+        /* URLに対応したホーム・一覧・詳細を表示する場所です。 */
         .main-content {
+            /* サイドバーを除いた残りの横幅をすべて使用します。 */
             flex: 1;
+            /* テーブルがある場合でも、画面からはみ出しにくくします。 */
             min-width: 0;
             padding: 24px;
         }
 
+        /* 各画面の見出しの上下の余白を設定します。 */
+        .page-title {
+            margin-top: 0;
+            margin-bottom: 16px;
+        }
+
+        /* ホーム画面の説明を、白い枠の中に表示します。 */
+        .welcome-box {
+            padding: 24px;
+            background-color: white;
+            border: 1px solid #cccccc;
+        }
+
+        /* 白い枠の先頭に余分な空白ができないようにします。 */
+        .welcome-box h2 {
+            margin-top: 0;
+        }
+
+        /* 商品一覧と商品詳細で使用するテーブルです。 */
+        .product-table {
+            width: 100%;
+            margin-top: 16px;
+            margin-bottom: 16px;
+            background-color: white;
+            /* 隣り合うセルの枠線を1本にまとめます。 */
+            border-collapse: collapse;
+        }
+
+        /* テーブルの見出しとデータに、内側の余白と枠線を付けます。 */
+        .product-table th,
+        .product-table td {
+            padding: 10px;
+            border: 1px solid #999999;
+        }
+
+        /* テーブルの見出しだけ、背景を黒くして文字を白くします。 */
+        .product-table th {
+            color: white;
+            background-color: #333333;
+        }
+
+        /* タブレット端末以下で開くメニューのリンクを縦に並べます。 */
+        .mobile-menu-links a {
+            display: block;
+            padding: 10px;
+            text-decoration: none;
+        }
+
+        /* 画面の一番下に表示するフッターです。 */
         .site-footer {
             padding: 16px;
             color: white;
@@ -69,16 +133,19 @@
             display: none;
         }
 
-        /* 【参考】タブレット端末以下では、サイドバーを三本線メニューへ変更します。 */
+        /* 【参考】画面幅が768px以下の場合だけ、この中のCSSを適用します。 */
         @media (max-width: 768px) {
+            /* 狭い画面では、PC用のサイドバーを非表示にします。 */
             .sidebar {
                 display: none;
             }
 
+            /* 代わりに、三本線のメニューボタンを表示します。 */
             .mobile-menu-button {
                 display: block;
             }
 
+            /* 狭い画面に合わせて、メイン画面の余白を少し小さくします。 */
             .main-content {
                 padding: 16px;
             }
@@ -112,13 +179,13 @@
     <!-- 【参考】タブレット端末以下で、三本線ボタンから開くメニューです。 -->
     <div class="offcanvas offcanvas-start" tabindex="-1" id="mobileMenu">
         <div class="offcanvas-header">
-            <h2 class="offcanvas-title fs-5">メニュー</h2>
+            <h2 class="offcanvas-title">メニュー</h2>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
         </div>
         <div class="offcanvas-body">
-            <nav class="nav flex-column">
-                <a href="/" class="nav-link">ホーム</a>
-                <a href="/products" class="nav-link">商品一覧</a>
+            <nav class="mobile-menu-links">
+                <a href="/">ホーム</a>
+                <a href="/products">商品一覧</a>
             </nav>
         </div>
     </div>
@@ -187,15 +254,11 @@
     // ホーム画面を表示します。
     function showHome() {
         document.getElementById('app').innerHTML = `
-            <h1 class="mb-4">ホーム</h1>
-            <div class="card">
-                <div class="card-body">
-                    <h2 class="card-title fs-4">商品管理システムへようこそ</h2>
-                    <p class="card-text">
-                        メニューから商品一覧を表示し、商品の詳細を確認できます。
-                    </p>
-                    <a href="/products" class="btn btn-primary">商品一覧を見る</a>
-                </div>
+            <h1 class="page-title">ホーム</h1>
+            <div class="welcome-box">
+                <h2>商品管理システムへようこそ</h2>
+                <p>メニューから商品一覧を表示し、商品の詳細を確認できます。</p>
+                <a href="/products" class="btn btn-primary">商品一覧を見る</a>
             </div>`;
     }
 
@@ -220,10 +283,10 @@
             });
 
             document.getElementById('app').innerHTML = `
-                <h2 class="mb-3">商品一覧</h2>
+                <h2 class="page-title">商品一覧</h2>
                 <p>商品名をクリックすると、再読み込みせずに詳細画面へ移動します。</p>
-                <table class="table table-bordered bg-white">
-                    <thead class="table-dark">
+                <table class="product-table">
+                    <thead>
                         <tr>
                             <th>商品番号</th>
                             <th>商品名</th>
@@ -244,8 +307,8 @@
             let product = response.data;
 
             document.getElementById('app').innerHTML = `
-                <h2 class="mb-3">商品詳細</h2>
-                <table class="table table-bordered bg-white">
+                <h2 class="page-title">商品詳細</h2>
+                <table class="product-table">
                     <tr><th>商品番号</th><td>${product.id}</td></tr>
                     <tr><th>商品名</th><td>${product.name}</td></tr>
                     <tr><th>価格</th><td>${product.price}</td></tr>
