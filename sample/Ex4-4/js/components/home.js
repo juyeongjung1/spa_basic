@@ -1,6 +1,7 @@
 /*
  * ホーム画面を表示するコンポーネントです。
- * exportを付けると、app.jsなどの別ファイルからこの関数を使用できます。
+ * exportは、この関数を別のJavaScriptファイルから読み込めるようにする指定です。
+ * app.jsでimportすると、app.jsからshowHome()を呼び出せるようになります。
  */
 export function showHome() {
     document.getElementById('app').innerHTML = `

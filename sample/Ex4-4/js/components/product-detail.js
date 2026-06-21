@@ -1,6 +1,7 @@
 /*
  * 商品詳細画面を表示するコンポーネントです。
- * 商品詳細の中で使用する更新Modalと削除Modalも読み込みます。
+ * 商品詳細の中で使用する更新Modalと削除Modalもimportで読み込みます。
+ * importを使うと、別ファイルに分けた関数をこのファイルから呼び出せます。
  */
 import { openUpdateModal } from './product-update-modal.js';
 import { openDeleteModal } from './product-delete-modal.js';

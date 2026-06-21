@@ -53,7 +53,10 @@ export function showProductRegister() {
         .then(response => {
             alert('商品が登録されました');
 
-            // 登録が完了したら、Navigation APIで商品一覧へ移動します。
+            /*
+             * navigation.navigate(移動先)は、Navigation APIでURLと画面を変更するメソッドです。
+             * 通常のページ移動と違い、index.html全体を読み込み直さず商品一覧へ移動します。
+             */
             navigation.navigate('/products');
         })
         .catch(error => console.error('商品登録に失敗しました:', error));

@@ -40,12 +40,22 @@ export function showProductList() {
          * 商品名のリンクは、API通信の後にinnerHTMLで作成されます。
          * そのため、HTMLを表示した後でクリックイベントを登録します。
          */
+        /*
+         * querySelectorAll('.product-detail-link')は、同じclassを持つ要素をすべて取得します。
+         * 商品は複数あるため、戻り値のdetailLinksにも複数のリンクが入ります。
+         */
         let detailLinks = document.querySelectorAll('.product-detail-link');
 
+        // forEachを使い、取得した商品名リンクへ1つずつクリックイベントを登録します。
         detailLinks.forEach(detailLink => {
             detailLink.addEventListener('click', function(event) {
-                // 通常のリンク移動を止め、Navigation APIで移動します。
+                // preventDefault()は、a要素が持つ通常のページ移動を中止します。
                 event.preventDefault();
+
+                /*
+                 * getAttribute('href')で、クリックしたリンクのhrefを取得します。
+                 * 取得したURLへNavigation APIで移動するため、ページ全体は再読込されません。
+                 */
                 navigation.navigate(detailLink.getAttribute('href'));
             });
         });

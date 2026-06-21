@@ -3,7 +3,11 @@
  * 各画面を表示する処理はcomponentsフォルダから読み込みます。
  */
 
-// exportされた関数を、別ファイルで使用するためにimportします。
+/*
+ * importは、別のJavaScriptファイルでexportされた関数を読み込む書き方です。
+ * { 関数名 }には、読み込みたい関数の名前を記述します。
+ * fromの後ろには、その関数が書かれているファイルの場所を記述します。
+ */
 import { showHome } from './components/home.js';
 import { showProductList } from './components/product-list.js';
 import { showProductDetail } from './components/product-detail.js';
@@ -16,6 +20,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // リンク、戻る、進むによるページ移動をNavigation APIで受け取ります。
 navigation.addEventListener('navigate', function(event) {
+    /*
+     * event.destination.urlには、これから移動しようとしているURLが入っています。
+     * new URL()を使うと、そのURLをpathnameやoriginに分けて利用できます。
+     */
     let url = new URL(event.destination.url);
 
     // このWebサイト内の、処理を置き換えられるページ移動だけを対象にします。
@@ -24,12 +32,19 @@ navigation.addEventListener('navigate', function(event) {
     }
 
     // タブレット用メニューが開いている場合は閉じます。
+    /*
+     * getInstance()は、すでに作成されているBootstrapのメニューを取得するメソッドです。
+     * メニューが一度も開かれていない場合は取得できないため、menuにはnullが入ります。
+     */
     let menu = bootstrap.Offcanvas.getInstance(document.getElementById('mobileMenu'));
     if (menu) {
         menu.hide();
     }
 
-    // 通常のページ移動を止め、URLに対応したコンポーネントを表示します。
+    /*
+     * intercept()は、ブラウザの通常のページ移動をNavigation APIの処理へ置き換えます。
+     * handlerに指定した関数の中で、移動先URLに対応する画面を表示します。
+     */
     event.intercept({
         handler: function() {
             showPage(url.pathname);

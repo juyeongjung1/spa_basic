@@ -22,9 +22,16 @@ export function openDeleteModal(product) {
             </div>
         </div>`;
 
-    // 挿入したModalをBootstrapから取得し、画面へ表示します。
+    // innerHTMLで挿入した削除ModalのHTML要素を取得します。
     let modalElement = document.getElementById('deleteModal');
+
+    /*
+     * new bootstrap.Modal(HTML要素)は、HTML要素をBootstrapのModalとして
+     * 操作できる状態にするための定型文です。
+     */
     let deleteModal = new bootstrap.Modal(modalElement);
+
+    // show()を実行すると、削除Modalが画面に表示されます。
     deleteModal.show();
 
     document.getElementById('deleteBtn').addEventListener('click', function() {
@@ -33,12 +40,20 @@ export function openDeleteModal(product) {
         .then(response => {
             alert('商品が削除されました');
 
-            // Modalを閉じた後で、商品一覧画面へ移動します。
+            /*
+             * hidden.bs.modalは、BootstrapのModalが完全に閉じた後に発生するイベントです。
+             * Modalが閉じ終わってから、使用済みのHTMLを消して商品一覧へ移動します。
+             * 第3引数の{ once: true }により、このイベントは1回実行された後に自動で解除されます。
+             */
             modalElement.addEventListener('hidden.bs.modal', function() {
+                // 使用済みの削除Modalをmodal-areaから削除します。
                 document.getElementById('modal-area').innerHTML = '';
+
+                // navigation.navigate()を使い、ページ全体を再読込せず商品一覧へ移動します。
                 navigation.navigate('/products');
             }, { once: true });
 
+            // hide()でModalを閉じ始めます。閉じ終わるとhidden.bs.modalが発生します。
             deleteModal.hide();
         })
         .catch(error => console.error('商品削除に失敗しました:', error));

@@ -46,12 +46,26 @@ export function openUpdateModal(product) {
             </div>
         </div>`;
 
-    // select要素はvalue属性だけでは選択できないため、JavaScriptで現在値を設定します。
+    /*
+     * select要素の選択状態を、現在の商品カテゴリに変更します。
+     * 例えばproduct.categoryが「家具」の場合は、「家具」が選択された状態になります。
+     */
     document.getElementById('updateCategory').value = product.category;
 
-    // 挿入したModalをBootstrapから取得し、画面へ表示します。
+    /*
+     * innerHTMLで挿入した更新ModalのHTML要素を取得します。
+     * この時点ではModalのHTMLが作られただけで、まだ画面には開いていません。
+     */
     let modalElement = document.getElementById('updateModal');
+
+    /*
+     * new bootstrap.Modal(HTML要素)は、HTML要素をBootstrapのModalとして
+     * 操作できる状態にするための定型文です。
+     * 作成したModalを変数updateModalへ代入すると、show()やhide()を使用できます。
+     */
     let updateModal = new bootstrap.Modal(modalElement);
+
+    // show()は、作成したBootstrapのModalを画面に表示するメソッドです。
     updateModal.show();
 
     // Modal内の更新ボタンにクリックイベントを登録します。
@@ -78,14 +92,30 @@ export function openUpdateModal(product) {
             alert('商品が更新されました');
 
             /*
-             * Modalを閉じる動作が完了してから、現在の商品詳細を再表示します。
-             * hidden.bs.modalは、BootstrapのModalが閉じた後に発生するイベントです。
+             * addEventListenerは、指定した出来事が発生した時に実行する処理を登録します。
+             * ここではclickではなく、Bootstrapが用意しているhidden.bs.modalを指定しています。
+             * hidden.bs.modalは、Modalが完全に閉じ終わった時に発生するイベントです。
+             *
+             * Modalが閉じ終わる前にHTMLを消すと、閉じる動きが途中で止まることがあります。
+             * そのため、Modalが閉じ終わるのを待ってから、ModalのHTMLを消して画面を更新します。
+             * 第3引数の{ once: true }は、このイベントを1回だけ実行するための指定です。
+             * 実行後はイベントが自動で解除されるため、同じ処理が重複して登録されません。
              */
             modalElement.addEventListener('hidden.bs.modal', function() {
+                // 使用済みの更新Modalをmodal-areaから削除します。
                 document.getElementById('modal-area').innerHTML = '';
+
+                /*
+                 * navigation.reload()は、現在のURLのままNavigation APIの画面表示を
+                 * もう一度実行します。更新後の商品情報をAPIから取得し直すために使います。
+                 */
                 navigation.reload();
             }, { once: true });
 
+            /*
+             * hide()はModalを閉じ始めるメソッドです。
+             * Modalが完全に閉じ終わると、上で登録したhidden.bs.modalの処理が実行されます。
+             */
             updateModal.hide();
         })
         .catch(error => console.error('商品更新に失敗しました:', error));
