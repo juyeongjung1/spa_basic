@@ -47,7 +47,12 @@ app.get('/api/v43/products/:id', (req, res) => {
     });
 });
 
-// 詳細画面のURLへ直接アクセスした時も、同じindex.htmlを返します。
+// 商品一覧のURLへ直接アクセスした時も、同じindex.htmlを返します。
+app.get('/products', (req, res) => {
+    res.sendFile(indexPath);
+});
+
+// 商品詳細のURLへ直接アクセスした時も、同じindex.htmlを返します。
 app.get('/products/:id', (req, res) => {
     res.sendFile(indexPath);
 });
