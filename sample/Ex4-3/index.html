@@ -6,19 +6,111 @@
     <title>Navigation APIを使った商品管理システム</title>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            background-color: #f5f5f5;
+        }
+
+        .site-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 24px;
+            color: white;
+            background-color: #0d6efd;
+        }
+
+        .site-title {
+            color: white;
+            font-size: 24px;
+            text-decoration: none;
+        }
+
+        /* サイドバーとメイン画面を横並びにします。 */
+        .layout {
+            display: flex;
+            min-height: 75vh;
+        }
+
+        .sidebar {
+            width: 220px;
+            padding: 24px;
+            background-color: white;
+            border-right: 1px solid #cccccc;
+        }
+
+        .sidebar a {
+            display: block;
+            padding: 10px;
+            color: #333333;
+            text-decoration: none;
+        }
+
+        .sidebar a:hover {
+            background-color: #eeeeee;
+        }
+
+        .main-content {
+            flex: 1;
+            min-width: 0;
+            padding: 24px;
+        }
+
+        .site-footer {
+            padding: 16px;
+            color: white;
+            text-align: center;
+            background-color: #212529;
+        }
+
+        /* PCでは三本線ボタンを表示しません。 */
+        .mobile-menu-button {
+            display: none;
+        }
+
+        /* 【参考】タブレット端末以下では、サイドバーを三本線メニューへ変更します。 */
+        @media (max-width: 768px) {
+            .sidebar {
+                display: none;
+            }
+
+            .mobile-menu-button {
+                display: block;
+            }
+
+            .main-content {
+                padding: 16px;
+            }
+        }
+    </style>
 </head>
-<body class="bg-light">
-    <!-- ヘッダーとメニューは、画面を移動しても表示したままにします。 -->
-    <header class="navbar navbar-dark bg-primary px-3">
-        <a href="/" class="navbar-brand">商品管理システム</a>
-        <button class="navbar-toggler" type="button"
-                data-bs-toggle="offcanvas" data-bs-target="#sideMenu">
-            <span class="navbar-toggler-icon"></span>
+<body>
+    <!-- ヘッダーは、画面を移動しても表示したままにします。 -->
+    <header class="site-header">
+        <a href="/" class="site-title">商品管理システム</a>
+        <button class="btn btn-outline-light mobile-menu-button" type="button"
+                data-bs-toggle="offcanvas" data-bs-target="#mobileMenu">
+            ☰
         </button>
     </header>
 
-    <!-- 三本線ボタンから開く共通メニューです。 -->
-    <div class="offcanvas offcanvas-end" tabindex="-1" id="sideMenu">
+    <div class="layout">
+        <!-- PCで表示する共通サイドバーです。 -->
+        <aside class="sidebar">
+            <h2>メニュー</h2>
+            <nav>
+                <a href="/">ホーム</a>
+                <a href="/products">商品一覧</a>
+            </nav>
+        </aside>
+
+        <!-- URLに対応するメイン画面だけを、この要素の中へ表示します。 -->
+        <main id="app" class="main-content"></main>
+    </div>
+
+    <!-- 【参考】タブレット端末以下で、三本線ボタンから開くメニューです。 -->
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="mobileMenu">
         <div class="offcanvas-header">
             <h2 class="offcanvas-title fs-5">メニュー</h2>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
@@ -31,11 +123,8 @@
         </div>
     </div>
 
-    <!-- URLに対応するメイン画面だけを、この要素の中へ表示します。 -->
-    <main id="app" class="container py-4" style="min-height: 75vh;"></main>
-
     <!-- フッターも、画面を移動しても表示したままにします。 -->
-    <footer class="bg-dark text-white text-center p-3">
+    <footer class="site-footer">
         商品管理システム
     </footer>
 
@@ -56,7 +145,7 @@
         }
 
         // メニューが開いている場合は、画面を切り替える前に閉じます。
-        let menu = bootstrap.Offcanvas.getInstance(document.getElementById('sideMenu'));
+        let menu = bootstrap.Offcanvas.getInstance(document.getElementById('mobileMenu'));
         if (menu) {
             menu.hide();
         }
