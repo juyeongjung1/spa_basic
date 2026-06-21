@@ -228,12 +228,14 @@
     //【作業手順③】URLを確認し、表示する画面を決めます。
     function showPage(path) {
 
-        if (path === '/') {
+        // 「/」または「/index.html」で開いた場合は、ホーム画面を表示します。
+        if (path === '/' || path === '/index.html') {
             showHome();
             return;
         }
 
-        if (path === '/products') {
+        // URLの最後に「/」が付いている場合も、商品一覧として扱います。
+        if (path === '/products' || path === '/products/') {
             return showProductList();
         }
 
