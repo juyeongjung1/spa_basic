@@ -220,7 +220,7 @@
         // 通常のページ移動を止め、URLに対応する画面だけを表示します。
         event.intercept({
             handler: function() {
-                return showPage(url.pathname);
+                showPage(url.pathname);
             }
         });
     });
@@ -236,14 +236,16 @@
 
         // URLの最後に「/」が付いている場合も、商品一覧として扱います。
         if (path === '/products' || path === '/products/') {
-            return showProductList();
+            showProductList();
+            return;
         }
 
         // /products/3 の「3」に当たる商品番号を取り出します。
         let result = path.match(/^\/products\/(\d+)$/);
 
         if (result) {
-            return showProductDetail(result[1]);
+            showProductDetail(result[1]);
+            return;
         }
 
         document.getElementById('app').innerHTML = `
@@ -266,7 +268,7 @@
 
     // 商品一覧APIを呼び出し、一覧画面を表示します。
     function showProductList() {
-        return axios.get('/api/v43/products')
+        axios.get('http://localhost:3005/api/v43/products')
         .then(response => {
             let rows = '';
 
@@ -275,7 +277,7 @@
                     <tr>
                         <td>${product.id}</td>
                         <td>
-                            <a href="/products/${product.id}">
+                            <a href="/products/${product.id}" class="product-detail-link">
                                 ${product.name}
                             </a>
                         </td>
@@ -298,13 +300,26 @@
                     </thead>
                     <tbody>${rows}</tbody>
                 </table>`;
+
+            // 商品名がクリックされた時に、商品詳細のURLへ移動します。
+            let detailLinks = document.querySelectorAll('.product-detail-link');
+
+            detailLinks.forEach(detailLink => {
+                detailLink.addEventListener('click', function(event) {
+                    // 通常のリンクによるページ移動を止めます。
+                    event.preventDefault();
+
+                    // Navigation APIを使って、リンク先のURLへ移動します。
+                    navigation.navigate(detailLink.getAttribute('href'));
+                });
+            });
         })
         .catch(error => console.error('商品一覧の取得に失敗しました:', error));
     }
 
     // 商品詳細APIを呼び出し、詳細画面を表示します。
     function showProductDetail(id) {
-        return axios.get(`/api/v43/products/${id}`)
+        axios.get(`http://localhost:3005/api/v43/products/${id}`)
         .then(response => {
             let product = response.data;
 
