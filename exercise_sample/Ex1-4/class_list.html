@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8"><title>classList</title>
+<style>
+.status { padding: 12px; background: #eee; color: #555; }
+.working { background: #d1e7dd; color: #0f5132; font-weight: bold; }
+</style>
+</head>
+<body>
+<p id="workStatus" class="status">勤務状態</p>
+<button id="workStartBtn">出勤</button>
+<button id="workEndBtn">退勤</button>
+<button id="toggleBtn">状態切替</button>
+<script>
+let target = document.getElementById('workStatus');
+document.getElementById('workStartBtn').addEventListener('click', function() {
+    // addは指定したclassを追加します。既に付いている場合は重複しません。
+    target.classList.add('working');
+});
+document.getElementById('workEndBtn').addEventListener('click', function() {
+    // removeは指定したclassだけを削除します。
+    target.classList.remove('working');
+});
+document.getElementById('toggleBtn').addEventListener('click', function() {
+    // toggleはclassがなければ追加し、あれば削除します。
+    target.classList.toggle('working');
+});
+</script>
+</body>
+</html>

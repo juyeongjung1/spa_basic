@@ -1,0 +1,30 @@
+<!DOCTYPE html><html lang="ja"><head><meta charset="UTF-8"><title>人事管理SPA</title><script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script><style>body{margin:0;font-family:sans-serif}header,footer{background:#17365d;color:white;padding:16px}nav a{margin-right:16px}main{padding:24px}table{border-collapse:collapse}th,td{border:1px solid #aaa;padding:8px}</style></head>
+<body><header><h1>人事管理システム</h1><nav><a href="/">ホーム</a><a href="/employees">社員一覧</a><a href="/employees/new">新規社員登録</a><a href="/about">このシステムについて</a></nav></header><main id="app"></main><footer>人事管理システム</footer>
+<script>
+// 最初にURLへ直接アクセスした場合も、そのpathnameに対応する画面を表示します。
+document.addEventListener('DOMContentLoaded',function(){showPage(window.location.pathname);});
+// リンク操作・戻る・進むなどのページ移動をNavigation APIで受け取ります。
+navigation.addEventListener('navigate',function(event){
+    let url=new URL(event.destination.url);
+    // ブラウザが置換できない移動と、外部サイトへの移動は通常動作に任せます。
+    if(!event.canIntercept||url.origin!==window.location.origin){return;}
+    // interceptによりページ全体の移動を止め、main領域だけを書き換えます。
+    event.intercept({handler:function(){showPage(url.pathname);}});
+});
+function showPage(path){
+    if(path==='/'||path==='/index.html'){showHome();return;}
+    if(path==='/employees'||path==='/employees/'){showEmployeeList();return;}
+    if(path==='/employees/new'||path==='/employees/new/'){showEmployeeRegister();return;}
+    // 正規表現の()で社員番号部分を取り出し、result[1]として利用します。
+    let result=path.match(/^\/employees\/(\d+)$/);
+    if(result){showEmployeeDetail(result[1]);return;}
+    if(path==='/about'||path==='/about/'){showAbout();return;}
+    // どのルートにも一致しない場合はSPAの表示領域へ404画面を描画します。
+    document.getElementById('app').innerHTML=`<h2>ページが見つかりません</h2><p>${path}</p><a href="/">ホーム</a> <a href="/employees">社員一覧</a>`;
+}
+function showHome(){document.getElementById('app').innerHTML='<h2>ホーム</h2><p>メニューから社員情報を管理できます。</p>';}
+function showEmployeeRegister(){document.getElementById('app').innerHTML='<h2>新規社員登録</h2><p>この演習では画面遷移を確認します。</p>';}
+function showAbout(){document.getElementById('app').innerHTML='<h2>このシステムについて</h2><p>使用技術：JavaScript、Express、SQLite、Axios</p>';}
+function showEmployeeList(){axios.get('http://localhost:3005/api/employees').then(r=>{let rows='';r.data.forEach(e=>rows+=`<tr><td>${e.id}</td><td><a href="/employees/${e.id}">${e.name}</a></td><td>${e.salary}</td><td>${e.location_name}</td></tr>`);document.getElementById('app').innerHTML=`<h2>社員一覧</h2><table><tbody>${rows}</tbody></table>`;});}
+function showEmployeeDetail(id){axios.get(`http://localhost:3005/api/employees/${id}`).then(r=>{let e=r.data;document.getElementById('app').innerHTML=`<h2>社員詳細</h2><p>${e.id} ${e.name} ${e.salary}円 ${e.location_name}</p><a href="/employees">一覧へ戻る</a>`;});}
+</script></body></html>

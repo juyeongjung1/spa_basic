@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8"><title>Axios - 給与計算</title>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+<h1>手取り見込額計算</h1>
+<input type="number" id="salary" value="230000">
+<button id="calculateBtn">計算する</button>
+<div id="result"></div>
+<script>
+document.getElementById('calculateBtn').addEventListener('click', function() {
+    let salary = document.getElementById('salary').value;
+    // テンプレートリテラルで入力値をURLパラメータとして送ります。
+    axios.get(`http://localhost:3003/payroll/${salary}`)
+    .then(response => {
+        // Axiosでは変換済みのレスポンス本文をresponse.dataから取得できます。
+        console.log(response.data);
+        let payroll = response.data;
+        document.getElementById('result').innerHTML = `
+            給与：${payroll.salary}円<br>
+            控除額：${payroll.tax}円<br>
+            手取り見込額：${payroll.net_salary}円`;
+    })
+    .catch(error => console.error('給与計算に失敗しました:', error));
+});
+</script>
+</body>
+</html>
