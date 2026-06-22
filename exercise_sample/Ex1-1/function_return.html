@@ -1,17 +1,23 @@
 <!DOCTYPE html>
 <html lang="ja">
-<head><meta charset="UTF-8"><title>引数と戻り値</title></head>
-<body>
-<script>
-// 仮引数を使うと、呼び出し元から関数へ値を渡せます。
-function calculateAnnualIncome(monthlySalary, bonus) {
-    // returnは計算結果を呼び出し元へ返し、この関数の処理を終了します。
-    return monthlySalary * 12 + bonus;
-}
 
-// 実引数230000と400000が、順番にmonthlySalaryとbonusへ入ります。
-let annualIncome = calculateAnnualIncome(230000, 400000);
-document.write(`年収見込額：${annualIncome}円`);
-</script>
+<head>
+    <meta charset="UTF-8">
+    <title>引数と戻り値</title>
+</head>
+
+<body>
+    <script>
+        // 仮引数を使うと、呼び出し元から関数へ値を渡せます。
+        function calculateAnnualIncome(monthlySalary, bonus) {
+            // returnは計算結果を呼び出し元へ返し、この関数の処理を終了します。
+            return monthlySalary * 12 + bonus;
+        }
+        // 実引数230000と400000が、順番にmonthlySalaryとbonusへ入ります。
+        let annualIncome = calculateAnnualIncome(230000, 400000);
+        document.write(`年収見込額：${annualIncome}円`);
+
+    </script>
 </body>
+
 </html>

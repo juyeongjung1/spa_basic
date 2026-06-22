@@ -1,38 +1,67 @@
 <!DOCTYPE html>
 <html lang="ja">
-<head><meta charset="UTF-8"><title>社員登録</title><script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script></head>
+
+<head>
+    <meta charset="UTF-8">
+    <title>社員登録</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+
 <body>
-<h1>新規社員登録</h1>
-<p id="errorMessage" style="color:red"></p>
-<input type="password" id="password" placeholder="パスワード"><input type="text" id="name" placeholder="氏名">
-<input type="number" id="salary" placeholder="給与"><input type="text" id="locationName" placeholder="勤務地">
-<input type="text" id="imagePath" placeholder="画像パス"><button id="registerBtn">登録</button>
-<table border="1"><thead><tr><th>社員番号</th><th>氏名</th><th>給与</th><th>勤務地</th></tr></thead><tbody id="employeeList"></tbody></table>
-<script>
-document.getElementById('registerBtn').addEventListener('click', function() {
-    let password = document.getElementById('password').value;
-    let name = document.getElementById('name').value;
-    let salary = document.getElementById('salary').value;
-    let locationName = document.getElementById('locationName').value;
-    let imagePath = document.getElementById('imagePath').value;
-    let errorMessage = document.getElementById('errorMessage');
-    errorMessage.innerHTML = '';
-    // 必須項目が不足する場合はAPIを呼ばず、returnで処理を終了します。
-    if (!password || !name || !salary) {
-        errorMessage.innerHTML = 'パスワード、氏名、給与を入力してください。'; return;
-    }
-    // 第2引数のオブジェクトがJSONのリクエストボディとして送信されます。
-    axios.post('http://localhost:3005/api/employees', {
-        password: password, name: name, salary: salary,
-        location_name: locationName, image_path: imagePath
-    })
-    .then(response => showEmployeeList(response.data))
-    .catch(error => { errorMessage.innerHTML = '社員登録に失敗しました。'; console.error(error); });
-});
-function showEmployeeList(employees) {
-    let list = document.getElementById('employeeList'); list.innerHTML = '';
-    employees.forEach(e => list.insertAdjacentHTML('beforeend', `<tr><td>${e.id}</td><td>${e.name}</td><td>${e.salary}</td><td>${e.location_name}</td></tr>`));
-}
-</script>
+    <h1>新規社員登録</h1>
+    <p id="errorMessage" style="color:red"></p>
+    <input type="password" id="password" placeholder="パスワード"><input type="text" id="name"
+        placeholder="氏名">
+    <input type="number" id="salary" placeholder="給与"><input type="text" id="locationName"
+        placeholder="勤務地">
+    <input type="text" id="imagePath" placeholder="画像パス"><button id="registerBtn">登録</button>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>社員番号</th>
+                <th>氏名</th>
+                <th>給与</th>
+                <th>勤務地</th>
+            </tr>
+        </thead>
+        <tbody id="employeeList"></tbody>
+    </table>
+    <script>
+        document.getElementById('registerBtn').addEventListener('click', function() {
+            let password = document.getElementById('password').value;
+            let name = document.getElementById('name').value;
+            let salary = document.getElementById('salary').value;
+            let locationName = document.getElementById('locationName').value;
+            let imagePath = document.getElementById('imagePath').value;
+            let errorMessage = document.getElementById('errorMessage');
+            errorMessage.innerHTML = '';
+            // 必須項目が不足する場合はAPIを呼ばず、returnで処理を終了します。
+            if (!password || !name || !salary) {
+                errorMessage.innerHTML = 'パスワード、氏名、給与を入力してください。';
+                return;
+            }
+            // 第2引数のオブジェクトがJSONのリクエストボディとして送信されます。
+            axios.post('http://localhost:3005/api/employees', {
+                password: password,
+                name: name,
+                salary: salary,
+                location_name: locationName,
+                image_path: imagePath
+            }).then(response => showEmployeeList(response.data)).catch(error => {
+                errorMessage.innerHTML = '社員登録に失敗しました。';
+                console.error(error);
+            });
+        });
+
+        function showEmployeeList(employees) {
+            let list = document.getElementById('employeeList');
+            list.innerHTML = '';
+            employees.forEach(e => list.insertAdjacentHTML('beforeend',
+                `<tr><td>${e.id}</td><td>${e.name}</td><td>${e.salary}</td><td>${e.location_name}</td></tr>`
+                ));
+        }
+
+    </script>
 </body>
+
 </html>

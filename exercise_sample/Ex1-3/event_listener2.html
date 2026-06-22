@@ -1,17 +1,23 @@
 <!DOCTYPE html>
 <html lang="ja">
-<head><meta charset="UTF-8"><title>addEventListener</title></head>
-<body>
-<button id="workEndBtn">退勤する</button>
-<script>
-// idを指定して、イベントを登録するボタン要素を取得します。
-let btn = document.getElementById('workEndBtn');
 
-// addEventListenerは、対象要素・イベント名・実行する関数を分けて記述できます。
-btn.addEventListener('click', function() {
-    // 第2引数の関数は、ボタンがクリックされた時点で実行されます。
-    alert('退勤を受け付けました');
-});
-</script>
+<head>
+    <meta charset="UTF-8">
+    <title>addEventListener</title>
+</head>
+
+<body>
+    <button id="workEndBtn">退勤する</button>
+    <script>
+        // idを指定して、イベントを登録するボタン要素を取得します。
+        let btn = document.getElementById('workEndBtn');
+        // addEventListenerは、対象要素・イベント名・実行する関数を分けて記述できます。
+        btn.addEventListener('click', function() {
+            // 第2引数の関数は、ボタンがクリックされた時点で実行されます。
+            alert('退勤を受け付けました');
+        });
+
+    </script>
 </body>
+
 </html>

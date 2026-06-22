@@ -58,7 +58,7 @@ document.getElementById('xxxx').addEventListener('click', function() {
 
     errorMessage.innerHTML = '';
 
-    // ➃ 未入力の項目がある場合は、「データを入力してください。」と表示して処理を止めてください。
+    // ➃ 未入力の項目がある場合は、「データを入力してください。」と表示して処理を止めるコードを確認してください。
     if (!name || !price || !category) {
         errorMessage.innerHTML = 'データを入力してください。';
         return;
@@ -72,8 +72,8 @@ document.getElementById('xxxx').addEventListener('click', function() {
         category: xxx
     })
 
-    // 【作業手順③】api/server.jsの「3-4 商品登録API」の問題を解いてから戻ってください。
-    // 【作業手順④】APIからのデータを動的レンダリング
+    // 【作業手順➂】api/server.jsの「3-4 商品登録API」の問題を解いてから戻ってください。
+    // 【作業手順➃】APIからのデータを動的レンダリング
     .then(response => {
         alert('商品が登録されました');
         errorMessage.innerHTML = '';

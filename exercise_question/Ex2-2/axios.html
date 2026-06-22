@@ -1,27 +1,30 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
-<meta charset="UTF-8"><title>Axios - 給与計算</title>
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <meta charset="UTF-8">
+    <title>Axios - 給与計算</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
+
 <body>
-<h1>手取り見込額計算</h1>
-<input type="number" id="salary" value="230000">
-<button id="calculateBtn">計算する</button>
-<div id="result"></div>
-<script>
-document.getElementById('calculateBtn').addEventListener('click', function() {
-    let salary = document.getElementById('salary').value;
-    // 【手順1】axios.getで給与額をURLへ含め、給与計算APIを呼び出してください。
-    axios._____(_____)
-    .then(response => {
-        // 【手順2】response.dataをConsoleへ出力してください。
-        _____
-        // 【手順3】salary、tax、net_salaryを画面へ表示してください。
-        document.getElementById('result').innerHTML = _____;
-    })
-    .catch(error => console.error('給与計算に失敗しました:', error));
-});
-</script>
+    <h1>手取り見込額計算</h1>
+    <input type="number" id="salary" value="230000">
+    <button id="calculateBtn">計算する</button>
+    <div id="result"></div>
+    <script>
+        document.getElementById('calculateBtn').addEventListener('click', function() {
+            let salary = document.getElementById('salary').value;
+            // 【手順1】axios.getで給与額をURLへ含め、給与計算APIを呼び出してください。
+            axios._____(_____).then(response => {
+                // 【手順2】response.dataをConsoleへ出力してください。
+                _____
+                // 【手順3】salary、tax、net_salaryを画面へ表示してください。
+                document.getElementById('result').innerHTML = _____;
+            }).catch(error => console.error('給与計算に失敗しました:', error));
+        });
+
+    </script>
 </body>
+
 </html>

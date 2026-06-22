@@ -1,25 +1,29 @@
 <!DOCTYPE html>
 <html lang="ja">
-<head><meta charset="UTF-8"><title>関数の定義と呼び出し</title></head>
+
+<head>
+    <meta charset="UTF-8">
+    <title>関数の定義と呼び出し</title>
+</head>
+
 <body>
-<script>
-// 関数宣言は「function 関数名()」で定義します。
-// 関数宣言はコードの記述位置より前からでも呼び出せる特徴があります。
-function showSystemName() {
-    document.write('人事管理システム');
-    document.write('<br>');
-}
+    <script>
+        // 関数宣言は「function 関数名()」で定義します。
+        // 関数宣言はコードの記述位置より前からでも呼び出せる特徴があります。
+        function showSystemName() {
+            document.write('人事管理システム');
+            document.write('<br>');
+        }
+        // 関数は、名前の後ろに()を付けて呼び出します。
+        showSystemName();
+        // 関数式では、名前のない関数を変数へ代入します。
+        // この形式は、変数が定義された行より後で呼び出します。
+        let showOperationGuide = function() {
+            document.write('社員メニューを選択してください');
+        };
+        showOperationGuide();
 
-// 関数は、名前の後ろに()を付けて呼び出します。
-showSystemName();
-
-// 関数式では、名前のない関数を変数へ代入します。
-// この形式は、変数が定義された行より後で呼び出します。
-let showOperationGuide = function() {
-    document.write('社員メニューを選択してください');
-};
-
-showOperationGuide();
-</script>
+    </script>
 </body>
+
 </html>

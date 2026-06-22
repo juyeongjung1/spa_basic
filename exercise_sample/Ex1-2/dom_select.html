@@ -1,26 +1,32 @@
 <!DOCTYPE html>
 <html lang="ja">
-<head><meta charset="UTF-8"><title>DOMの選択</title></head>
-<body>
-<h1>社員情報</h1>
-<p id="employeeName">山田太郎</p>
-<p class="work-location">東京</p>
-<button class="operation-button">詳細</button>
-<button class="operation-button">編集</button>
-<script>
-// idはページ内で一意なので、getElementByIdで1件取得します。
-let employeeName = document.getElementById('employeeName');
-// querySelectorはCSSセレクターに一致する最初の1件を返します。
-let workLocation = document.querySelector('.work-location');
-// querySelectorAllは一致するすべての要素をNodeListとして返します。
-let operationButtons = document.querySelectorAll('.operation-button');
 
-console.log(employeeName.textContent);
-console.log(workLocation.textContent);
-// 複数取得した要素はforEachで1件ずつ確認できます。
-operationButtons.forEach(function(button) {
-    console.log(button.textContent);
-});
-</script>
+<head>
+    <meta charset="UTF-8">
+    <title>DOMの選択</title>
+</head>
+
+<body>
+    <h1>社員情報</h1>
+    <p id="employeeName">山田太郎</p>
+    <p class="work-location">東京</p>
+    <button class="operation-button">詳細</button>
+    <button class="operation-button">編集</button>
+    <script>
+        // idはページ内で一意なので、getElementByIdで1件取得します。
+        let employeeName = document.getElementById('employeeName');
+        // querySelectorはCSSセレクターに一致する最初の1件を返します。
+        let workLocation = document.querySelector('.work-location');
+        // querySelectorAllは一致するすべての要素をNodeListとして返します。
+        let operationButtons = document.querySelectorAll('.operation-button');
+        console.log(employeeName.textContent);
+        console.log(workLocation.textContent);
+        // 複数取得した要素はforEachで1件ずつ確認できます。
+        operationButtons.forEach(function(button) {
+            console.log(button.textContent);
+        });
+
+    </script>
 </body>
+
 </html>

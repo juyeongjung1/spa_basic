@@ -59,6 +59,7 @@
     <button id="registBtn">登録</button>
 
 <script>
+//【作業手順➁】 更新フォームに商品データを表示する関数の作成
 // APIから取得した商品一覧を保存するための変数です。
 // 更新ボタンを押した時、この配列の中から選択された商品データを探します。
 let productData = [];
@@ -185,7 +186,7 @@ document.getElementById('registBtn').addEventListener('click', function() {
         console.error('商品登録に失敗しました:', error);
     });
 });
-
+//【作業手順➀】 商品リストを表示する関数の修正
 function showProductList(products){
     // 表示中の商品一覧をproductDataへ保存しておきます。
     // テーブルに表示するだけでなく、更新フォームへデータを入れる時にも使います。

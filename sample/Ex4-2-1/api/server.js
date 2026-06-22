@@ -35,7 +35,7 @@ app.get('/api/v421/products', (req, res) => {
     });
 });
 
-// 商品詳細
+// 【作業手順➃】主キーで商品詳細を検索するAPIを作る
 app.get('/api/v421/products/:id', (req, res) => {
     const id = req.params.id;
     const sql = 'SELECT * FROM products WHERE id = ?';

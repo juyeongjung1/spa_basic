@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,6 +10,7 @@
     <!-- Modalを使うためにBootstrapを読み込みます。 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
+
 <body>
     <h1>商品管理システム</h1>
 
@@ -60,10 +62,10 @@
                         </tr>
                     </table>
                 </div>
-                 <div class="modal-footer">
-                    <button type="button" class ="btn btn-primary">ボタン1</button>
-                    <button type="button" class ="btn btn-danger">ボタン2</button>
-                    <button type="button" data-bs-dismiss="modal" class ="btn btn-secondary">閉じる</button>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">ボタン1</button>
+                    <button type="button" class="btn btn-danger">ボタン2</button>
+                    <button type="button" data-bs-dismiss="modal" class="btn btn-secondary">閉じる</button>
                 </div>
 
             </div>
@@ -73,38 +75,13 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        getProductList();
-    });
+        //【作業手順➂】商品名をクリックできるようにする
+        function showProductList(products) {
+            let productList = document.getElementById('product_list');
+            productList.innerHTML = '';
 
-    document.getElementById('searchBtn').addEventListener('click', function() {
-        let name = document.getElementById('searchName').value;
-
-        axios.get(`http://localhost:3005/api/v421/products?keyword=${name}`)
-        .then(response => {
-            showProductList(response.data);
-        })
-        .catch(error => console.error('エラーが発生しました:', error));
-    });
-
-    document.getElementById('listBtn').addEventListener('click', function() {
-        getProductList();
-    });
-
-    function getProductList() {
-        axios.get('http://localhost:3005/api/v421/products')
-        .then(response => {
-            showProductList(response.data);
-        })
-        .catch(error => console.error('エラーが発生しました:', error));
-    }
-
-    function showProductList(products) {
-        let productList = document.getElementById('product_list');
-        productList.innerHTML = '';
-
-        products.forEach(product => {
-            let productHtml = `
+            products.forEach(product => {
+                let productHtml = `
             <tr>
                 <td>${product.id}</td>
                 <td>
@@ -116,28 +93,56 @@
                 <td>${product.price}</td>
                 <td>${product.category}</td>
             </tr>`;
-            productList.insertAdjacentHTML('beforeend', productHtml);
+                productList.insertAdjacentHTML('beforeend', productHtml);
+            });
+        }
+
+        function showProductDetail(id) {
+            // クリックされた商品IDをURLに入れ、1件分の商品詳細を取得します。
+            axios.get(`http://localhost:3005/api/v421/products/${id}`)
+                .then(response => {
+                    let product = response.data;
+
+                    // 重要：取得した商品情報を、Modal内の各表示場所へ挿入します。
+                    document.getElementById('detailId').innerHTML = product.id;
+                    document.getElementById('detailName').innerHTML = product.name;
+                    document.getElementById('detailPrice').innerHTML = product.price;
+                    document.getElementById('detailCategory').innerHTML = product.category;
+
+                    // 重要：商品情報を挿入した後にModalを表示します。
+                    let modal = new bootstrap.Modal(document.getElementById('detailModal'));
+                    modal.show();
+                })
+                .catch(error => console.error('エラーが発生しました:', error));
+        }
+
+        //3.3学習した初期リスト表示の呼び出し関数
+        document.addEventListener('DOMContentLoaded', function () {
+            getProductList();
         });
-    }
+        //3.4学習したキーワード検索の呼び出し関数
+        document.getElementById('searchBtn').addEventListener('click', function () {
+            let name = document.getElementById('searchName').value;
 
-    function showProductDetail(id) {
-        // 重要：クリックされた商品IDをURLに入れ、1件分の商品詳細を取得します。
-        axios.get(`http://localhost:3005/api/v421/products/${id}`)
-        .then(response => {
-            let product = response.data;
+            axios.get(`http://localhost:3005/api/v421/products?keyword=${name}`)
+                .then(response => {
+                    showProductList(response.data);
+                })
+                .catch(error => console.error('エラーが発生しました:', error));
+        });
+        //3.4学習した一覧表示の呼び出し関数
+        document.getElementById('listBtn').addEventListener('click', function () {
+            getProductList();
+        });
 
-            // 重要：取得した商品情報を、Modal内の各表示場所へ挿入します。
-            document.getElementById('detailId').innerHTML = product.id;
-            document.getElementById('detailName').innerHTML = product.name;
-            document.getElementById('detailPrice').innerHTML = product.price;
-            document.getElementById('detailCategory').innerHTML = product.category;
-
-            // 重要：商品情報を挿入した後にModalを表示します。
-            let modal = new bootstrap.Modal(document.getElementById('detailModal'));
-            modal.show();
-        })
-        .catch(error => console.error('エラーが発生しました:', error));
-    }
+        function getProductList() {
+            axios.get('http://localhost:3005/api/v421/products')
+                .then(response => {
+                    showProductList(response.data);
+                })
+                .catch(error => console.error('エラーが発生しました:', error));
+        }
     </script>
 </body>
+
 </html>

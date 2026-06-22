@@ -1,39 +1,51 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
-<meta charset="UTF-8"><title>社員検索</title>
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <meta charset="UTF-8">
+    <title>社員検索</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
+
 <body>
-<h1>社員検索</h1>
-<input type="text" id="keyword" placeholder="氏名">
-<button id="searchBtn">検索</button><button id="listBtn">一覧表示</button>
-<table border="1"><thead><tr><th>社員番号</th><th>氏名</th><th>給与</th><th>勤務地</th></tr></thead><tbody id="employeeList"></tbody></table>
-<script>
-document.getElementById('searchBtn').addEventListener('click', function() {
-    // 【手順1】入力された検索キーワードを取得してください。
-    let keyword = _____;
-    // 【手順2】クエリパラメータkeywordを付けて社員APIを呼び出してください。
-    axios.get(_____)
-    .then(response => {
-        // 【手順3】検索結果をshowEmployeeListへ渡してください。
-        _____
-    })
-    .catch(error => console.error('社員検索に失敗しました:', error));
-});
-
-document.getElementById('listBtn').addEventListener('click', function() {
-    // 【手順4】キーワードを付けず、全社員を取得してください。
-    axios.get(_____).then(response => showEmployeeList(response.data));
-});
-
-// 一覧描画は前の演習で学習済みのため完成済みです。
-function showEmployeeList(employees) {
-    let employeeList = document.getElementById('employeeList');
-    employeeList.innerHTML = '';
-    employees.forEach(employee => employeeList.insertAdjacentHTML('beforeend', `
+    <h1>社員検索</h1>
+    <input type="text" id="keyword" placeholder="氏名">
+    <button id="searchBtn">検索</button><button id="listBtn">一覧表示</button>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>社員番号</th>
+                <th>氏名</th>
+                <th>給与</th>
+                <th>勤務地</th>
+            </tr>
+        </thead>
+        <tbody id="employeeList"></tbody>
+    </table>
+    <script>
+        document.getElementById('searchBtn').addEventListener('click', function() {
+            // 【手順1】入力された検索キーワードを取得してください。
+            let keyword = _____;
+            // 【手順2】クエリパラメータkeywordを付けて社員APIを呼び出してください。
+            axios.get(_____).then(response => {
+                // 【手順3】検索結果をshowEmployeeListへ渡してください。
+                _____
+            }).catch(error => console.error('社員検索に失敗しました:', error));
+        });
+        document.getElementById('listBtn').addEventListener('click', function() {
+            // 【手順4】キーワードを付けず、全社員を取得してください。
+            axios.get(_____).then(response => showEmployeeList(response.data));
+        });
+        // 一覧描画は前の演習で学習済みのため完成済みです。
+        function showEmployeeList(employees) {
+            let employeeList = document.getElementById('employeeList');
+            employeeList.innerHTML = '';
+            employees.forEach(employee => employeeList.insertAdjacentHTML('beforeend',
+                `
         <tr><td>${employee.id}</td><td>${employee.name}</td><td>${employee.salary}</td><td>${employee.location_name}</td></tr>`));
-}
-</script>
+        }
+
+    </script>
 </body>
+
 </html>

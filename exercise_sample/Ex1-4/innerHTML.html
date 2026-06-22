@@ -1,19 +1,25 @@
 <!DOCTYPE html>
 <html lang="ja">
-<head><meta charset="UTF-8"><title>innerHTML</title></head>
-<body>
-<div id="content">社員情報はまだ読み込まれていません。</div>
-<button id="loadButton">社員情報を表示</button>
-<script>
-// 操作のきっかけとなるボタンをidで取得します。
-let btn = document.getElementById('loadButton');
 
-btn.addEventListener('click', function() {
-    // 書き換え対象となるdiv要素を、クリック後に取得します。
-    let content = document.getElementById('content');
-    // innerHTMLへ代入すると、要素内の既存内容を新しいHTMLへ置き換えます。
-    content.innerHTML = '<h2>社員情報を読み込みました</h2><p>山田太郎</p>';
-});
-</script>
+<head>
+    <meta charset="UTF-8">
+    <title>innerHTML</title>
+</head>
+
+<body>
+    <div id="content">社員情報はまだ読み込まれていません。</div>
+    <button id="loadButton">社員情報を表示</button>
+    <script>
+        // 操作のきっかけとなるボタンをidで取得します。
+        let btn = document.getElementById('loadButton');
+        btn.addEventListener('click', function() {
+            // 書き換え対象となるdiv要素を、クリック後に取得します。
+            let content = document.getElementById('content');
+            // innerHTMLへ代入すると、要素内の既存内容を新しいHTMLへ置き換えます。
+            content.innerHTML = '<h2>社員情報を読み込みました</h2><p>山田太郎</p>';
+        });
+
+    </script>
 </body>
+
 </html>

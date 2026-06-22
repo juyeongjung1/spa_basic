@@ -1,20 +1,25 @@
 <!DOCTYPE html>
 <html lang="ja">
-<head><meta charset="UTF-8"><title>アロー関数</title></head>
+
+<head>
+    <meta charset="UTF-8">
+    <title>アロー関数</title>
+</head>
+
 <body>
-<script>
-let formatEmployeeByFunction = function(id, name) {
-    return `${id}：${name}`;
-};
+    <script>
+        let formatEmployeeByFunction = function(id, name) {
+            return `${id}：${name}`;
+        };
+        // アロー関数はfunctionを省略し、引数の右に=>を記述します。
+        // 波括弧を使った場合、戻り値はreturnで明示します。
+        let formatEmployee = (id, name) => {
+            return `${id}：${name}`;
+        };
+        let result = formatEmployee(1001, '山田太郎');
+        document.write(result);
 
-// アロー関数はfunctionを省略し、引数の右に=>を記述します。
-// 波括弧を使った場合、戻り値はreturnで明示します。
-let formatEmployee = (id, name) => {
-    return `${id}：${name}`;
-};
-
-let result = formatEmployee(1001, '山田太郎');
-document.write(result);
-</script>
+    </script>
 </body>
+
 </html>

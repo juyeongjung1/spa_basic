@@ -1,35 +1,50 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
-<meta charset="UTF-8"><title>社員検索</title>
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <meta charset="UTF-8">
+    <title>社員検索</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
+
 <body>
-<h1>社員検索</h1>
-<input type="text" id="keyword" placeholder="氏名">
-<button id="searchBtn">検索</button><button id="listBtn">一覧表示</button>
-<table border="1"><thead><tr><th>社員番号</th><th>氏名</th><th>給与</th><th>勤務地</th></tr></thead><tbody id="employeeList"></tbody></table>
-<script>
-document.getElementById('searchBtn').addEventListener('click', function() {
-    let keyword = document.getElementById('keyword').value;
-    // ?keyword=の後ろへ入力値を付け、クエリパラメータとして送ります。
-    axios.get(`http://localhost:3005/api/employees?keyword=${keyword}`)
-    .then(response => showEmployeeList(response.data))
-    .catch(error => console.error('社員検索に失敗しました:', error));
-});
+    <h1>社員検索</h1>
+    <input type="text" id="keyword" placeholder="氏名">
+    <button id="searchBtn">検索</button><button id="listBtn">一覧表示</button>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>社員番号</th>
+                <th>氏名</th>
+                <th>給与</th>
+                <th>勤務地</th>
+            </tr>
+        </thead>
+        <tbody id="employeeList"></tbody>
+    </table>
+    <script>
+        document.getElementById('searchBtn').addEventListener('click', function() {
+            let keyword = document.getElementById('keyword').value;
+            // ?keyword=の後ろへ入力値を付け、クエリパラメータとして送ります。
+            axios.get(`http://localhost:3005/api/employees?keyword=${keyword}`).then(
+                response => showEmployeeList(response.data)).catch(error => console
+                .error('社員検索に失敗しました:', error));
+        });
+        document.getElementById('listBtn').addEventListener('click', function() {
+            // keywordを付けない場合、APIは全件検索を実行します。
+            axios.get('http://localhost:3005/api/employees').then(response =>
+                showEmployeeList(response.data));
+        });
 
-document.getElementById('listBtn').addEventListener('click', function() {
-    // keywordを付けない場合、APIは全件検索を実行します。
-    axios.get('http://localhost:3005/api/employees')
-    .then(response => showEmployeeList(response.data));
-});
-
-function showEmployeeList(employees) {
-    let employeeList = document.getElementById('employeeList');
-    employeeList.innerHTML = '';
-    employees.forEach(employee => employeeList.insertAdjacentHTML('beforeend', `
+        function showEmployeeList(employees) {
+            let employeeList = document.getElementById('employeeList');
+            employeeList.innerHTML = '';
+            employees.forEach(employee => employeeList.insertAdjacentHTML('beforeend',
+                `
         <tr><td>${employee.id}</td><td>${employee.name}</td><td>${employee.salary}</td><td>${employee.location_name}</td></tr>`));
-}
-</script>
+        }
+
+    </script>
 </body>
+
 </html>

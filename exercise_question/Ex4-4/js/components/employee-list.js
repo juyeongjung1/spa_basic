@@ -1,2 +1,12 @@
 // 【手順5】showEmployeeList関数をexportしてください。
-_____ function showEmployeeList(){axios.get('http://localhost:3005/api/employees').then(response=>{let rows='';response.data.forEach(e=>rows+=`<tr><td>${e.id}</td><td><a href="/employees/${e.id}">${e.name}</a></td><td>${e.salary}</td><td>${e.location_name}</td></tr>`);document.getElementById('app').innerHTML=`<h2>社員一覧</h2><table class="table"><tbody>${rows}</tbody></table>`;});}
+_____
+function showEmployeeList() {
+    axios.get('http://localhost:3005/api/employees').then(response => {
+        let rows = '';
+        response.data.forEach(e => rows +=
+            `<tr><td>${e.id}</td><td><a href="/employees/${e.id}">${e.name}</a></td><td>${e.salary}</td><td>${e.location_name}</td></tr>`
+            );
+        document.getElementById('app').innerHTML =
+            `<h2>社員一覧</h2><table class="table"><tbody>${rows}</tbody></table>`;
+    });
+}

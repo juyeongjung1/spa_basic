@@ -13,6 +13,10 @@ app.get('/api/test', (req, res) => {
     res.json({ status: 'ok', message: 'APIサーバー稼働中！' });
 });
 
+// 【作業手順➄】商品登録APIを作成する
+// ④ sample/Ex3-4/api/server.jsの商品登録APIをここへコピーし、APIのパスを
+// 「/api/v422/products」に変更してください。
+
 // 商品一覧・キーワード検索
 app.get('/api/v422/products', (req, res) => {
     const keyword = req.query.keyword;

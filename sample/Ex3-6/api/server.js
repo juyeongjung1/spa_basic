@@ -20,7 +20,7 @@ app.get('/api/test', (req, res) => {
     res.json({ status: 'ok', message: 'APIサーバー稼働中！' });
 });
 
-// 3-6 商品更新
+// 3-6 【作業手順➃】 商品データを更新するAPIの作成
 app.put('/api/v36/products/:id', (req, res) => {
     const id = req.params.id;
     const name = req.body.name;

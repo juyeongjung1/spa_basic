@@ -33,8 +33,8 @@ app.post('/api/v34/products', (req, res) => {
     }
 
     const sql = 'INSERT INTO products (name, price, category) VALUES (?, ?, ?)';
-
-    db.run(sql, [name, price, category], (err) => {
+    const params = [name, price, category];
+    db.run(sql, params, (err) => {
         if (err) {
             console.error(err);
             res.status(500).json({ error: 'Database error' });
@@ -47,7 +47,6 @@ app.post('/api/v34/products', (req, res) => {
                 res.status(500).json({ error: 'Database error' });
                 return;
             }
-
             res.json(rows);
         });
     });
