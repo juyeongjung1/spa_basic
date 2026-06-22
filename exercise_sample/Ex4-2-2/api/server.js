@@ -5,38 +5,34 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 const db = new sqlite3.Database('../db/employees.db');
-app.get('/api/employees', (req, res) => db.all('SELECT * FROM employee', [], (err, rows) => {
-    if (err) {
-        res.status(500).json({
-            error: 'Database error'
-        });
-        return;
-    }
-    res.json(rows);
-}));
+app.get('/api/employees', (req, res) =>
+    db.all('SELECT * FROM employee', [], (err, rows) => {
+        if (err) {
+            res.status(500).json({
+                error: 'Database error',
+            });
+            return;
+        }
+        res.json(rows);
+    }),
+);
 // 第3章の登録APIと同じ責務です。Modal化してもAPIの設計は変わりません。
 app.post('/api/employees', (req, res) => {
-    const {
-        password,
-        name,
-        salary,
-        location_name,
-        image_path
-    } = req.body;
+    const { password, name, salary, location_name, image_path } = req.body;
     const sql =
         'INSERT INTO employee (password,name,salary,location_name,image_path) VALUES (?,?,?,?,?)';
     const params = [password, name, salary, location_name, image_path];
-    db.run(sql, params, err => {
+    db.run(sql, params, (err) => {
         if (err) {
             res.status(500).json({
-                error: 'Database error'
+                error: 'Database error',
             });
             return;
         }
         db.all('SELECT * FROM employee', [], (err, rows) => {
             if (err) {
                 res.status(500).json({
-                    error: 'Database error'
+                    error: 'Database error',
                 });
                 return;
             }

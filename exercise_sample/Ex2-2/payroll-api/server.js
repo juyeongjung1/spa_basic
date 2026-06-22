@@ -10,7 +10,7 @@ app.get('/payroll/:salary', (req, res) => {
     res.json({
         salary: salary,
         tax: tax,
-        net_salary: salary - tax
+        net_salary: salary - tax,
     });
 });
 app.listen(3003, () => console.log('payroll API: http://localhost:3003'));

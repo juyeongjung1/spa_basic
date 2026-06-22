@@ -1,31 +1,29 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ja">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Fetch API - 出勤時刻</title>
+    </head>
 
-<head>
-    <meta charset="UTF-8">
-    <title>Fetch API - 出勤時刻</title>
-</head>
-
-<body>
-    <h1>勤怠登録</h1>
-    <p id="showTime">出勤時刻は未登録です。</p>
-    <button id="workStartBtn">出勤する</button>
-    <script>
-        document.getElementById('workStartBtn').addEventListener('click', function() {
-            let result = document.getElementById('showTime');
-            // fetchへURLを渡すと、GET方式で非同期通信を開始します。
-            fetch('http://localhost:3002/currenttime')
-                // fetchのresponseは通信情報を含むため、json()で本文を変換します。
-                .then(response => response.json()).then(data => {
-                    // APIの返却形式を確認すると、利用するプロパティを判断できます。
-                    console.log(data);
-                    result.innerHTML = `出勤時刻：${data.time}`;
-                })
-                // 通信できなかった場合の情報をConsoleへ出します。
-                .catch(error => console.error('時刻の取得に失敗しました:', error));
-        });
-
-    </script>
-</body>
-
+    <body>
+        <h1>勤怠登録</h1>
+        <p id="showTime">出勤時刻は未登録です。</p>
+        <button id="workStartBtn">出勤する</button>
+        <script>
+            document.getElementById("workStartBtn").addEventListener("click", function () {
+                let result = document.getElementById("showTime");
+                // fetchへURLを渡すと、GET方式で非同期通信を開始します。
+                fetch("http://localhost:3002/currenttime")
+                    // fetchのresponseは通信情報を含むため、json()で本文を変換します。
+                    .then((response) => response.json())
+                    .then((data) => {
+                        // APIの返却形式を確認すると、利用するプロパティを判断できます。
+                        console.log(data);
+                        result.innerHTML = `出勤時刻：${data.time}`;
+                    })
+                    // 通信できなかった場合の情報をConsoleへ出します。
+                    .catch((error) => console.error("時刻の取得に失敗しました:", error));
+            });
+        </script>
+    </body>
 </html>

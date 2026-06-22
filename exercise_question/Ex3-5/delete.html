@@ -1,48 +1,64 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ja">
+    <head>
+        <meta charset="UTF-8" />
+        <title>社員削除</title>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    </head>
 
-<head>
-    <meta charset="UTF-8">
-    <title>社員削除</title>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-</head>
-
-<body>
-    <h1>社員削除</h1>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>氏名</th>
-                <th>給与</th>
-                <th>勤務地</th>
-                <th>操作</th>
-            </tr>
-        </thead>
-        <tbody id="employeeList"></tbody>
-    </table>
-    <script>
-        function deleteEmployee(id) {
-            // 【手順1】確認ダイアログでキャンセルされた場合は処理を終了してください。
-            _____
-            // 【手順2】DELETE /api/employees/{id}を呼び出してください。
-            axios._____(_____).then(response => {
-                // 【手順3】削除後の一覧を再描画してください。
-                _____
-            }).catch(error => console.error('社員削除に失敗しました:', error));
-        }
-        // 一覧取得と描画は完成済みです。
-        function showEmployeeList(employees) {
-            let list = document.getElementById('employeeList');
-            list.innerHTML = '';
-            employees.forEach(e => list.insertAdjacentHTML('beforeend',
-                `<tr><td>${e.id}</td><td>${e.name}</td><td>${e.salary}</td><td>${e.location_name}</td><td><button onclick="deleteEmployee(${e.id})">削除</button></td></tr>`
-                ));
-        }
-        document.addEventListener('DOMContentLoaded', () => axios.get(
-            'http://localhost:3005/api/employees').then(r => showEmployeeList(r.data)));
-
-    </script>
-</body>
-
+    <body>
+        <h1>社員削除</h1>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>氏名</th>
+                    <th>給与</th>
+                    <th>勤務地</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody id="employeeList"></tbody>
+        </table>
+        <script>
+            function deleteEmployee(id) {
+                // 【手順1】確認ダイアログでキャンセルされた場合は処理を終了してください。
+                _____;
+                // 【手順2】DELETE /api/employees/{id}を呼び出してください。
+                axios
+                    ._____(_____)
+                    .then((response) => {
+                        // 【手順3】削除後の一覧を再描画してください。
+                        _____;
+                    })
+                    .catch((error) => console.error("社員削除に失敗しました:", error));
+            }
+            // 一覧取得と描画は完成済みです。
+            function showEmployeeList(employees) {
+                let list = document.getElementById("employeeList");
+                list.innerHTML = "";
+                employees.forEach((e) =>
+                    list.insertAdjacentHTML(
+                        "beforeend",
+                        `
+                <tr>
+                    <td>${e.id}</td>
+                    <td>${e.name}</td>
+                    <td>${e.salary}</td>
+                    <td>${e.location_name}</td>
+                    <td>
+                        <button onclick="deleteEmployee(${e.id})">削除</button>
+                    </td>
+                </tr>
+            `,
+                    ),
+                );
+            }
+            document.addEventListener("DOMContentLoaded", () =>
+                axios
+                    .get("http://localhost:3005/api/employees")
+                    .then((r) => showEmployeeList(r.data)),
+            );
+        </script>
+    </body>
 </html>

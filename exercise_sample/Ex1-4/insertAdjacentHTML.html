@@ -1,40 +1,37 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ja">
+    <head>
+        <meta charset="UTF-8" />
+        <title>insertAdjacentHTML</title>
+    </head>
 
-<head>
-    <meta charset="UTF-8">
-    <title>insertAdjacentHTML</title>
-</head>
-
-<body>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>社員番号</th>
-                <th>氏名</th>
-                <th>勤務地</th>
-            </tr>
-        </thead>
-        <tbody id="employeeList"></tbody>
-    </table>
-    <button id="addEmployeeBtn">社員を追加</button>
-    <script>
-        let employeeId = 1001;
-        document.getElementById('addEmployeeBtn').addEventListener('click', function() {
-            let employeeList = document.getElementById('employeeList');
-            // テンプレートリテラルなら、${}で変数をHTML文字列へ埋め込めます。
-            let employeeHtml = `
+    <body>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>社員番号</th>
+                    <th>氏名</th>
+                    <th>勤務地</th>
+                </tr>
+            </thead>
+            <tbody id="employeeList"></tbody>
+        </table>
+        <button id="addEmployeeBtn">社員を追加</button>
+        <script>
+            let employeeId = 1001;
+            document.getElementById("addEmployeeBtn").addEventListener("click", function () {
+                let employeeList = document.getElementById("employeeList");
+                // テンプレートリテラルなら、${}で変数をHTML文字列へ埋め込めます。
+                let employeeHtml = `
         <tr>
             <td>${employeeId}</td>
             <td>新規社員</td>
             <td>未設定</td>
         </tr>`;
-            // beforeendは、tbodyの内側の末尾へHTMLを追加する位置です。
-            employeeList.insertAdjacentHTML('beforeend', employeeHtml);
-            employeeId++;
-        });
-
-    </script>
-</body>
-
+                // beforeendは、tbodyの内側の末尾へHTMLを追加する位置です。
+                employeeList.insertAdjacentHTML("beforeend", employeeHtml);
+                employeeId++;
+            });
+        </script>
+    </body>
 </html>

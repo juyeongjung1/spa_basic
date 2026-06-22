@@ -13,7 +13,7 @@ const db = new sqlite3.Database('../db/employees.db');
 app.get('/api/test', (req, res) => {
     res.json({
         status: 'ok',
-        message: '人事管理API稼働中'
+        message: '人事管理API稼働中',
     });
 });
 app.listen(3005, () => console.log('http://localhost:3005 で起動しました'));

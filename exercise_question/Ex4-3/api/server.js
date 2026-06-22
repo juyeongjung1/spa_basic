@@ -4,13 +4,22 @@ const express = require('express'),
 const app = express();
 app.use(cors());
 const db = new sqlite3.Database('../db/employees.db');
-app.get('/api/employees', (req, res) => db.all('SELECT * FROM employee', [], (e, rows) => e ? res
-    .status(500).json({
-        error: 'Database error'
-    }) : res.json(rows)));
-app.get('/api/employees/:id', (req, res) => db.get('SELECT * FROM employee WHERE id=?', [req.params
-    .id
-], (e, row) => e ? res.status(500).json({
-    error: 'Database error'
-}) : res.json(row)));
+app.get('/api/employees', (req, res) =>
+    db.all('SELECT * FROM employee', [], (e, rows) =>
+        e
+            ? res.status(500).json({
+                  error: 'Database error',
+              })
+            : res.json(rows),
+    ),
+);
+app.get('/api/employees/:id', (req, res) =>
+    db.get('SELECT * FROM employee WHERE id=?', [req.params.id], (e, row) =>
+        e
+            ? res.status(500).json({
+                  error: 'Database error',
+              })
+            : res.json(row),
+    ),
+);
 app.listen(3005, () => console.log('http://localhost:3005 で起動しました'));

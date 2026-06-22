@@ -1,24 +1,16 @@
 // 各画面の表示責務を別ファイルへ分け、app.jsは画面遷移だけを管理します。
-import {
-    showHome
-} from './components/home.js';
-import {
-    showEmployeeList
-} from './components/employee-list.js';
-import {
-    showEmployeeDetail
-} from './components/employee-detail.js';
-import {
-    showEmployeeRegister
-} from './components/employee-register.js';
+import { showHome } from './components/home.js';
+import { showEmployeeList } from './components/employee-list.js';
+import { showEmployeeDetail } from './components/employee-detail.js';
+import { showEmployeeRegister } from './components/employee-register.js';
 document.addEventListener('DOMContentLoaded', () => showPage(window.location.pathname));
-navigation.addEventListener('navigate', event => {
+navigation.addEventListener('navigate', (event) => {
     let url = new URL(event.destination.url);
     if (!event.canIntercept || url.origin !== window.location.origin) {
         return;
     }
     event.intercept({
-        handler: () => showPage(url.pathname)
+        handler: () => showPage(url.pathname),
     });
 });
 

@@ -1,49 +1,49 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ja">
+    <head>
+        <meta charset="UTF-8" />
+        <title>社員一覧</title>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    </head>
 
-<head>
-    <meta charset="UTF-8">
-    <title>社員一覧</title>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-</head>
+    <body>
+        <h1>社員一覧</h1>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>社員番号</th>
+                    <th>氏名</th>
+                    <th>給与</th>
+                    <th>勤務地</th>
+                </tr>
+            </thead>
+            <tbody id="employeeList"></tbody>
+        </table>
+        <script>
+            // DOMContentLoadedは、HTML要素の読み込み完了後に発生します。
+            document.addEventListener("DOMContentLoaded", function () {
+                axios
+                    .get("http://localhost:3005/api/employees")
+                    .then((response) => {
+                        showEmployeeList(response.data);
+                    })
+                    .catch((error) => console.error("社員一覧の取得に失敗しました:", error));
+            });
 
-<body>
-    <h1>社員一覧</h1>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>社員番号</th>
-                <th>氏名</th>
-                <th>給与</th>
-                <th>勤務地</th>
-            </tr>
-        </thead>
-        <tbody id="employeeList"></tbody>
-    </table>
-    <script>
-        // DOMContentLoadedは、HTML要素の読み込み完了後に発生します。
-        document.addEventListener('DOMContentLoaded', function() {
-            axios.get('http://localhost:3005/api/employees').then(response => {
-                showEmployeeList(response.data);
-            }).catch(error => console.error('社員一覧の取得に失敗しました:', error));
-        });
-
-        function showEmployeeList(employees) {
-            let employeeList = document.getElementById('employeeList');
-            // 再表示時に行が重複しないよう、既存のtbodyを空にします。
-            employeeList.innerHTML = '';
-            employees.forEach(employee => {
-                // passwordとimage_pathは一覧に不要なので表示しません。
-                let employeeHtml = `
+            function showEmployeeList(employees) {
+                let employeeList = document.getElementById("employeeList");
+                // 再表示時に行が重複しないよう、既存のtbodyを空にします。
+                employeeList.innerHTML = "";
+                employees.forEach((employee) => {
+                    // passwordとimage_pathは一覧に不要なので表示しません。
+                    let employeeHtml = `
         <tr>
             <td>${employee.id}</td><td>${employee.name}</td>
             <td>${employee.salary}</td><td>${employee.location_name}</td>
         </tr>`;
-                employeeList.insertAdjacentHTML('beforeend', employeeHtml);
-            });
-        }
-
-    </script>
-</body>
-
+                    employeeList.insertAdjacentHTML("beforeend", employeeHtml);
+                });
+            }
+        </script>
+    </body>
 </html>

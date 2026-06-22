@@ -1,63 +1,66 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ja">
+    <head>
+        <meta charset="UTF-8" />
+        <title>社員登録</title>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    </head>
 
-<head>
-    <meta charset="UTF-8">
-    <title>社員登録</title>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-</head>
-
-<body>
-    <h1>新規社員登録</h1>
-    <p id="errorMessage" style="color:red"></p>
-    <input type="password" id="password" placeholder="パスワード">
-    <input type="text" id="name" placeholder="氏名">
-    <input type="number" id="salary" placeholder="給与">
-    <input type="text" id="locationName" placeholder="勤務地">
-    <input type="text" id="imagePath" placeholder="画像パス">
-    <button id="registerBtn">登録</button>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>社員番号</th>
-                <th>氏名</th>
-                <th>給与</th>
-                <th>勤務地</th>
-            </tr>
-        </thead>
-        <tbody id="employeeList"></tbody>
-    </table>
-    <script>
-        document.getElementById('registerBtn').addEventListener('click', function() {
-            // 【手順1】5つの入力値を取得してください。
-            let password = _____;
-            let name = _____;
-            let salary = _____;
-            let locationName = _____;
-            let imagePath = _____;
-            let errorMessage = document.getElementById('errorMessage');
-            errorMessage.innerHTML = '';
-            // 【手順2】password、name、salaryが未入力ならエラーを表示してreturnしてください。
-            _____
-            // 【手順3】POST /api/employeesへ5項目を送信してください。
-            axios._____(_____, _____).then(response => {
-                // 【手順4】登録後の社員一覧を表示してください。
-                _____
-            }).catch(error => {
-                errorMessage.innerHTML = '社員登録に失敗しました。';
-                console.error(error);
+    <body>
+        <h1>新規社員登録</h1>
+        <p id="errorMessage" style="color: red"></p>
+        <input type="password" id="password" placeholder="パスワード" />
+        <input type="text" id="name" placeholder="氏名" />
+        <input type="number" id="salary" placeholder="給与" />
+        <input type="text" id="locationName" placeholder="勤務地" />
+        <input type="text" id="imagePath" placeholder="画像パス" />
+        <button id="registerBtn">登録</button>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>社員番号</th>
+                    <th>氏名</th>
+                    <th>給与</th>
+                    <th>勤務地</th>
+                </tr>
+            </thead>
+            <tbody id="employeeList"></tbody>
+        </table>
+        <script>
+            document.getElementById("registerBtn").addEventListener("click", function () {
+                // 【手順1】5つの入力値を取得してください。
+                let password = _____;
+                let name = _____;
+                let salary = _____;
+                let locationName = _____;
+                let imagePath = _____;
+                let errorMessage = document.getElementById("errorMessage");
+                errorMessage.innerHTML = "";
+                // 【手順2】password、name、salaryが未入力ならエラーを表示してreturnしてください。
+                _____;
+                // 【手順3】POST /api/employeesへ5項目を送信してください。
+                axios
+                    ._____(_____, _____)
+                    .then((response) => {
+                        // 【手順4】登録後の社員一覧を表示してください。
+                        _____;
+                    })
+                    .catch((error) => {
+                        errorMessage.innerHTML = "社員登録に失敗しました。";
+                        console.error(error);
+                    });
             });
-        });
-        // 一覧描画は学習済みのため完成済みです。
-        function showEmployeeList(employees) {
-            let list = document.getElementById('employeeList');
-            list.innerHTML = '';
-            employees.forEach(e => list.insertAdjacentHTML('beforeend',
-                `<tr><td>${e.id}</td><td>${e.name}</td><td>${e.salary}</td><td>${e.location_name}</td></tr>`
-                ));
-        }
-
-    </script>
-</body>
-
+            // 一覧描画は学習済みのため完成済みです。
+            function showEmployeeList(employees) {
+                let list = document.getElementById("employeeList");
+                list.innerHTML = "";
+                employees.forEach((e) =>
+                    list.insertAdjacentHTML(
+                        "beforeend",
+                        `<tr><td>${e.id}</td><td>${e.name}</td><td>${e.salary}</td><td>${e.location_name}</td></tr>`,
+                    ),
+                );
+            }
+        </script>
+    </body>
 </html>

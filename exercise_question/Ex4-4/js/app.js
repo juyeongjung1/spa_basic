@@ -1,24 +1,16 @@
 // 【手順2】各コンポーネントから表示関数をimportしてください。
-import {
-    _____
-} from './components/home.js';
-import {
-    _____
-} from './components/employee-list.js';
-import {
-    _____
-} from './components/employee-detail.js';
-import {
-    _____
-} from './components/employee-register.js';
+import { _____ } from './components/home.js';
+import { _____ } from './components/employee-list.js';
+import { _____ } from './components/employee-detail.js';
+import { _____ } from './components/employee-register.js';
 document.addEventListener('DOMContentLoaded', () => showPage(window.location.pathname));
-navigation.addEventListener('navigate', event => {
+navigation.addEventListener('navigate', (event) => {
     let url = new URL(event.destination.url);
     if (!event.canIntercept || url.origin !== window.location.origin) {
         return;
     }
     event.intercept({
-        handler: () => showPage(url.pathname)
+        handler: () => showPage(url.pathname),
     });
 });
 

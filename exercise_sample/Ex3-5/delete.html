@@ -1,49 +1,63 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ja">
+    <head>
+        <meta charset="UTF-8" />
+        <title>社員削除</title>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    </head>
 
-<head>
-    <meta charset="UTF-8">
-    <title>社員削除</title>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-</head>
-
-<body>
-    <h1>社員削除</h1>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>氏名</th>
-                <th>給与</th>
-                <th>勤務地</th>
-                <th>操作</th>
-            </tr>
-        </thead>
-        <tbody id="employeeList"></tbody>
-    </table>
-    <script>
-        function deleteEmployee(id) {
-            // confirmがfalseなら、APIを呼び出さずに処理を終了します。
-            if (!confirm('この社員を削除しますか？')) {
-                return;
+    <body>
+        <h1>社員削除</h1>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>氏名</th>
+                    <th>給与</th>
+                    <th>勤務地</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody id="employeeList"></tbody>
+        </table>
+        <script>
+            function deleteEmployee(id) {
+                // confirmがfalseなら、APIを呼び出さずに処理を終了します。
+                if (!confirm("この社員を削除しますか？")) {
+                    return;
+                }
+                // 社員番号をURLパラメータとしてDELETE APIへ送ります。
+                axios
+                    .delete(`http://localhost:3005/api/employees/${id}`)
+                    .then((response) => showEmployeeList(response.data))
+                    .catch((error) => console.error("社員削除に失敗しました:", error));
             }
-            // 社員番号をURLパラメータとしてDELETE APIへ送ります。
-            axios.delete(`http://localhost:3005/api/employees/${id}`).then(response =>
-                showEmployeeList(response.data)).catch(error => console.error('社員削除に失敗しました:',
-                error));
-        }
 
-        function showEmployeeList(employees) {
-            let list = document.getElementById('employeeList');
-            list.innerHTML = '';
-            employees.forEach(e => list.insertAdjacentHTML('beforeend',
-                `<tr><td>${e.id}</td><td>${e.name}</td><td>${e.salary}</td><td>${e.location_name}</td><td><button onclick="deleteEmployee(${e.id})">削除</button></td></tr>`
-                ));
-        }
-        document.addEventListener('DOMContentLoaded', () => axios.get(
-            'http://localhost:3005/api/employees').then(r => showEmployeeList(r.data)));
-
-    </script>
-</body>
-
+            function showEmployeeList(employees) {
+                let list = document.getElementById("employeeList");
+                list.innerHTML = "";
+                employees.forEach((e) =>
+                    list.insertAdjacentHTML(
+                        "beforeend",
+                        `
+                <tr>
+                    <td>${e.id}</td>
+                    <td>${e.name}</td>
+                    <td>${e.salary}</td>
+                    <td>${e.location_name}</td>
+                    <td>
+                        <button onclick="deleteEmployee(${e.id})">削除</button>
+                    </td>
+                </tr>
+            `,
+                    ),
+                );
+            }
+            document.addEventListener("DOMContentLoaded", () =>
+                axios
+                    .get("http://localhost:3005/api/employees")
+                    .then((r) => showEmployeeList(r.data)),
+            );
+        </script>
+    </body>
 </html>

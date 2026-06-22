@@ -1,21 +1,18 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ja">
+    <head>
+        <meta charset="UTF-8" />
+        <title>HTML属性のイベント</title>
+    </head>
 
-<head>
-    <meta charset="UTF-8">
-    <title>HTML属性のイベント</title>
-</head>
-
-<body>
-    <!-- onclickには、クリック時に実行する関数呼び出しを指定します。 -->
-    <button onclick="showWorkStartMessage()">出勤する</button>
-    <script>
-        function showWorkStartMessage() {
-            // alertはブラウザにメッセージダイアログを表示します。
-            alert('出勤を受け付けました');
-        }
-
-    </script>
-</body>
-
+    <body>
+        <!-- onclickには、クリック時に実行する関数呼び出しを指定します。 -->
+        <button onclick="showWorkStartMessage()">出勤する</button>
+        <script>
+            function showWorkStartMessage() {
+                // alertはブラウザにメッセージダイアログを表示します。
+                alert("出勤を受け付けました");
+            }
+        </script>
+    </body>
 </html>

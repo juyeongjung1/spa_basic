@@ -19,7 +19,7 @@ app.get('/api/employees', (req, res) => {
     db.all(sql, params, (err, rows) => {
         if (err) {
             res.status(500).json({
-                error: 'Database error'
+                error: 'Database error',
             });
             return;
         }

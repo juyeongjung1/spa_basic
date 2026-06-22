@@ -5,23 +5,25 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 const db = new sqlite3.Database('../db/employees.db');
-app.get('/api/employees', (req, res) => db.all('SELECT * FROM employee', [], (err, rows) => {
-    if (err) {
-        res.status(500).json({
-            error: 'Database error'
-        });
-        return;
-    }
-    res.json(rows);
-}));
+app.get('/api/employees', (req, res) =>
+    db.all('SELECT * FROM employee', [], (err, rows) => {
+        if (err) {
+            res.status(500).json({
+                error: 'Database error',
+            });
+            return;
+        }
+        res.json(rows);
+    }),
+);
 app.delete('/api/employees/:id', (req, res) => {
     // :idの値はreq.params.idで取得します。
     const id = req.params.id;
     const sql = 'DELETE FROM employee WHERE id = ?';
-    db.run(sql, [id], err => {
+    db.run(sql, [id], (err) => {
         if (err) {
             res.status(500).json({
-                error: 'Database error'
+                error: 'Database error',
             });
             return;
         }
@@ -29,7 +31,7 @@ app.delete('/api/employees/:id', (req, res) => {
         db.all('SELECT * FROM employee', [], (err, rows) => {
             if (err) {
                 res.status(500).json({
-                    error: 'Database error'
+                    error: 'Database error',
                 });
                 return;
             }

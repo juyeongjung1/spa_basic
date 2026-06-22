@@ -8,11 +8,9 @@ const db = new sqlite3.Database('../db/employees.db');
 // 【手順1】POST /api/employeesを定義してください。
 app._____(_____, (req, res) => {
     // 【手順2】req.bodyから5項目を取得してください。
-    const {
-        _____
-    } = req.body;
+    const { _____ } = req.body;
     // 【手順3】必須3項目がなければ400を返してください。
-    _____
+    _____;
     // 【手順4】employeeテーブルへ登録するSQLとparamsを作成してください。
     const sql = _____;
     const params = _____;
@@ -20,18 +18,18 @@ app._____(_____, (req, res) => {
     db._____(sql, params, (err) => {
         if (err) {
             res.status(500).json({
-                error: 'Database error'
+                error: 'Database error',
             });
             return;
         }
         db._____('SELECT * FROM employee', [], (err, rows) => {
             if (err) {
                 res.status(500).json({
-                    error: 'Database error'
+                    error: 'Database error',
                 });
                 return;
             }
-            _____
+            _____;
         });
     });
 });

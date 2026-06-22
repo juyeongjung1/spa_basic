@@ -21,12 +21,12 @@ app._____(_____, (req, res) => {
     db._____(sql, params, (err, rows) => {
         if (err) {
             res.status(500).json({
-                error: 'Database error'
+                error: 'Database error',
             });
             return;
         }
         // 【手順6】rowsをJSON形式で返してください。
-        _____
+        _____;
     });
 });
 app.listen(3005, () => console.log('http://localhost:3005 で起動しました'));
