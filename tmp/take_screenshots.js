@@ -110,7 +110,7 @@ const styleOverride = `
     await page.evaluateOnNewDocument(() => {
         document.addEventListener('DOMContentLoaded', () => {
             const style = document.createElement('style');
-            style.textContent = \`
+            style.textContent = `
               body {
                 border: 1px solid #aaa !important;
                 padding: 20px !important;
@@ -121,7 +121,7 @@ const styleOverride = `
                 min-height: 80px !important;
                 position: relative !important;
               }
-            \`;
+            `;
             document.head.appendChild(style);
         });
     });
