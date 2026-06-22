@@ -77,11 +77,14 @@ exercise_sample/    コメントで詳しく解説した演習の完成解答
 
 ### 演習1.1.1 関数宣言と関数式
 
-- 参照テキスト: 1.1.1. 関数の定義と呼び出し方法
+**参照テキスト**  
+1.1.1. 関数の定義と呼び出し方法
 
-- 参照ファイル: `sample\Ex1-1\function_basic.html`
+**参照ファイル**  
+`sample\Ex1-1\function_basic.html`
 
-- 演習ファイル: `exercise_question\Ex1-1\function_basic.html`
+**演習ファイル**  
+`exercise_question\Ex1-1\function_basic.html`
 
 1. `showSystemName` 関数を関数宣言で定義してください。
 2. 関数内で `document.write` を使用し、「人事管理システム」と表示してください。
@@ -100,11 +103,14 @@ exercise_sample/    コメントで詳しく解説した演習の完成解答
 
 ### 演習1.1.2 引数と戻り値を持つ関数
 
-- 参照テキスト: 1.1.2. 引数と戻り値を持つ関数
+**参照テキスト**  
+1.1.2. 引数と戻り値を持つ関数
 
-- 参照ファイル: `sample\Ex1-1\function_return.html`
+**参照ファイル**  
+`sample\Ex1-1\function_return.html`
 
-- 演習ファイル: `exercise_question\Ex1-1\function_return.html`
+**演習ファイル**  
+`exercise_question\Ex1-1\function_return.html`
 
 1. 月給と賞与を受け取る `calculateAnnualIncome` 関数を定義してください。
 2. 「月給×12＋賞与」の計算結果を `return` で返してください。
@@ -120,11 +126,14 @@ exercise_sample/    コメントで詳しく解説した演習の完成解答
 
 ### 演習1.1.3 アロー関数
 
-- 参照テキスト: 1.1.3. アロー関数(ラムダ式)
+**参照テキスト**  
+1.1.3. アロー関数(ラムダ式)
 
-- 参照ファイル: `sample\Ex1-1\function_arrow.html`
+**参照ファイル**  
+`sample\Ex1-1\function_arrow.html`
 
-- 演習ファイル: `exercise_question\Ex1-1\function_arrow.html`
+**演習ファイル**  
+`exercise_question\Ex1-1\function_arrow.html`
 
 1. 社員番号と氏名を受け取り、「1001：山田太郎」の形式で返す関数式を確認してください。
 2. 同じ処理を行う `formatEmployee` をアロー関数で定義してください。
@@ -139,11 +148,14 @@ exercise_sample/    コメントで詳しく解説した演習の完成解答
 
 ## 演習1.2 DOMの選択
 
-- 参照テキスト: 1.2. DOM の選択
+**参照テキスト**  
+1.2. DOM の選択
 
-- 参照ファイル: `sample\Ex1-2\dom_select.html`
+**参照ファイル**  
+`sample\Ex1-2\dom_select.html`
 
-- 演習ファイル: `exercise_question\Ex1-2\dom_select.html`
+**演習ファイル**  
+`exercise_question\Ex1-2\dom_select.html`
 
 1. idが `employeeName` の社員名要素を選択してください。
 2. classが `work-location` の勤務地要素をCSSセレクターで選択してください。
@@ -161,11 +173,14 @@ exercise_sample/    コメントで詳しく解説した演習の完成解答
 
 ### 演習1.3.1 HTML属性でイベントを割り当てる
 
-- 参照テキスト: 1.3. イベントハンドリング
+**参照テキスト**  
+1.3. イベントハンドリング
 
-- 参照ファイル: `sample\Ex1-3\event_listener1.html`
+**参照ファイル**  
+`sample\Ex1-3\event_listener1.html`
 
-- 演習ファイル: `exercise_question\Ex1-3\event_listener1.html`
+**演習ファイル**  
+`exercise_question\Ex1-3\event_listener1.html`
 
 1. [出勤する]ボタンにクリック時のイベント属性を追加してください。
 2. クリック時に `showWorkStartMessage()` が呼び出されるようにしてください。
@@ -179,11 +194,14 @@ exercise_sample/    コメントで詳しく解説した演習の完成解答
 
 ### 演習1.3.2 addEventListenerでイベントを割り当てる
 
-- 参照テキスト: 1.3.1. addEventListener
+**参照テキスト**  
+1.3.1. addEventListener
 
-- 参照ファイル: `sample\Ex1-3\event_listener2.html`
+**参照ファイル**  
+`sample\Ex1-3\event_listener2.html`
 
-- 演習ファイル: `exercise_question\Ex1-3\event_listener2.html`
+**演習ファイル**  
+`exercise_question\Ex1-3\event_listener2.html`
 
 1. [退勤する]ボタンにid `workEndBtn` を指定してください。
 2. idを使ってボタンをDOMから選択し、変数 `btn` に代入してください。
@@ -201,11 +219,14 @@ exercise_sample/    コメントで詳しく解説した演習の完成解答
 
 ### 演習1.4.1 innerHTMLによる置き換え
 
-- 参照テキスト: 1.4.1. innerHTML プロパティ
+**参照テキスト**  
+1.4.1. innerHTML プロパティ
 
-- 参照ファイル: `sample\Ex1-4\innerHTML.html`
+**参照ファイル**  
+`sample\Ex1-4\innerHTML.html`
 
-- 演習ファイル: `exercise_question\Ex1-4\innerHTML.html`
+**演習ファイル**  
+`exercise_question\Ex1-4\innerHTML.html`
 
 1. idが `changeButton` の要素を選択し、変数 `btn` に代入してください。
 2. ボタンのclickイベント内で、idが `content` の要素を選択してください。
@@ -221,11 +242,14 @@ exercise_sample/    コメントで詳しく解説した演習の完成解答
 
 ### 演習1.4.2 insertAdjacentHTMLによる追加
 
-- 参照テキスト: 1.4.2. insertAdjacentHTML メソッド
+**参照テキスト**  
+1.4.2. insertAdjacentHTML メソッド
 
-- 参照ファイル: `sample\Ex1-4\insertAdjacentHTML.html`
+**参照ファイル**  
+`sample\Ex1-4\insertAdjacentHTML.html`
 
-- 演習ファイル: `exercise_question\Ex1-4\insertAdjacentHTML.html`
+**演習ファイル**  
+`exercise_question\Ex1-4\insertAdjacentHTML.html`
 
 1. 既存の社員一覧テーブル、[社員を追加]ボタン、社員番号を管理する変数の役割を確認してください。
 2. ボタンのclickイベント内で、社員一覧の末尾に新しい社員行を追加してください。
@@ -243,11 +267,14 @@ exercise_sample/    コメントで詳しく解説した演習の完成解答
 
 ### 演習1.4.3 classListによるスタイル変更
 
-- 参照テキスト: 1.4.3. classList によるスタイルクラスの動的適用
+**参照テキスト**  
+1.4.3. classList によるスタイルクラスの動的適用
 
-- 参照ファイル: `sample\Ex1-4\class_list.html`
+**参照ファイル**  
+`sample\Ex1-4\class_list.html`
 
-- 演習ファイル: `exercise_question\Ex1-4\class_list.html`
+**演習ファイル**  
+`exercise_question\Ex1-4\class_list.html`
 
 1. 在席中を表すCSSクラス `.working` を完成させてください。
 2. 勤務状態の表示要素にid `workStatus` と初期表示用classを指定してください。
@@ -287,11 +314,14 @@ exercise_sample/    コメントで詳しく解説した演習の完成解答
 
 ## 演習2.2 Fetch APIで出勤時刻を取得する
 
-- 参照テキスト: 2.2. Fetch API と、サーバーからの応答
+**参照テキスト**  
+2.2. Fetch API と、サーバーからの応答
 
-- 参照ファイル: `sample\Ex2-2\fetch.html`
+**参照ファイル**  
+`sample\Ex2-2\fetch.html`
 
-- 演習ファイル: `exercise_question\Ex2-2\fetch.html`
+**演習ファイル**  
+`exercise_question\Ex2-2\fetch.html`
 - 使用するAPI: `exercise_question\Ex2-2\currenttime-api`
 
 ### APIの準備
@@ -318,11 +348,14 @@ exercise_sample/    コメントで詳しく解説した演習の完成解答
 
 ## 演習2.3 Axiosで手取り見込額を取得する
 
-- 参照テキスト: 2.3. axios ライブラリを用いたデータ送信
+**参照テキスト**  
+2.3. axios ライブラリを用いたデータ送信
 
-- 参照ファイル: `sample\Ex2-2\axios.html`
+**参照ファイル**  
+`sample\Ex2-2\axios.html`
 
-- 演習ファイル: `exercise_question\Ex2-2\axios.html`
+**演習ファイル**  
+`exercise_question\Ex2-2\axios.html`
 - 使用するAPI: `exercise_question\Ex2-2\payroll-api`
 
 ### APIの準備
@@ -347,9 +380,11 @@ exercise_sample/    コメントで詳しく解説した演習の完成解答
 
 ## 演習2.4 Fetch APIとAxiosの比較
 
-- 参照テキスト: 2.2. Fetch API と、サーバーからの応答／2.3. axios ライブラリを用いたデータ送信
+**参照テキスト**  
+2.2. Fetch API と、サーバーからの応答／2.3. axios ライブラリを用いたデータ送信
 
-- 参照ファイル: `sample\Ex2-2\fetch.html`、`sample\Ex2-2\axios.html`
+**参照ファイル**  
+`sample\Ex2-2\fetch.html`、`sample\Ex2-2\axios.html`
 
 次の観点で、演習2.2と演習2.3のコードを比較してください。
 
@@ -382,11 +417,14 @@ exercise_sample/    コメントで詳しく解説した演習の完成解答
 
 ## 演習3.2 REST APIの環境構築
 
-- 参照テキスト: 3.2.1. REST APIの環境構築
+**参照テキスト**  
+3.2.1. REST APIの環境構築
 
-- 参照ファイル: `sample\Ex3-2\index.html`、`sample\Ex3-2\api\server.js`
+**参照ファイル**  
+`sample\Ex3-2\index.html`、`sample\Ex3-2\api\server.js`
 
-- 演習ファイル: `exercise_question\Ex3-2\index.html`、`exercise_question\Ex3-2\api\server.js`
+**演習ファイル**  
+`exercise_question\Ex3-2\index.html`、`exercise_question\Ex3-2\api\server.js`
 
 1. `employee` テーブルを持つSQLiteデータベースを準備してください。
 2. `employee` テーブルに、冒頭のデータ構成に従って社員を3名以上登録してください。
@@ -404,11 +442,14 @@ exercise_sample/    コメントで詳しく解説した演習の完成解答
 
 ### 演習3.3.1 社員一覧の表示
 
-- 参照テキスト: 3.3.1. 初期画面実装(一覧表示)
+**参照テキスト**  
+3.3.1. 初期画面実装(一覧表示)
 
-- 参照ファイル: `sample\Ex3-3\list.html`、`sample\Ex3-3\api\server.js`
+**参照ファイル**  
+`sample\Ex3-3\list.html`、`sample\Ex3-3\api\server.js`
 
-- 演習ファイル: `exercise_question\Ex3-3\list.html`、`exercise_question\Ex3-3\api\server.js`
+**演習ファイル**  
+`exercise_question\Ex3-3\list.html`、`exercise_question\Ex3-3\api\server.js`
 
 #### フロントエンド
 
@@ -432,11 +473,14 @@ exercise_sample/    コメントで詳しく解説した演習の完成解答
 
 ### 演習3.3.2 氏名によるキーワード検索
 
-- 参照テキスト: 3.3.2. キーワード検索機能実装
+**参照テキスト**  
+3.3.2. キーワード検索機能実装
 
-- 参照ファイル: `sample\Ex3-3\search_keyword.html`、`sample\Ex3-3\api\server.js`
+**参照ファイル**  
+`sample\Ex3-3\search_keyword.html`、`sample\Ex3-3\api\server.js`
 
-- 演習ファイル: `exercise_question\Ex3-3\search_keyword.html`、`exercise_question\Ex3-3\api\server.js`
+**演習ファイル**  
+`exercise_question\Ex3-3\search_keyword.html`、`exercise_question\Ex3-3\api\server.js`
 
 #### フロントエンド
 
@@ -460,11 +504,14 @@ exercise_sample/    コメントで詳しく解説した演習の完成解答
 
 ## 演習3.4 新規社員の登録
 
-- 参照テキスト: 3.4. 新規データ登録
+**参照テキスト**  
+3.4. 新規データ登録
 
-- 参照ファイル: `sample\Ex3-4\add_data.html`、`sample\Ex3-4\api\server.js`
+**参照ファイル**  
+`sample\Ex3-4\add_data.html`、`sample\Ex3-4\api\server.js`
 
-- 演習ファイル: `exercise_question\Ex3-4\add_data.html`、`exercise_question\Ex3-4\api\server.js`
+**演習ファイル**  
+`exercise_question\Ex3-4\add_data.html`、`exercise_question\Ex3-4\api\server.js`
 
 ### フロントエンド
 
@@ -496,11 +543,14 @@ VALUES (?, ?, ?, ?, ?)
 
 ## 演習3.5 社員情報の削除
 
-- 参照テキスト: 3.5. データの削除機能の実装
+**参照テキスト**  
+3.5. データの削除機能の実装
 
-- 参照ファイル: `sample\Ex3-5\delete.html`、`sample\Ex3-5\api\server.js`
+**参照ファイル**  
+`sample\Ex3-5\delete.html`、`sample\Ex3-5\api\server.js`
 
-- 演習ファイル: `exercise_question\Ex3-5\delete.html`、`exercise_question\Ex3-5\api\server.js`
+**演習ファイル**  
+`exercise_question\Ex3-5\delete.html`、`exercise_question\Ex3-5\api\server.js`
 
 ### フロントエンド
 
@@ -524,11 +574,14 @@ VALUES (?, ?, ?, ?, ?)
 
 ## 演習3.6 【参考】社員情報の更新
 
-- 参照テキスト: 3.6. 【参考】更新機能の実装
+**参照テキスト**  
+3.6. 【参考】更新機能の実装
 
-- 参照ファイル: `sample\Ex3-6\update.html`、`sample\Ex3-6\api\server.js`
+**参照ファイル**  
+`sample\Ex3-6\update.html`、`sample\Ex3-6\api\server.js`
 
-- 演習ファイル: `exercise_question\Ex3-6\update.html`、`exercise_question\Ex3-6\api\server.js`
+**演習ファイル**  
+`exercise_question\Ex3-6\update.html`、`exercise_question\Ex3-6\api\server.js`
 
 ### フロントエンド
 
@@ -582,11 +635,14 @@ WHERE id = ?
 
 ### 演習4.2.1 社員詳細をModalに表示する
 
-- 参照テキスト: 4.2.1. 商品詳細を Modal に表示する
+**参照テキスト**  
+4.2.1. 商品詳細を Modal に表示する
 
-- 参照ファイル: `sample\Ex4-2-1\index.html`、`sample\Ex4-2-1\api\server.js`
+**参照ファイル**  
+`sample\Ex4-2-1\index.html`、`sample\Ex4-2-1\api\server.js`
 
-- 演習ファイル: `exercise_question\Ex4-2-1\index.html`、`exercise_question\Ex4-2-1\api\server.js`
+**演習ファイル**  
+`exercise_question\Ex4-2-1\index.html`、`exercise_question\Ex4-2-1\api\server.js`
 
 > 参照テキストは商品情報を扱っていますが、本演習では社員情報へ置き換えます。使用する仕組みは、APIで1件を取得してModalへ表示する点で同じです。
 
@@ -612,11 +668,14 @@ WHERE id = ?
 
 ### 演習4.2.2 【参考】社員登録をModal化する
 
-- 参照テキスト: 4.2.2. 【参考】登録機能の Modal 化
+**参照テキスト**  
+4.2.2. 【参考】登録機能の Modal 化
 
-- 参照ファイル: `sample\Ex4-2-2\index.html`、`sample\Ex4-2-2\api\server.js`
+**参照ファイル**  
+`sample\Ex4-2-2\index.html`、`sample\Ex4-2-2\api\server.js`
 
-- 演習ファイル: `exercise_question\Ex4-2-2\index.html`、`exercise_question\Ex4-2-2\api\server.js`
+**演習ファイル**  
+`exercise_question\Ex4-2-2\index.html`、`exercise_question\Ex4-2-2\api\server.js`
 
 1. [新規社員登録]ボタンと登録Modalを対応させてください。
 2. Modal内に5項目の入力欄と[登録]ボタンを配置してください。
@@ -631,11 +690,14 @@ WHERE id = ?
 
 ### 演習4.2.3 【参考】更新・削除をModal化する
 
-- 参照テキスト: 4.2.3. 【参考】更新・削除機能の Modal 化
+**参照テキスト**  
+4.2.3. 【参考】更新・削除機能の Modal 化
 
-- 参照ファイル: `sample\Ex4-2-3\index.html`、`sample\Ex4-2-3\api\server.js`
+**参照ファイル**  
+`sample\Ex4-2-3\index.html`、`sample\Ex4-2-3\api\server.js`
 
-- 演習ファイル: `exercise_question\Ex4-2-3\index.html`、`exercise_question\Ex4-2-3\api\server.js`
+**演習ファイル**  
+`exercise_question\Ex4-2-3\index.html`、`exercise_question\Ex4-2-3\api\server.js`
 
 1. 社員詳細Modalへ[編集]と[削除]を配置してください。
 2. 編集Modalへ現在の社員情報を設定してください。
@@ -652,11 +714,14 @@ WHERE id = ?
 
 ### 演習4.3.1 ルートと画面を対応させる
 
-- 参照テキスト: 4.3. Navigation APIを活用した本格 SPA（擬似遷移）
+**参照テキスト**  
+4.3. Navigation APIを活用した本格 SPA（擬似遷移）
 
-- 参照ファイル: `sample\Ex4-3\index.html`
+**参照ファイル**  
+`sample\Ex4-3\index.html`
 
-- 演習ファイル: `exercise_question\Ex4-3\index.html`
+**演習ファイル**  
+`exercise_question\Ex4-3\index.html`
 
 次のURLと表示内容を `showPage(path)` で対応させてください。
 
@@ -681,11 +746,14 @@ WHERE id = ?
 
 ### 演習4.3.2 404画面を作る
 
-- 参照テキスト: 4.3. Navigation APIを活用した本格 SPA（擬似遷移）
+**参照テキスト**  
+4.3. Navigation APIを活用した本格 SPA（擬似遷移）
 
-- 参照ファイル: `sample\Ex4-3\index.html`
+**参照ファイル**  
+`sample\Ex4-3\index.html`
 
-- 演習ファイル: `exercise_question\Ex4-3\index.html`
+**演習ファイル**  
+`exercise_question\Ex4-3\index.html`
 
 1. どのルートにも一致しない場合は「ページが見つかりません」と表示してください。
 2. 入力されたパスを表示してください。
@@ -693,11 +761,14 @@ WHERE id = ?
 
 ### 演習4.3.3 新しいルートを追加する
 
-- 参照テキスト: 4.3. Navigation APIを活用した本格 SPA（擬似遷移）
+**参照テキスト**  
+4.3. Navigation APIを活用した本格 SPA（擬似遷移）
 
-- 参照ファイル: `sample\Ex4-3\index.html`
+**参照ファイル**  
+`sample\Ex4-3\index.html`
 
-- 演習ファイル: `exercise_question\Ex4-3\index.html`
+**演習ファイル**  
+`exercise_question\Ex4-3\index.html`
 
 次の仕様で「このシステムについて」画面を追加してください。
 
@@ -710,11 +781,14 @@ WHERE id = ?
 
 ### 演習4.4.1 モジュールへ分割する
 
-- 参照テキスト: 4.4. 【参考】コンポーネント化
+**参照テキスト**  
+4.4. 【参考】コンポーネント化
 
-- 参照ファイル: `sample\Ex4-4\index.html`、`sample\Ex4-4\js\app.js`、`sample\Ex4-4\js\components`
+**参照ファイル**  
+`sample\Ex4-4\index.html`、`sample\Ex4-4\js\app.js`、`sample\Ex4-4\js\components`
 
-- 演習ファイル: `exercise_question\Ex4-4\index.html`、`exercise_question\Ex4-4\js`
+**演習ファイル**  
+`exercise_question\Ex4-4\index.html`、`exercise_question\Ex4-4\js`
 
 次の構成を参考に、画面表示処理を分割してください。
 
@@ -737,11 +811,14 @@ js/
 
 ### 演習4.4.2 分割後の構成を確認する
 
-- 参照テキスト: 4.4. 【参考】コンポーネント化
+**参照テキスト**  
+4.4. 【参考】コンポーネント化
 
-- 参照ファイル: `sample\Ex4-4\js\app.js`、`sample\Ex4-4\js\components`
+**参照ファイル**  
+`sample\Ex4-4\js\app.js`、`sample\Ex4-4\js\components`
 
-- 演習ファイル: `exercise_question\Ex4-4\js`
+**演習ファイル**  
+`exercise_question\Ex4-4\js`
 
 | URLまたは操作 | 呼び出される関数 | 定義ファイル |
 |---|---|---|
@@ -759,9 +836,11 @@ js/
 
 ## 演習4.5 総合確認
 
-- 参照テキスト: 第4章 章のまとめ
+**参照テキスト**  
+第4章 章のまとめ
 
-- 参照ファイル: `sample\Ex4-3\index.html`、`sample\Ex4-4`
+**参照ファイル**  
+`sample\Ex4-3\index.html`、`sample\Ex4-4`
 
 社員一覧から社員詳細を表示するまでの流れを、次の語句をすべて使って説明してください。
 

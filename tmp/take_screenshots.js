@@ -33,18 +33,19 @@ const tasks = [
 const alertOverride = `
   window.alert = function(msg) {
     const div = document.createElement('div');
-    div.style.position = 'fixed';
-    div.style.top = '10px';
+    div.style.position = 'absolute';
+    div.style.top = '20px';
     div.style.left = '50%';
     div.style.transform = 'translateX(-50%)';
     div.style.backgroundColor = 'white';
-    div.style.border = '1px solid #ccc';
-    div.style.boxShadow = '0 2px 10px rgba(0,0,0,0.2)';
+    div.style.border = '2px solid #333';
+    div.style.boxShadow = '0 4px 12px rgba(0,0,0,0.3)';
     div.style.padding = '20px';
     div.style.zIndex = '9999';
     div.style.fontFamily = 'sans-serif';
     div.style.fontSize = '14px';
-    div.innerHTML = msg + '<br><button style="margin-top:10px;float:right">OK</button>';
+    div.style.borderRadius = '6px';
+    div.innerHTML = msg + '<br><button style="margin-top:15px;float:right;padding:4px 12px;">OK</button>';
     document.body.appendChild(div);
   };
 `;
@@ -83,16 +84,47 @@ const consoleOverride = `
   };
 `;
 
+const styleOverride = `
+  body {
+    border: 1px solid #aaa;
+    padding: 20px;
+    margin: 10px;
+    display: inline-block;
+    border-radius: 4px;
+    min-width: 300px;
+    min-height: 80px;
+    position: relative;
+  }
+`;
+
 (async () => {
   const browser = await puppeteer.launch({ headless: 'new' });
   for (const t of tasks) {
     const page = await browser.newPage();
-    await page.setViewport({ width: 500, height: 350, deviceScaleFactor: 2 });
+    await page.setViewport({ width: 800, height: 600, deviceScaleFactor: 2 });
     
     await page.evaluateOnNewDocument(alertOverride);
     if (t.consoleOut) {
       await page.evaluateOnNewDocument(consoleOverride);
     }
+    await page.evaluateOnNewDocument(() => {
+        document.addEventListener('DOMContentLoaded', () => {
+            const style = document.createElement('style');
+            style.textContent = \`
+              body {
+                border: 1px solid #aaa !important;
+                padding: 20px !important;
+                margin: 10px !important;
+                display: inline-block !important;
+                border-radius: 4px !important;
+                min-width: 300px !important;
+                min-height: 80px !important;
+                position: relative !important;
+              }
+            \`;
+            document.head.appendChild(style);
+        });
+    });
 
     const fileUrl = 'file:///' + path.join(BASE_DIR, t.file).replace(/\\/g, '/');
     await page.goto(fileUrl, { waitUntil: 'networkidle0' });
@@ -104,7 +136,8 @@ const consoleOverride = `
     await new Promise(r => setTimeout(r, 500));
     
     const outPath = path.join(OUT_DIR, t.name + '.png');
-    await page.screenshot({ path: outPath });
+    const bodyHandle = await page.$('body');
+    await bodyHandle.screenshot({ path: outPath });
     console.log('Saved', outPath);
     await page.close();
   }
