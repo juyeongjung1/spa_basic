@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Axios - BMI計算</title>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    </head>
+
+    <body>
+        <h1>BMI計算</h1>
+        <input type="number" id="height" value="170" />
+        <input type="number" id="weight" value="65" />
+        <button id="calculateBtn">計算する</button>
+        <div id="result"></div>
+        <script>
+            document.getElementById("calculateBtn").addEventListener("click", function () {
+                // 【手順1】heightとweightの入力欄から値を取得してください。
+                let height = _____;
+                let weight = _____;
+                // 【手順2】AxiosのPOSTメソッドを使用し、http://localhost:3003/bmi へリクエストを送信してください。
+                // 【手順3】POSTで送信するリクエストパラメータとして、heightとweightをオブジェクトにまとめてください。
+                axios
+                    ._____(_____, _____)
+                    .then((response) => {
+                        // 【手順4】response.dataをConsoleへ出力してください。
+                        _____;
+                        // 【手順5】Consoleでレスポンスのプロパティ名がbmiとcategoryであることを確認してください。
+                        // 【手順6】bmiとcategoryを使って、BMIと判定を画面へ表示してください。
+                        document.getElementById("result").innerHTML = _____;
+                    })
+                    // 【手順7】失敗時にcatchが実行されることを確認してください。
+                    .catch((error) => console.error("BMI計算に失敗しました:", error));
+            });
+        </script>
+    </body>
+</html>
