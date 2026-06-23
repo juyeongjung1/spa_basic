@@ -166,6 +166,7 @@ const confirmOverrideTrue = `
     await page.close();
   } finally {
     server3.kill();
+    await new Promise(r => setTimeout(r, 1500)); // ポート解放待ち
   }
 
   // ==========================================
@@ -199,6 +200,7 @@ const confirmOverrideTrue = `
     await page.close();
   } finally {
     server4.kill();
+    await new Promise(r => setTimeout(r, 1500)); // ポート解放待ち
   }
 
   // ==========================================
@@ -238,6 +240,7 @@ const confirmOverrideTrue = `
     await page.close();
   } finally {
     server5.kill();
+    await new Promise(r => setTimeout(r, 1500)); // ポート解放待ち
   }
 
   // ==========================================
@@ -275,6 +278,7 @@ const confirmOverrideTrue = `
     await page.close();
   } finally {
     server6.kill();
+    await new Promise(r => setTimeout(r, 1500)); // ポート解放待ち
   }
 
   await browser.close();

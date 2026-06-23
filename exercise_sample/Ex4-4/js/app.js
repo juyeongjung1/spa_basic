@@ -3,6 +3,7 @@ import { showHome } from './components/home.js';
 import { showEmployeeList } from './components/employee-list.js';
 import { showEmployeeDetail } from './components/employee-detail.js';
 import { showEmployeeRegister } from './components/employee-register.js';
+export const navigation = window.navigation;
 document.addEventListener('DOMContentLoaded', () => showPage(window.location.pathname));
 navigation.addEventListener('navigate', (event) => {
     let url = new URL(event.destination.url);
@@ -29,7 +30,7 @@ function showPage(path) {
         showEmployeeRegister();
         return;
     }
-    let result = path.match(/^\/employees\/(\d+)$/);
+    let result = path.match(/^\/employees\/(\w+)$/);
     if (result) {
         showEmployeeDetail(result[1]);
         return;

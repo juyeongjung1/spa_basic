@@ -58,3 +58,8 @@ _____ const employeeRegister = {
         });
     },
 };
+
+export function showEmployeeRegister() {
+    document.getElementById('app').innerHTML = employeeRegister.render();
+    employeeRegister.init();
+}
