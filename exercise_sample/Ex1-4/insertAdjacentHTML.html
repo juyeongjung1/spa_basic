@@ -19,14 +19,16 @@
         <button id="addEmployeeBtn">社員を追加</button>
         <script>
             let employeeId = 1001;
+            let employeeName = "新規社員";
+            let locationName = "未設定";
             document.getElementById("addEmployeeBtn").addEventListener("click", function () {
                 let employeeList = document.getElementById("employeeList");
                 // テンプレートリテラルなら、${}で変数をHTML文字列へ埋め込めます。
                 let employeeHtml = `
         <tr>
             <td>${employeeId}</td>
-            <td>新規社員</td>
-            <td>未設定</td>
+            <td>${employeeName}</td>
+            <td>${locationName}</td>
         </tr>`;
                 // beforeendは、tbodyの内側の末尾へHTMLを追加する位置です。
                 employeeList.insertAdjacentHTML("beforeend", employeeHtml);

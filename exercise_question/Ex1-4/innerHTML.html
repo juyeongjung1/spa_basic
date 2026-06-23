@@ -6,16 +6,21 @@
     </head>
 
     <body>
-        <div id="content">社員情報はまだ読み込まれていません。</div>
+        <div id="employeeInfo">社員情報はまだ読み込まれていません。</div>
         <button id="loadButton">社員情報を表示</button>
         <script>
+            // まず、動作確認のように実装するためには、どうするべきか考えましょう。
+            // どの要素を選択して操作するべきかをまず考えてください。
+            // そして置き換えるための要素がどの場所かも考えておきましょう。
+
             // 【手順1】loadButtonを選択し、変数btnへ代入してください。
             let btn = _____;
             btn.addEventListener("click", function () {
-                // 【手順2】contentを選択し、変数contentへ代入してください。
-                let content = _____;
-                // 【手順3】innerHTMLで見出し「社員情報を読み込みました」と社員名「山田太郎」を表示してください。
-                content.innerHTML = _____;
+                // 【手順2】employeeInfoを選択し、変数employeeInfoへ代入してください。
+                let employeeInfo = _____;
+                // 【手順3】元々「社員情報はまだ読み込まれていません。」と表示される要素を、
+                // 見出し「社員情報を読み込みました」と社員名「山田太郎」というHTMLに置き換えてください。
+                _____;
             });
         </script>
     </body>
