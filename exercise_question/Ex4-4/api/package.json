@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+    "prestart": "npm install",
     "start": "node server.js",
+    "predev": "npm install",
     "dev": "nodemon server.js"
   },
   "dependencies": {
