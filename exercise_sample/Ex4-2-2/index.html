@@ -35,16 +35,26 @@
                     </div>
                     <div class="modal-body">
                         <p id="errorMessage" class="text-danger"></p>
-                        <input
-                            class="form-control"
-                            type="password"
-                            id="password"
-                            placeholder="パスワード"
-                        />
-                        <input class="form-control" id="name" placeholder="氏名" />
-                        <input class="form-control" type="number" id="salary" placeholder="給与" />
-                        <input class="form-control" id="locationName" placeholder="勤務地" />
-                        <input class="form-control" id="imagePath" placeholder="画像パス" />
+                        <label class="d-flex align-items-center gap-2 mb-2">
+                            <span style="width: 90px">パスワード</span>
+                            <input class="form-control" type="password" id="password" />
+                        </label>
+                        <label class="d-flex align-items-center gap-2 mb-2">
+                            <span style="width: 90px">氏名</span>
+                            <input class="form-control" id="name" />
+                        </label>
+                        <label class="d-flex align-items-center gap-2 mb-2">
+                            <span style="width: 90px">給与</span>
+                            <input class="form-control" type="number" id="salary" />
+                        </label>
+                        <label class="d-flex align-items-center gap-2 mb-2">
+                            <span style="width: 90px">勤務地</span>
+                            <input class="form-control" id="locationName" />
+                        </label>
+                        <label class="d-flex align-items-center gap-2 mb-2">
+                            <span style="width: 90px">画像パス</span>
+                            <input class="form-control" id="imagePath" />
+                        </label>
                     </div>
                     <div class="modal-footer">
                         <button id="registerBtn" class="btn btn-primary">登録</button>

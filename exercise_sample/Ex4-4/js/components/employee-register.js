@@ -4,32 +4,32 @@ export const employeeRegister = {
     render() {
         return `
       <h2>社員登録</h2>
-      <form id="register-form" class="row g-3">
-        <div class="col-md-6">
-          <label class="form-label">社員ID</label>
+      <form id="register-form">
+        <div class="d-flex align-items-center gap-2 mb-2">
+          <label for="id" style="width: 90px">社員ID</label>
           <input id="id" class="form-control" required>
         </div>
-        <div class="col-md-6">
-          <label class="form-label">パスワード</label>
+        <div class="d-flex align-items-center gap-2 mb-2">
+          <label for="password" style="width: 90px">パスワード</label>
           <input id="password" type="password" class="form-control" required>
         </div>
-        <div class="col-md-6">
-          <label class="form-label">氏名</label>
+        <div class="d-flex align-items-center gap-2 mb-2">
+          <label for="name" style="width: 90px">氏名</label>
           <input id="name" class="form-control" required>
         </div>
-        <div class="col-md-6">
-          <label class="form-label">給与</label>
+        <div class="d-flex align-items-center gap-2 mb-2">
+          <label for="salary" style="width: 90px">給与</label>
           <input id="salary" type="number" class="form-control" required>
         </div>
-        <div class="col-md-6">
-          <label class="form-label">勤務地</label>
+        <div class="d-flex align-items-center gap-2 mb-2">
+          <label for="location_name" style="width: 90px">勤務地</label>
           <input id="location_name" class="form-control" required>
         </div>
-        <div class="col-md-6">
-          <label class="form-label">画像パス</label>
+        <div class="d-flex align-items-center gap-2 mb-2">
+          <label for="image_path" style="width: 90px">画像パス</label>
           <input id="image_path" class="form-control">
         </div>
-        <div class="col-12">
+        <div>
           <button class="btn btn-primary">登録</button>
         </div>
       </form>`;

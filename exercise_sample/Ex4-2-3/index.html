@@ -50,16 +50,26 @@
                     </div>
                     <div class="modal-body">
                         <input type="hidden" id="updateId" />
-                        <input
-                            class="form-control"
-                            type="password"
-                            id="updatePassword"
-                            placeholder="パスワード"
-                        />
-                        <input class="form-control" id="updateName" />
-                        <input class="form-control" type="number" id="updateSalary" />
-                        <input class="form-control" id="updateLocation" />
-                        <input class="form-control" id="updateImagePath" />
+                        <label class="d-flex align-items-center gap-2 mb-2">
+                            <span style="width: 90px">パスワード</span>
+                            <input class="form-control" type="password" id="updatePassword" />
+                        </label>
+                        <label class="d-flex align-items-center gap-2 mb-2">
+                            <span style="width: 90px">氏名</span>
+                            <input class="form-control" id="updateName" />
+                        </label>
+                        <label class="d-flex align-items-center gap-2 mb-2">
+                            <span style="width: 90px">給与</span>
+                            <input class="form-control" type="number" id="updateSalary" />
+                        </label>
+                        <label class="d-flex align-items-center gap-2 mb-2">
+                            <span style="width: 90px">勤務地</span>
+                            <input class="form-control" id="updateLocation" />
+                        </label>
+                        <label class="d-flex align-items-center gap-2 mb-2">
+                            <span style="width: 90px">画像パス</span>
+                            <input class="form-control" id="updateImagePath" />
+                        </label>
                     </div>
                     <div class="modal-footer">
                         <button id="updateBtn" class="btn btn-primary">更新</button>

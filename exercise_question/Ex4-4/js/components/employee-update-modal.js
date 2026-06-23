@@ -10,21 +10,27 @@ _____ function openUpdateModal(employee) {
           <button class="btn-close" data-bs-dismiss="modal"></button>
         </div>
         <div class="modal-body">
-          <label class="form-label">氏名</label>
-          <input id="update-name" class="form-control mb-2" value="${employee.name}">
-          <label class="form-label">給与</label>
-          <input
-            id="update-salary"
-            type="number"
-            class="form-control mb-2"
-            value="${employee.salary}"
-          >
-          <label class="form-label">勤務地</label>
-          <input
-            id="update-location"
-            class="form-control"
-            value="${employee.location_name}"
-          >
+          <div class="d-flex align-items-center gap-2 mb-2">
+            <label for="update-name" style="width: 90px">氏名</label>
+            <input id="update-name" class="form-control" value="${employee.name}">
+          </div>
+          <div class="d-flex align-items-center gap-2 mb-2">
+            <label for="update-salary" style="width: 90px">給与</label>
+            <input
+              id="update-salary"
+              type="number"
+              class="form-control"
+              value="${employee.salary}"
+            >
+          </div>
+          <div class="d-flex align-items-center gap-2 mb-2">
+            <label for="update-location" style="width: 90px">勤務地</label>
+            <input
+              id="update-location"
+              class="form-control"
+              value="${employee.location_name}"
+            >
+          </div>
         </div>
         <div class="modal-footer">
           <button class="btn btn-secondary" data-bs-dismiss="modal">閉じる</button>
