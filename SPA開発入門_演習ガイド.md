@@ -339,6 +339,22 @@ exercise_sample/    コメントで詳しく解説した演習の完成解答
 5. `data` の時刻を「出勤時刻」として、変数 `result` が参照する要素へ表示してください。
 6. 失敗時に `catch` が実行されることを確認してください。
 
+#### 初心者向けヒント
+
+Fetch APIでは、APIから返ってきたレスポンスをそのまま使うのではなく、最初にJSONへ変換します。演習ファイルの空欄は、次の流れになるように埋めてください。
+
+```javascript
+fetch(送信先URL)
+    .then((response) => response.json())
+    .then((data) => {
+        console.log(data);
+        表示先.innerHTML = `出勤時刻：${data.time}`;
+    })
+    .catch((error) => console.error(error));
+```
+
+`data.time` の `time` は、APIの動作確認で返ってくるJSONのプロパティ名です。まずブラウザで `http://localhost:3002/currenttime` を開き、返ってくる形を確認してから実装してください。
+
 #### 動作確認
 
 ![演習2.2 動作確認](./images/2-2_fetch.png)
@@ -542,6 +558,32 @@ VALUES (?, ?, ?, ?, ?)
 
 5. 登録後に社員一覧を取得し、最新の一覧をJSON形式で返してください。
 
+#### 初心者向けヒント
+
+フロントエンドで送るキー名と、API側で受け取るキー名は一致させます。この演習では、次の5項目です。
+
+```javascript
+password
+name
+salary
+location_name
+image_path
+```
+
+画面側の入力欄IDは `locationName` のようなJavaScript向けの名前ですが、APIへ送るオブジェクトではデータベース列名に合わせて `location_name` を使います。
+
+```javascript
+{
+    password: password,
+    name: name,
+    salary: salary,
+    location_name: locationName,
+    image_path: imagePath
+}
+```
+
+サーバー側の必須チェックは、演習ファイルのコメントにある通り `password`、`name`、`salary` の3項目を対象にします。勤務地と画像パスは空でも登録できる扱いです。
+
 #### 動作確認
 
 ![演習3.4 動作確認](./images/3-4_add_data.png)
@@ -697,6 +739,20 @@ WHERE id = ?
 4. 登録成功後、社員一覧を再取得し、Modalを閉じてください。
 5. 入力欄とエラーメッセージを初期状態へ戻してください。
 
+#### 初心者向けヒント
+
+登録Modalで使うidは、開くボタンの `data-bs-target` とModal本体の `id` を対応させます。例えばModalのidを `registerModal` にする場合、ボタン側は `data-bs-target="#registerModal"` と書きます。
+
+登録APIは第3章のPOST処理と同じ考え方です。`exercise_question\Ex4-2-2\api\server.js` では、第3章で作った登録APIを参考にし、必須チェックも含めてコピーしてください。
+
+登録後にModalを閉じる処理は、次の形です。
+
+```javascript
+bootstrap.Modal.getInstance(document.getElementById('registerModal')).hide();
+```
+
+`getInstance` には、閉じたいModal本体のDOM要素を渡します。
+
 #### 動作確認
 
 ![演習4.2.2 動作確認](./images/4-2-2_register_modal.png)
@@ -720,6 +776,25 @@ WHERE id = ?
 3. PUT `/api/employees/{id}` で更新してください。
 4. DELETE `/api/employees/{id}` で削除してください。
 5. 成功後は対象Modalを閉じ、社員一覧を再取得してください。
+
+#### 初心者向けヒント
+
+更新処理は、次の順番で考えると整理しやすくなります。
+
+1. 詳細APIで取得した社員情報を、詳細Modalと更新Modalの両方へ設定する。
+2. 更新ボタンを押したら、更新Modalの入力値を読み取る。
+3. `axios.put` で `/api/employees/{id}` へ送る。
+4. 成功したら `showEmployeeList(response.data)` で一覧を再描画する。
+5. `updateModal` を `hide()` で閉じる。
+
+削除処理は、詳細Modalに表示している社員番号を使います。
+
+1. `detailId` から社員番号を取得する。
+2. `axios.delete` で `/api/employees/{id}` を呼び出す。
+3. 成功したら一覧を再描画する。
+4. `detailModal` を閉じる。
+
+Modalを閉じる時は、`bootstrap.Modal.getInstance(document.getElementById('Modalのid')).hide()` の形を使います。
 
 #### 動作確認
 
@@ -773,6 +848,42 @@ WHERE id = ?
 3. 同一オリジンでintercept可能な移動だけを処理してください。
 4. `event.intercept` 内で `showPage` を呼び出してください。
 5. 社員詳細のURLから正規表現で社員番号を取り出してください。
+
+#### 初心者向けヒント
+
+Navigation APIでは、リンククリックや戻る・進むなどの移動を `navigate` イベントで受け取ります。演習ファイルの空欄は、次の形を目安にしてください。
+
+```javascript
+document.addEventListener("DOMContentLoaded", function () {
+    showPage(window.location.pathname);
+});
+
+navigation.addEventListener("navigate", function (event) {
+    let url = new URL(event.destination.url);
+
+    if (!event.canIntercept || url.origin !== window.location.origin) {
+        return;
+    }
+
+    event.intercept({
+        handler: function () {
+            showPage(url.pathname);
+        },
+    });
+});
+```
+
+`showPage(path)` の中では、単純なURLは `if (path === "/employees")` のように比較し、社員詳細のように番号が変わるURLは正規表現で取り出します。
+
+```javascript
+let result = path.match(/^\/employees\/(\w+)$/);
+if (result) {
+    showEmployeeDetail(result[1]);
+    return;
+}
+```
+
+`result[1]` には、`/employees/1001` の `1001` が入ります。
 
 #### 動作確認
 
@@ -877,6 +988,39 @@ js/
 2. 各表示関数を対応ファイルから `export` してください。
 3. `app.js` で必要な関数を `import` してください。
 4. `app.js` には画面遷移とルート判定の責務を残してください。
+
+#### 初心者向けヒント
+
+`import` / `export` は、別ファイルの関数を使うための仕組みです。関数を外部から使えるようにする側では、関数宣言の前に `export` を付けます。
+
+```javascript
+export function showHome() {
+    // 画面を表示する処理
+}
+```
+
+読み込む側では、関数名を `{}` の中に書き、相対パスでファイルを指定します。
+
+```javascript
+import { showHome } from './components/home.js';
+```
+
+名前は完全に一致させます。`showHome` と `showhome` は別名として扱われるため、大小文字にも注意してください。
+
+オブジェクトを外部へ出す場合は、次のように `export const` を使います。
+
+```javascript
+export const employeeRegister = {
+    render() {
+        // HTMLを返す処理
+    },
+    init() {
+        // イベント登録の処理
+    },
+};
+```
+
+画面遷移で使う `navigation.navigate('/employees')` は指定したURLへ移動し、`navigation.reload()` は現在のURLの画面をもう一度表示します。
 
 #### 動作確認
 
