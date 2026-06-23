@@ -1,9 +1,11 @@
 const express = require('express');
 const cors = require('cors');
 const sqlite3 = require('sqlite3').verbose();
+const path = require('path');
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.use(express.static(path.join(__dirname, '..')));
 const db = new sqlite3.Database('../db/employees.db');
 // この演習の中心は、画面側のJavaScriptをモジュールに分割することです。
 // APIは完成済みです。そのまま利用してください。
@@ -74,4 +76,5 @@ app.delete('/api/employees/:id', (req, res) => {
         res.status(204).end();
     });
 });
+app.get(/^\/(?!api).*/, (req, res) => res.sendFile(path.join(__dirname, '..', 'index.html')));
 app.listen(3005, () => console.log('API server: http://localhost:3005'));

@@ -1,11 +1,14 @@
 const express = require('express');
 const cors = require('cors');
 const sqlite3 = require('sqlite3').verbose();
+const path = require('path');
 const app = express();
 // 別のポートで開くHTMLからAPIを呼び出せるようにします。
 app.use(cors());
 // POSTやPUTで送信されたJSONをreq.bodyから取得できるようにします。
 app.use(express.json());
+// URLを直接入力してもSPAを表示できるよう、1つ上のindex.htmlとjsフォルダを配信します。
+app.use(express.static(path.join(__dirname, '..')));
 const db = new sqlite3.Database('../db/employees.db');
 // 社員一覧をID順で返します。
 app.get('/api/employees', (req, res) => {
@@ -79,4 +82,6 @@ app.delete('/api/employees/:id', (req, res) => {
         res.status(204).end();
     });
 });
+// /employees/new のようなSPA用URLは、実ファイルではなくindex.htmlへ戻します。
+app.get(/^\/(?!api).*/, (req, res) => res.sendFile(path.join(__dirname, '..', 'index.html')));
 app.listen(3005, () => console.log('API server: http://localhost:3005'));
