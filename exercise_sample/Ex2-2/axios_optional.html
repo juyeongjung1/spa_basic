@@ -17,9 +17,12 @@
                 // 入力欄の値は、選択した要素のvalueで取得できます。
                 let height = document.getElementById("height").value;
                 let weight = document.getElementById("weight").value;
-                // 身長と体重をURLへ含めてBMI計算APIを呼び出します。
+                // 身長と体重をリクエストパラメータとしてPOSTで送信します。
                 axios
-                    .get(`http://localhost:3003/bmi/${height}/${weight}`)
+                    .post("http://localhost:3003/bmi", {
+                        height: height,
+                        weight: weight,
+                    })
                     .then((response) => {
                         // response.dataの中にbmiとcategoryが入っていることを確認します。
                         console.log(response.data);

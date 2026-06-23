@@ -418,7 +418,7 @@ let salary = document.getElementById("salary").value;
 
 ## 演習2.3.1【オプション】AxiosでBMIを取得する
 
-この演習はオプションです。演習2.3まで完了した人が、AxiosのGETメソッド、URLパラメータ、`response.data`、テンプレートリテラルをもう一度確認するために取り組んでください。
+この演習はオプションです。演習2.3まで完了した人が、AxiosのPOSTメソッド、リクエストパラメータ、`response.data`、テンプレートリテラルをもう一度確認するために取り組んでください。
 
 **参照テキスト**
 
@@ -439,16 +439,17 @@ let salary = document.getElementById("salary").value;
 2. ターミナルで `exercise_question/Ex2-2/bmi-api` を開いてください。
 3. 初回のみ `npm install` を実行してください。
 4. `npm start` を実行してください。
-5. ブラウザで `http://localhost:3003/bmi/170/65` を開き、`height`、`weight`、`bmi`、`category` を含むJSONが返ることを確認してください。
+5. このAPIはPOSTでデータを受け取るため、ブラウザでURLを直接開く確認は行いません。フロントエンド実装後に、Networkで `POST http://localhost:3003/bmi` が送信されることを確認してください。
 
 ### フロントエンドの実装
 
 1. `height` と `weight` の入力欄から値を取得してください。
-2. AxiosのGETメソッドを使用し、`http://localhost:3003/bmi/${height}/${weight}` へリクエストを送信してください。
-3. `response.data` をConsoleへ出力してください。
-4. Consoleでレスポンスのプロパティ名が `bmi` と `category` であることを確認してください。
-5. `result` の要素のコンテンツを、BMIと判定を表示するHTMLに置き換えてください。
-6. 失敗時に `catch` が実行されることを確認してください。
+2. AxiosのPOSTメソッドを使用し、`http://localhost:3003/bmi` へリクエストを送信してください。
+3. POSTで送信するリクエストパラメータとして、`height` と `weight` をオブジェクトにまとめてください。
+4. `response.data` をConsoleへ出力してください。
+5. Consoleでレスポンスのプロパティ名が `bmi` と `category` であることを確認してください。
+6. `result` の要素のコンテンツを、BMIと判定を表示するHTMLに置き換えてください。
+7. 失敗時に `catch` が実行されることを確認してください。
 
 #### 初心者向けヒント
 
@@ -456,6 +457,15 @@ Axiosでは、APIから返ってきたJSONの本文は `response.data` に入り
 
 ```javascript
 console.log(response.data);
+```
+
+POSTで複数の値を送信するときは、URLへ値を埋め込むのではなく、第2引数にオブジェクトを渡します。
+
+```javascript
+axios.post("http://localhost:3003/bmi", {
+    height: height,
+    weight: weight,
+});
 ```
 
 `response.data` の中に `bmi` と `category` があることを確認できたら、テンプレートリテラルを使ってHTMLへ埋め込みます。
@@ -469,6 +479,7 @@ console.log(response.data);
 
 - 身長に `170`、体重に `65` を入力すると、BMIが `22.5`、判定が `普通体重` と表示されること
 - 別の身長・体重でもAPIの計算結果が表示されること
+- Networkで `POST http://localhost:3003/bmi` が送信され、Request Payloadに `height` と `weight` が含まれること
 - Consoleで `response.data` の中身を確認できること
 
 ## 演習2.4 Fetch APIとAxiosの比較

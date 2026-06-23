@@ -5,11 +5,12 @@ const app = express();
 const port = 3003;
 
 app.use(cors());
+app.use(express.json());
 
-// 身長(cm)と体重(kg)を数値に変換し、BMIと判定をJSONで返します。
-app.get('/bmi/:height/:weight', (req, res) => {
-    const height = Number(req.params.height);
-    const weight = Number(req.params.weight);
+// POSTされた身長(cm)と体重(kg)を数値に変換し、BMIと判定をJSONで返します。
+app.post('/bmi', (req, res) => {
+    const height = Number(req.body.height);
+    const weight = Number(req.body.weight);
     const heightMeter = height / 100;
     const bmi = Math.round((weight / (heightMeter * heightMeter)) * 10) / 10;
     let category = '普通体重';

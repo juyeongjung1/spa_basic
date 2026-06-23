@@ -17,17 +17,18 @@
                 // 【手順1】heightとweightの入力欄から値を取得してください。
                 let height = _____;
                 let weight = _____;
-                // 【手順2】AxiosのGETメソッドを使用し、http://localhost:3003/bmi/${height}/${weight} へリクエストを送信してください。
+                // 【手順2】AxiosのPOSTメソッドを使用し、http://localhost:3003/bmi へリクエストを送信してください。
+                // 【手順3】POSTで送信するリクエストパラメータとして、heightとweightをオブジェクトにまとめてください。
                 axios
-                    ._____(_____)
+                    ._____(_____, _____)
                     .then((response) => {
-                        // 【手順3】response.dataをConsoleへ出力してください。
+                        // 【手順4】response.dataをConsoleへ出力してください。
                         _____;
-                        // 【手順4】Consoleでレスポンスのプロパティ名がbmiとcategoryであることを確認してください。
-                        // 【手順5】bmiとcategoryを使って、BMIと判定を画面へ表示してください。
+                        // 【手順5】Consoleでレスポンスのプロパティ名がbmiとcategoryであることを確認してください。
+                        // 【手順6】bmiとcategoryを使って、BMIと判定を画面へ表示してください。
                         document.getElementById("result").innerHTML = _____;
                     })
-                    // 【手順6】失敗時にcatchが実行されることを確認してください。
+                    // 【手順7】失敗時にcatchが実行されることを確認してください。
                     .catch((error) => console.error("BMI計算に失敗しました:", error));
             });
         </script>
