@@ -2,32 +2,32 @@
 <html lang="ja">
     <head>
         <meta charset="UTF-8" />
-        <title>Axios - 積と和</title>
+        <title>Axios - BMI計算</title>
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     </head>
 
     <body>
-        <h1>積と和の計算</h1>
-        <input type="number" id="number1" value="3" />
-        <input type="number" id="number2" value="5" />
+        <h1>BMI計算</h1>
+        <input type="number" id="height" value="170" />
+        <input type="number" id="weight" value="65" />
         <button id="calculateBtn">計算する</button>
         <div id="result"></div>
         <script>
             document.getElementById("calculateBtn").addEventListener("click", function () {
                 // 入力欄の値は、選択した要素のvalueで取得できます。
-                let number1 = document.getElementById("number1").value;
-                let number2 = document.getElementById("number2").value;
-                // 2つの数値をURLへ含めて計算APIを呼び出します。
+                let height = document.getElementById("height").value;
+                let weight = document.getElementById("weight").value;
+                // 身長と体重をURLへ含めてBMI計算APIを呼び出します。
                 axios
-                    .get(`http://localhost:3003/calculate/${number1}/${number2}`)
+                    .get(`http://localhost:3003/bmi/${height}/${weight}`)
                     .then((response) => {
-                        // response.dataの中にmultiplyとsumが入っていることを確認します。
+                        // response.dataの中にbmiとcategoryが入っていることを確認します。
                         console.log(response.data);
                         document.getElementById("result").innerHTML = `
-            積: ${response.data.multiply}<br>
-            和: ${response.data.sum}`;
+            BMI: ${response.data.bmi}<br>
+            判定: ${response.data.category}`;
                     })
-                    .catch((error) => console.error("計算に失敗しました:", error));
+                    .catch((error) => console.error("BMI計算に失敗しました:", error));
             });
         </script>
     </body>

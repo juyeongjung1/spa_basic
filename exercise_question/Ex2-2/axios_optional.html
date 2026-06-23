@@ -2,31 +2,33 @@
 <html lang="ja">
     <head>
         <meta charset="UTF-8" />
-        <title>Axios - 積と和</title>
+        <title>Axios - BMI計算</title>
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     </head>
 
     <body>
-        <h1>積と和の計算</h1>
-        <input type="number" id="number1" value="3" />
-        <input type="number" id="number2" value="5" />
+        <h1>BMI計算</h1>
+        <input type="number" id="height" value="170" />
+        <input type="number" id="weight" value="65" />
         <button id="calculateBtn">計算する</button>
         <div id="result"></div>
         <script>
             document.getElementById("calculateBtn").addEventListener("click", function () {
-                // 【手順1】number1とnumber2の入力欄から値を取得してください。
-                let number1 = _____;
-                let number2 = _____;
-                // 【手順2】AxiosのGETメソッドを使用し、http://localhost:3003/calculate/${number1}/${number2} へリクエストを送信してください。
+                // 【手順1】heightとweightの入力欄から値を取得してください。
+                let height = _____;
+                let weight = _____;
+                // 【手順2】AxiosのGETメソッドを使用し、http://localhost:3003/bmi/${height}/${weight} へリクエストを送信してください。
                 axios
                     ._____(_____)
                     .then((response) => {
                         // 【手順3】response.dataをConsoleへ出力してください。
                         _____;
-                        // 【手順4】multiplyとsumを使って、積と和を画面へ表示してください。
+                        // 【手順4】Consoleでレスポンスのプロパティ名がbmiとcategoryであることを確認してください。
+                        // 【手順5】bmiとcategoryを使って、BMIと判定を画面へ表示してください。
                         document.getElementById("result").innerHTML = _____;
                     })
-                    .catch((error) => console.error("計算に失敗しました:", error));
+                    // 【手順6】失敗時にcatchが実行されることを確認してください。
+                    .catch((error) => console.error("BMI計算に失敗しました:", error));
             });
         </script>
     </body>

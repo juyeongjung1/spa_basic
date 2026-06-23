@@ -416,7 +416,7 @@ let salary = document.getElementById("salary").value;
 - 別の給与額でもAPIの計算結果が表示されること
 - `response` と `response.data` の違いを説明できること
 
-## 演習2.3.1【オプション】Axiosで積と和を取得する
+## 演習2.3.1【オプション】AxiosでBMIを取得する
 
 この演習はオプションです。演習2.3まで完了した人が、AxiosのGETメソッド、URLパラメータ、`response.data`、テンプレートリテラルをもう一度確認するために取り組んでください。
 
@@ -426,28 +426,28 @@ let salary = document.getElementById("salary").value;
 
 **参照ファイル**
 
-`sample\Ex2-2\axios.html`、`sample\Ex2-2\calculate-api\server.js`
+`sample\Ex2-2\axios.html`
 
 **演習ファイル**
 
 `exercise_question\Ex2-2\axios_optional.html`
-- 使用するAPI: `exercise_question\Ex2-2\calculate-api`
+- 使用するAPI: `exercise_question\Ex2-2\bmi-api`
 
 ### APIの準備
 
 1. 給与計算APIを起動している場合は停止してください。このオプション演習のAPIも同じ `3003` 番ポートを使用します。
-2. ターミナルで `exercise_question/Ex2-2/calculate-api` を開いてください。
+2. ターミナルで `exercise_question/Ex2-2/bmi-api` を開いてください。
 3. 初回のみ `npm install` を実行してください。
 4. `npm start` を実行してください。
-5. ブラウザで `http://localhost:3003/calculate/3/5` を開き、`multiply` と `sum` を含むJSONが返ることを確認してください。
+5. ブラウザで `http://localhost:3003/bmi/170/65` を開き、`height`、`weight`、`bmi`、`category` を含むJSONが返ることを確認してください。
 
 ### フロントエンドの実装
 
-1. `number1` と `number2` の入力欄から値を取得してください。
-2. AxiosのGETメソッドを使用し、`http://localhost:3003/calculate/${number1}/${number2}` へリクエストを送信してください。
+1. `height` と `weight` の入力欄から値を取得してください。
+2. AxiosのGETメソッドを使用し、`http://localhost:3003/bmi/${height}/${weight}` へリクエストを送信してください。
 3. `response.data` をConsoleへ出力してください。
-4. Consoleでレスポンスのプロパティ名が `multiply` と `sum` であることを確認してください。
-5. `result` の要素のコンテンツを、積と和を表示するHTMLに置き換えてください。
+4. Consoleでレスポンスのプロパティ名が `bmi` と `category` であることを確認してください。
+5. `result` の要素のコンテンツを、BMIと判定を表示するHTMLに置き換えてください。
 6. 失敗時に `catch` が実行されることを確認してください。
 
 #### 初心者向けヒント
@@ -458,17 +458,17 @@ Axiosでは、APIから返ってきたJSONの本文は `response.data` に入り
 console.log(response.data);
 ```
 
-`response.data` の中に `multiply` と `sum` があることを確認できたら、テンプレートリテラルを使ってHTMLへ埋め込みます。
+`response.data` の中に `bmi` と `category` があることを確認できたら、テンプレートリテラルを使ってHTMLへ埋め込みます。
 
 ```javascript
-`積: ${response.data.multiply}<br>
- 和: ${response.data.sum}`
+`BMI: ${response.data.bmi}<br>
+ 判定: ${response.data.category}`
 ```
 
 #### 動作確認
 
-- 数値1に `3`、数値2に `5` を入力すると、積が `15`、和が `8` と表示されること
-- 別の数値でもAPIの計算結果が表示されること
+- 身長に `170`、体重に `65` を入力すると、BMIが `22.5`、判定が `普通体重` と表示されること
+- 別の身長・体重でもAPIの計算結果が表示されること
 - Consoleで `response.data` の中身を確認できること
 
 ## 演習2.4 Fetch APIとAxiosの比較
