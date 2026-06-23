@@ -477,7 +477,7 @@ axios.post("http://localhost:3003/bmi", {
 
 #### 動作確認
 
-- 身長に `170`、体重に `65` を入力すると、BMIが `22.5`、判定が `普通体重` と表示されること
+- 身長に `175`、体重に `60.8` を入力すると、BMIが `19.9`、判定が `普通体重` と表示されること
 - 別の身長・体重でもAPIの計算結果が表示されること
 - Networkで `POST http://localhost:3003/bmi` が送信され、Request Payloadに `height` と `weight` が含まれること
 - Consoleで `response.data` の中身を確認できること
