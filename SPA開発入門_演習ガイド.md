@@ -26,7 +26,7 @@ exercise_sample/    コメントで詳しく解説した演習の完成解答
 
 - HTMLファイルは、VS CodeのLive Serverなど、ローカルWebサーバーから開いてください。
 - APIを使用する演習では、先に対象の `api` フォルダで `npm install` を実行してください。
-- APIサーバーは `npm start` で起動できます。`exercise_question` と `exercise_sample` では、`npm run dev` も `node server.js` を実行するため、nodemonのインストールは不要です。
+- APIサーバーは `npm start` で起動できます。`npm run dev` を使用する場合は、`npm install` により開発用依存関係のnodemonもインストールされます。
 - APIサーバーを起動したターミナルは、演習中に閉じないでください。
 - ブラウザの開発者ツールを開き、ConsoleとNetworkを確認しながら進めてください。
 - データベースを使用する演習では、必要に応じて演習前の `employees.db` を複製しておいてください。
@@ -329,7 +329,7 @@ exercise_sample/    コメントで詳しく解説した演習の完成解答
 
 1. ターミナルで `exercise_question/Ex2-2/currenttime-api` を開いてください。
 2. 初回のみ `npm install` を実行してください。
-3. `npm start` を実行してください。`npm run dev` でも同じAPIサーバーを起動できます。
+3. `npm start` または `npm run dev` を実行してください。
 4. ブラウザで `http://localhost:3002/currenttime` を開き、`time` プロパティを持つJSONが返ることを確認してください。
 
 ### フロントエンドの実装
