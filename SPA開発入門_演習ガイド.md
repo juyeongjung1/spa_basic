@@ -313,7 +313,7 @@ exercise_sample/    コメントで詳しく解説した演習の完成解答
 
 ## 予想所要時間
 
-約45分
+約30分
 
 ## 演習2.2 Fetch APIで出勤時刻を取得する
 
@@ -336,12 +336,13 @@ exercise_sample/    コメントで詳しく解説した演習の完成解答
 
 ### フロントエンドの実装
 
-1. clickイベント内で、時刻の表示先 `showTime` が選択されていることを確認してください。
+1. clickイベント内で、時刻の表示先 `showTime` を選択し、変数 `result` に代入していることを確認してください。
 2. `fetch` の送信先に `http://localhost:3002/currenttime` を指定してください。
-3. 受信した `data` をConsoleへ出力してください。
-4. Consoleでレスポンスのプロパティ名を確認してください。
-5. `data` の時刻を「出勤時刻」として、変数 `result` が参照する要素へ表示してください。
-6. 失敗時に `catch` が実行されることを確認してください。
+3. 取得した `response` はJSON形式です。JavaScriptのデータへ変換してください。
+4. 受信した `data` をConsoleへ出力してください。
+5. Consoleでレスポンスのプロパティ名を確認してください。
+6. `result` で選択済みの要素の場所に、`data.time` を「出勤時刻：...」の形式で置き換えてください。
+7. 失敗時に `catch` が実行されることを確認してください。
 
 #### 初心者向けヒント
 
@@ -392,6 +393,20 @@ fetch(送信先URL)
 2. AxiosのGETメソッドを使用し、`http://localhost:3003/payroll/${salary}` へリクエストを送信してください。
 3. `response.data` をConsoleへ出力してください。
 4. レスポンス内の給与、控除額、手取り見込額を画面へ表示してください。
+
+#### 初心者向けヒント
+
+`input type="text"` や `input type="number"` のようなフォームに入力されるデータは、選択した要素の `.value` で取得できます。
+
+```javascript
+let salary = document.getElementById("salary").value;
+```
+
+この演習では、取得した `salary` をURLの一部として使います。テンプレートリテラルを使うと、次のように変数をURLへ埋め込めます。
+
+```javascript
+`http://localhost:3003/payroll/${salary}`
+```
 
 #### 動作確認
 

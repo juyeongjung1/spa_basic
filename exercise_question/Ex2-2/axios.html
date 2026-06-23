@@ -13,14 +13,15 @@
         <div id="result"></div>
         <script>
             document.getElementById("calculateBtn").addEventListener("click", function () {
-                let salary = document.getElementById("salary").value;
-                // 【手順1】axios.getで給与額をURLへ含め、給与計算APIを呼び出してください。
+                // 【手順1】給与入力欄から値を取得し、変数salaryへ代入してください。
+                let salary = _____;
+                // 【手順2】AxiosのGETメソッドを使用し、http://localhost:3003/payroll/${salary} へリクエストを送信してください。
                 axios
                     ._____(_____)
                     .then((response) => {
-                        // 【手順2】response.dataをConsoleへ出力してください。
+                        // 【手順3】response.dataをConsoleへ出力してください。
                         _____;
-                        // 【手順3】salary、tax、net_salaryを画面へ表示してください。
+                        // 【手順4】salary、tax、net_salaryを画面へ表示してください。
                         document.getElementById("result").innerHTML = _____;
                     })
                     .catch((error) => console.error("給与計算に失敗しました:", error));

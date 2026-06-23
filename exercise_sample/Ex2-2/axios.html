@@ -13,8 +13,9 @@
         <div id="result"></div>
         <script>
             document.getElementById("calculateBtn").addEventListener("click", function () {
+                // 入力欄の値は、選択した要素のvalueで取得できます。
                 let salary = document.getElementById("salary").value;
-                // テンプレートリテラルで入力値をURLパラメータとして送ります。
+                // AxiosのGETメソッドで、給与額をURLへ含めて給与計算APIを呼び出します。
                 axios
                     .get(`http://localhost:3003/payroll/${salary}`)
                     .then((response) => {

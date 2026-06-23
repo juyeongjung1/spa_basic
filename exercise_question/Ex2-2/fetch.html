@@ -14,12 +14,12 @@
                 let result = document.getElementById("showTime");
                 // 【手順1】fetchでhttp://localhost:3002/currenttimeを呼び出してください。
                 fetch(_____)
-                    // 【手順2】response.json()でJSONをJavaScriptのデータへ変換してください。
+                    // 【手順2】取得したresponseは、json形式です。JavaScriptのデータへ変換してください。
                     .then(_____)
                     .then((data) => {
                         // 【手順3】dataをConsoleへ出力してください。
                         _____;
-                        // 【手順4】data.timeを「出勤時刻：...」の形式で表示してください。
+                        // 【手順4】resultで選択済みの要素の場所に、data.timeを「出勤時刻：...」の形式で置き換えてください。
                         _____;
                     })
                     .catch((error) => console.error("時刻の取得に失敗しました:", error));
