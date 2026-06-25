@@ -540,6 +540,9 @@ axios.post("http://localhost:3003/bmi", {
 
 #### 動作確認
 
+![演習3.2 動作確認 (確認ページ)](./images/3-2_api_test_page.png)
+![演習3.2 動作確認 (APIレスポンス)](./images/3-2_api_test_result.png)
+
 - `/api/test` へアクセスするとJSONが返ること
 - SQLiteで `SELECT * FROM employee` を実行すると初期データが表示されること
 - CORSと `express.json()` の役割を説明できること
