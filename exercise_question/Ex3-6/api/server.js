@@ -32,14 +32,14 @@ app._____(_____, (req, res) => {
             });
             return;
         }
-        db._____('SELECT * FROM employee', [], (err, rows) => {
+        db.all('SELECT * FROM employee', [], (err, rows) => {
             if (err) {
                 res.status(500).json({
                     error: 'Database error',
                 });
                 return;
             }
-            _____;
+            res.json(rows);
         });
     });
 });

@@ -28,10 +28,10 @@
                 }
                 // 【手順1】DELETE http://localhost:3005/api/employees/${id} を呼び出してください。
                 axios
-                    ._____(_____)
+                    .delete(`http://localhost:3005/api/employees/${id}`)
                     .then((response) => {
                         // 【手順2】削除後の一覧を再描画してください。
-                        _____;
+                        showEmployeeList(response.data);
                     })
                     .catch((error) => console.error("社員削除に失敗しました:", error));
             }
@@ -50,8 +50,7 @@
                     <td>${e.salary}</td>
                     <td>${e.location_name}</td>
                     <td>
-                        <!-- 【手順3】削除ボタンから、削除対象の社員番号をdeleteEmployeeへ渡してください。 -->
-                        <button onclick="_____">削除</button>
+                        <button onclick="deleteEmployee(${e.id})">削除</button>
                     </td>
                 </tr>
             `,
