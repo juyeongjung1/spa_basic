@@ -532,11 +532,11 @@ axios.post("http://localhost:3003/bmi", {
 **演習ファイル**  
 `exercise_question\Ex3-2\index.html`、`exercise_question\Ex3-2\api\server.js`
 
-1. `employee` テーブルを持つSQLiteデータベースを準備してください。
-2. `employee` テーブルに、冒頭のデータ構成に従って社員を3名以上登録してください。
-3. APIプロジェクトで `npm install` を実行してください。
-4. Express、CORS、JSON受信、SQLite接続を設定してください。
-5. GET `/api/test` を作成し、APIサーバーを起動してください。
+1. 準備済みの `employee.db` を開き、`employee` テーブルの中身を確認してください。
+2. `employee` テーブルに社員が5名登録されていることを確認してください。
+3. `api\server.js` を開き、Express、CORS、JSON受信、SQLite接続が設定済みであることを確認してください。
+4. GET `/api/test` が作成済みであることを確認し、APIサーバーを起動してください。
+5. ブラウザで `http://localhost:3005/api/test` にアクセスし、APIの動作確認を行ってください。
 
 #### 動作確認
 
@@ -562,8 +562,8 @@ axios.post("http://localhost:3003/bmi", {
 
 #### フロントエンド
 
-1. 社員一覧用のtableを作り、社員番号、氏名、給与、勤務地の見出しを配置してください。
-2. `DOMContentLoaded` でGET `/api/employees` を呼び出してください。
+1. `list.html` を開き、社員一覧用のtableと、社員番号、氏名、給与、勤務地の見出しが配置済みであることを確認してください。
+2. `DOMContentLoaded` でGET `http://localhost:3005/api/employees` を呼び出してください。
 3. 成功時に `response.data` を社員一覧表示関数へ渡してください。
 4. `forEach` とテンプレートリテラルで社員を1名ずつ行に変換してください。
 5. `insertAdjacentHTML` でtbodyへ行を追加してください。
@@ -596,16 +596,17 @@ axios.post("http://localhost:3003/bmi", {
 #### フロントエンド
 
 1. 氏名入力欄と[検索]、[一覧表示]ボタンを作成してください。
-2. [検索]では `/api/employees?keyword={入力値}` を呼び出してください。
-3. [一覧表示]では、キーワードなしで同じAPIを呼び出してください。
+2. [検索]では `http://localhost:3005/api/employees?keyword={入力値}` を呼び出してください。
+3. [一覧表示]では、キーワードなしで `http://localhost:3005/api/employees` を呼び出してください。
 4. どちらのレスポンスも共通の社員一覧表示関数へ渡してください。
 
 #### API
 
-1. `req.query.keyword` を取得してください。
-2. キーワードがない場合は全件検索を実行してください。
-3. キーワードがある場合は `name LIKE ?` による部分一致検索へ切り替えてください。
-4. プレースホルダーに渡す値の前後へ `%` を付けてください。
+1. `api\server.js` の【演習3.3.2 手順3】と【手順4】のコメントアウトを外してください。
+2. `req.query.keyword` を取得してください。
+3. キーワードがない場合は全件検索を実行してください。
+4. キーワードがある場合は `name LIKE ?` による部分一致検索へ切り替えてください。
+5. プレースホルダーに渡す値の前後へ `%` を付けてください。
 
 #### 動作確認
 

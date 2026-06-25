@@ -10,13 +10,13 @@ app._____(_____, (req, res) => {
     // 【手順2】employeeテーブルを全件検索するSQLを指定してください。
     let sql = _____;
     let params = [];
-    // 【演習3.3.2 手順3】クエリパラメータkeywordを取得してください。
-    const keyword = _____;
-    // 【手順4】keywordがある場合、氏名の部分一致検索へSQLとparamsを変更してください。
-    if (keyword) {
-        sql = _____;
-        params = [_____];
-    }
+    // 【演習3.3.2 手順3】コメントアウトを外し、クエリパラメータkeywordを取得してください。
+    // const keyword = _____;
+    // 【手順4】コメントアウトを外し、keywordがある場合、氏名の部分一致検索へSQLとparamsを変更してください。
+    // if (keyword) {
+    //     sql = _____;
+    //     params = [_____];
+    // }
     // 【手順5】db.allで複数行を取得してください。
     db._____(sql, params, (err, rows) => {
         if (err) {

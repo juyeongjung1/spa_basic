@@ -26,7 +26,7 @@
             document.getElementById("searchBtn").addEventListener("click", function () {
                 // 【手順1】入力された検索キーワードを取得してください。
                 let keyword = _____;
-                // 【手順2】クエリパラメータkeywordを付けて社員APIを呼び出してください。
+                // 【手順2】http://localhost:3005/api/employees にクエリパラメータkeywordを付けて呼び出してください。
                 axios
                     .get(_____)
                     .then((response) => {
@@ -36,7 +36,7 @@
                     .catch((error) => console.error("社員検索に失敗しました:", error));
             });
             document.getElementById("listBtn").addEventListener("click", function () {
-                // 【手順4】キーワードを付けず、全社員を取得してください。
+                // 【手順4】http://localhost:3005/api/employees を呼び出し、全社員を取得してください。
                 axios.get(_____).then((response) => showEmployeeList(response.data));
             });
             // 一覧描画は前の演習で学習済みのため完成済みです。
