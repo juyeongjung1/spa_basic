@@ -56,7 +56,7 @@
             });
 
             document.getElementById("registerBtn").addEventListener("click", function () {
-                // 【手順1】5つの入力値を取得してください。
+                // 【手順1】HTMLのフォームのidを確認し、5つの入力値を取得してください。
                 let password = _____;
                 let name = _____;
                 let salary = _____;
@@ -66,7 +66,7 @@
                 errorMessage.innerHTML = "";
                 // 【手順2】password、name、salaryが未入力ならエラーを表示してreturnしてください。
                 _____;
-                // 【手順3】POST /api/employeesへ5項目をオブジェクトで送信してください。
+                // 【手順3】POST http://localhost:3005/api/employees へ5項目をオブジェクトで送信してください。
                 // location_name、image_pathのキー名で送信する点に注意してください。
                 axios
                     ._____(_____, _____)

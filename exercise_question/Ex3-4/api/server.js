@@ -19,10 +19,14 @@ app.get('/api/employees', (req, res) => {
 });
 // 【手順1】POST /api/employeesを定義してください。
 app._____(_____, (req, res) => {
-    // 【手順2】req.bodyから5項目を取得してください。
-    // location_name、image_pathのキー名で受け取る点に注意してください。
-    const { _____ } = req.body;
-    // 【手順3】必須3項目がなければ400を返してください。
+    // 【手順2】req.bodyから5項目を1つずつ取得してください。
+    // locationNameにはreq.body.location_name、imagePathにはreq.body.image_pathを代入する点に注意してください。
+    const password = req.body._____;
+    const name = req.body._____;
+    const salary = req.body._____;
+    const locationName = req.body._____;
+    const imagePath = req.body._____;
+    // 【手順3】必須3項目（password、name、salary）がなければ400を返してください。
     _____;
     // 【手順4】employeeテーブルへ登録するSQLとparamsを作成してください。
     // idは自動採番のため、INSERT対象の列名を明示してください。

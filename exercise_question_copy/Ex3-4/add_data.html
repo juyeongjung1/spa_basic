@@ -56,7 +56,7 @@
             });
 
             document.getElementById("registerBtn").addEventListener("click", function () {
-                // 【手順1】5つの入力値を取得してください。
+                // 【手順1】HTMLのフォームのidを確認し、5つの入力値を取得してください。
                 let password = document.getElementById("password").value;
                 let name = document.getElementById("name").value;
                 let salary = document.getElementById("salary").value;
@@ -70,7 +70,7 @@
                     errorMessage.innerHTML = 'データを入力してください。';
                     return;
                 }
-                // 【手順3】POST /api/employeesへ5項目を送信してください。
+                // 【手順3】POST http://localhost:3005/api/employees へ5項目を送信してください。
                 axios.post('http://localhost:3005/api/employees', {
                     password: password,
                     name: name,

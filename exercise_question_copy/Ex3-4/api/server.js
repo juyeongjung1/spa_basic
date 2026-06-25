@@ -19,14 +19,15 @@ app.get('/api/employees', (req, res) => {
 });
 // 【手順1】POST /api/employeesを定義してください。
 app.post('/api/employees', (req, res) => {
-    // 【手順2】req.bodyから5項目を取得してください。
+    // 【手順2】req.bodyから5項目を1つずつ取得してください。
+    // locationNameにはreq.body.location_name、imagePathにはreq.body.image_pathを代入する点に注意してください。
     const password = req.body.password;
     const name = req.body.name;
     const salary = req.body.salary;
     const locationName = req.body.location_name;
     const imagePath = req.body.image_path;
 
-    // 【手順3】必須3項目がなければ400を返してください。
+    // 【手順3】必須3項目（password、name、salary）がなければ400を返してください。
     if (!password || !name || !salary){
                    res.status(400).json({
                     error:'データに誤りがあります'

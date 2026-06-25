@@ -18,8 +18,13 @@ app.get('/api/employees', (req, res) => {
     });
 });
 app.post('/api/employees', (req, res) => {
-    // 分割代入でリクエストボディから必要な項目を取り出します。
-    const { password, name, salary, location_name, image_path } = req.body;
+    // req.bodyから必要な項目を1つずつ取り出します。
+    // locationNameにはreq.body.location_name、imagePathにはreq.body.image_pathを代入します。
+    const password = req.body.password;
+    const name = req.body.name;
+    const salary = req.body.salary;
+    const locationName = req.body.location_name;
+    const imagePath = req.body.image_path;
     if (!password || !name || !salary) {
         res.status(400).json({
             error: '必須項目が不足しています',
@@ -29,7 +34,7 @@ app.post('/api/employees', (req, res) => {
     // ?はparamsの値へ順番に置き換わります。
     const sql =
         'INSERT INTO employee (password,name,salary,location_name,image_path) VALUES (?,?,?,?,?)';
-    const params = [password, name, salary, location_name, image_path];
+    const params = [password, name, salary, locationName, imagePath];
     db.run(sql, params, (err) => {
         if (err) {
             res.status(500).json({
