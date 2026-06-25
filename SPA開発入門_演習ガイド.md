@@ -532,6 +532,8 @@ axios.post("http://localhost:3003/bmi", {
 **演習ファイル**  
 `exercise_question\Ex3-2\index.html`、`exercise_question\Ex3-2\api\server.js`
 
+APIの実装をする前に、Live Serverで現在のHTMLの状態を確認し、どの部分が足りないのかを考えてから実装しましょう。
+
 1. 準備済みの `employee.db` を開き、`employee` テーブルの中身を確認してください。
 2. `employee` テーブルに社員が5名登録されていることを確認してください。
 3. `api\server.js` を開き、Express、CORS、JSON受信、SQLite接続が設定済みであることを確認してください。
@@ -559,6 +561,8 @@ axios.post("http://localhost:3003/bmi", {
 
 **演習ファイル**  
 `exercise_question\Ex3-3\list.html`、`exercise_question\Ex3-3\api\server.js`
+
+APIの実装をする前に、Live Serverで現在のHTMLの状態を確認し、どの部分が足りないのかを考えてから実装しましょう。
 
 #### フロントエンド
 
@@ -592,6 +596,8 @@ axios.post("http://localhost:3003/bmi", {
 
 **演習ファイル**  
 `exercise_question\Ex3-3\search_keyword.html`、`exercise_question\Ex3-3\api\server.js`
+
+APIの実装をする前に、Live Serverで現在のHTMLの状態を確認し、どの部分が足りないのかを考えてから実装しましょう。
 
 #### フロントエンド
 
@@ -627,6 +633,8 @@ axios.post("http://localhost:3003/bmi", {
 
 **演習ファイル**  
 `exercise_question\Ex3-4\add_data.html`、`exercise_question\Ex3-4\api\server.js`
+
+APIの実装をする前に、Live Serverで現在のHTMLの状態を確認し、どの部分が足りないのかを考えてから実装しましょう。
 
 ### フロントエンド
 
@@ -695,6 +703,8 @@ image_path
 **演習ファイル**  
 `exercise_question\Ex3-5\delete.html`、`exercise_question\Ex3-5\api\server.js`
 
+APIの実装をする前に、Live Serverで現在のHTMLの状態を確認し、どの部分が足りないのかを考えてから実装しましょう。
+
 ### フロントエンド
 
 1. 各社員に[削除]ボタンを表示してください。
@@ -728,6 +738,8 @@ image_path
 
 **演習ファイル**  
 `exercise_question\Ex3-6\update.html`、`exercise_question\Ex3-6\api\server.js`
+
+APIの実装をする前に、Live Serverで現在のHTMLの状態を確認し、どの部分が足りないのかを考えてから実装しましょう。
 
 ### フロントエンド
 
