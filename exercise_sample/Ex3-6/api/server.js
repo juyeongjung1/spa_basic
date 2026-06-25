@@ -18,11 +18,15 @@ app.get('/api/employees', (req, res) =>
 );
 app.put('/api/employees/:id', (req, res) => {
     const id = req.params.id;
-    const { password, name, salary, location_name, image_path } = req.body;
+    const password = req.body.password;
+    const name = req.body.name;
+    const salary = req.body.salary;
+    const locationName = req.body.location_name;
+    const imagePath = req.body.image_path;
     // WHERE id = ?を付け、指定した社員だけを更新します。
     const sql =
         'UPDATE employee SET password = ?, name = ?, salary = ?, location_name = ?, image_path = ? WHERE id = ?';
-    const params = [password, name, salary, location_name, image_path, id];
+    const params = [password, name, salary, locationName, imagePath, id];
     db.run(sql, params, (err) => {
         if (err) {
             res.status(500).json({
