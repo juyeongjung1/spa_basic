@@ -47,6 +47,14 @@
             <tbody id="employeeList"></tbody>
         </table>
         <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                // 3-3で作成した関数を使い、初期表示時にも社員一覧を表示します。
+                axios
+                    .get("http://localhost:3005/api/employees")
+                    .then((response) => showEmployeeList(response.data))
+                    .catch((error) => console.error("社員一覧の取得に失敗しました:", error));
+            });
+
             document.getElementById("registerBtn").addEventListener("click", function () {
                 let password = document.getElementById("password").value;
                 let name = document.getElementById("name").value;

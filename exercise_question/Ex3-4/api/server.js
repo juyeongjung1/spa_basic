@@ -8,10 +8,12 @@ const db = new sqlite3.Database('../db/employees.db');
 // 【手順1】POST /api/employeesを定義してください。
 app._____(_____, (req, res) => {
     // 【手順2】req.bodyから5項目を取得してください。
+    // location_name、image_pathのキー名で受け取る点に注意してください。
     const { _____ } = req.body;
     // 【手順3】必須3項目がなければ400を返してください。
     _____;
     // 【手順4】employeeテーブルへ登録するSQLとparamsを作成してください。
+    // idは自動採番のため、INSERT対象の列名を明示してください。
     const sql = _____;
     const params = _____;
     // 【手順5】db.runでINSERTし、成功後に全件を取得して返してください。

@@ -47,6 +47,14 @@
             <tbody id="employeeList"></tbody>
         </table>
         <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                // 3-3で作成した関数を使い、初期表示時にも社員一覧を表示します。
+                axios
+                    .get('http://localhost:3005/api/employees')
+                    .then((response) => showEmployeeList(response.data))
+                    .catch((error) => console.error("社員一覧の取得に失敗しました:", error));
+            });
+
             document.getElementById("registerBtn").addEventListener("click", function () {
                 // 【手順1】5つの入力値を取得してください。
                 let password = _____;
@@ -58,7 +66,8 @@
                 errorMessage.innerHTML = "";
                 // 【手順2】password、name、salaryが未入力ならエラーを表示してreturnしてください。
                 _____;
-                // 【手順3】POST /api/employeesへ5項目を送信してください。
+                // 【手順3】POST /api/employeesへ5項目をオブジェクトで送信してください。
+                // location_name、image_pathのキー名で送信する点に注意してください。
                 axios
                     ._____(_____, _____)
                     .then((response) => {
