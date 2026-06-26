@@ -15,6 +15,7 @@ if (!fs.existsSync(OUT_DIR)) {
 function resetDatabases() {
   console.log('Resetting databases via Git...');
   const paths = [
+    'Ex4-2-1/db/employees.db',
     'Ex4-2-2/db/employees.db',
     'Ex4-2-3/db/employees.db',
     'Ex4-4/db/employees.db'
@@ -143,6 +144,34 @@ function createStaticServer(baseDir, port) {
       document.head.appendChild(style);
     });
   };
+
+  // ==========================================
+  // Task 0: Ex4-2-1 (詳細Modal)
+  // ==========================================
+  let apiServer1 = await startServer(path.join(BASE_DIR, 'Ex4-2-1/api/server.js'), 3005);
+  let staticServer1 = await createStaticServer(path.join(BASE_DIR, 'Ex4-2-1'), 8080);
+  try {
+    const page = await browser.newPage();
+    await page.setViewport({ width: 1000, height: 800, deviceScaleFactor: 2 });
+    await page.goto('http://localhost:8080/index.html', { waitUntil: 'networkidle0' });
+    
+    // 最初の社員リンクをクリックして詳細Modalを開く
+    await page.click('#employeeList tr:first-child a');
+    await page.waitForSelector('#detailModal .modal-content', { timeout: 5000 });
+    await new Promise(r => setTimeout(r, 300));
+    
+    await injectStyles(page);
+    
+    const modalContent = await page.$('#detailModal .modal-content');
+    await modalContent.screenshot({ path: path.join(OUT_DIR, '4-2-1_detail_modal.png') });
+    console.log('Saved 4-2-1_detail_modal.png');
+    
+    await page.close();
+  } finally {
+    apiServer1.kill();
+    staticServer1.close();
+    await new Promise(r => setTimeout(r, 1500));
+  }
 
   // ==========================================
   // Task 1: Ex4-2-2 (登録Modal)
