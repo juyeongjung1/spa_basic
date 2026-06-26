@@ -11,16 +11,22 @@ const cssPath = path.join(tmpDir, "guide.css");
 const htmlPath = path.join(tmpDir, "SPA開発入門_演習ガイド.html");
 const pdfPath = path.join(outDir, "SPA開発入門_演習ガイド.pdf");
 const previewPath = path.join(tmpDir, "SPA開発入門_演習ガイド_preview.png");
+const logoPath = path.join(tmpDir, "trainocate_logo.png");
+const logoUrl = "https://www.trainocate.co.jp/top_common/images/trainocate_logo.png";
 
 const css = String.raw`
 :root {
-    --ink: #1f2937;
-    --muted: #5b6472;
-    --line: #d9e2ec;
-    --soft: #f5f8fb;
-    --brand: #2456a6;
-    --brand-soft: #eaf1ff;
-    --code-bg: #f7f9fc;
+    --ink: #232323;
+    --muted: #666f7d;
+    --line: #ead8d2;
+    --soft: #fff8f5;
+    --brand: #e94b22;
+    --brand-dark: #b9361c;
+    --brand-soft: #fff1ec;
+    --accent: #1d3994;
+    --accent-soft: #eef3ff;
+    --code-bg: #fffaf7;
+    --guide-logo: none;
 }
 
 html {
@@ -46,77 +52,125 @@ body {
     border-left: 10px solid var(--brand);
     padding-left: 18mm;
     break-after: page;
+    position: relative;
+}
+
+#title-block-header::before {
+    content: "";
+    position: absolute;
+    top: 10mm;
+    left: 18mm;
+    width: 52mm;
+    height: 8mm;
+    background: var(--guide-logo) left center / contain no-repeat;
 }
 
 #title-block-header .title {
     margin: 0;
-    font-size: 28pt;
+    font-size: 30pt;
     line-height: 1.35;
     letter-spacing: 0;
     color: var(--brand);
 }
 
 #title-block-header .date {
-    margin-top: 10mm;
-    color: var(--muted);
-    font-size: 11pt;
+    display: none;
 }
 
-#TOC {
-    break-after: page;
-    padding: 4mm 0;
-}
-
-#TOC > h2 {
+body > h1:first-of-type {
     margin-top: 0;
-    border: none;
-    padding: 0;
+    color: var(--brand);
+    border-bottom: 2px solid var(--brand);
 }
 
-#TOC ul {
+body > h1:first-of-type + p strong {
+    display: block;
+    margin: 2mm 0 8mm;
+    color: var(--accent);
+    font-size: 13pt;
+}
+
+h2#目次 {
+    break-before: page;
+    background: var(--brand);
+    color: #ffffff;
+    border-left: 0;
+    border-radius: 6px 6px 0 0;
+    margin-bottom: 0;
+}
+
+h2#目次 + ol {
     list-style: none;
-    padding-left: 0;
+    margin: 0 0 10mm;
+    padding: 5mm;
+    background: #ffffff;
+    border: 1px solid var(--line);
+    border-top: 0;
+    border-radius: 0 0 6px 6px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3mm;
 }
 
-#TOC li {
-    margin: 2.5mm 0;
-}
-
-#TOC ul ul {
-    padding-left: 7mm;
-    font-size: 9.5pt;
+h2#目次 + ol li {
+    margin: 0;
+    padding: 4mm;
+    background: var(--brand-soft);
+    border-left: 4px solid var(--brand);
+    border-radius: 4px;
+    font-weight: 700;
 }
 
 a {
-    color: #174ea6;
+    color: var(--accent);
     text-decoration: none;
 }
 
 h1, h2, h3, h4 {
-    color: #143d75;
+    color: var(--brand-dark);
     line-height: 1.35;
     break-after: avoid;
 }
 
 h1 {
     font-size: 21pt;
-    margin: 0 0 9mm;
+    margin: 12mm 0 9mm;
     padding-bottom: 4mm;
     border-bottom: 2px solid var(--brand);
 }
 
-h2 {
-    font-size: 17pt;
-    margin: 16mm 0 6mm;
-    padding: 3mm 4mm;
-    background: var(--brand-soft);
-    border-left: 5px solid var(--brand);
+h1[id^="演習"] {
     break-before: page;
+    min-height: 22mm;
+    padding: 12mm 8mm 6mm;
+    margin: 0 0 8mm;
+    color: #ffffff;
+    background: linear-gradient(90deg, var(--brand) 0%, var(--brand-dark) 72%, var(--accent) 72%, var(--accent) 100%);
+    border-bottom: 0;
+    border-radius: 8px;
 }
 
-h1 + h2,
-#TOC + h2 {
+h2 {
+    font-size: 15.5pt;
+    margin: 8mm 0 5mm;
+    padding: 2.5mm 4mm;
+    background: var(--brand-soft);
+    border-left: 5px solid var(--brand);
+}
+
+h1 + h2 {
     break-before: auto;
+    margin-top: 0;
+}
+
+h2#演習の概要,
+h2#予想所要時間 {
+    break-before: avoid;
+}
+
+h2#演習の概要 + p,
+h2#予想所要時間 + p {
+    break-inside: avoid;
 }
 
 h3 {
@@ -129,7 +183,7 @@ h3 {
 h4 {
     font-size: 11.2pt;
     margin: 6mm 0 2.5mm;
-    color: #2f4f73;
+    color: var(--brand-dark);
 }
 
 p {
@@ -137,7 +191,7 @@ p {
 }
 
 strong {
-    color: #0f3b78;
+    color: var(--brand-dark);
     font-weight: 700;
 }
 
@@ -153,9 +207,9 @@ li {
 blockquote {
     margin: 5mm 0;
     padding: 3.5mm 5mm;
-    background: #fff8e6;
-    border-left: 5px solid #e2a319;
-    color: #4b3a14;
+    background: var(--brand-soft);
+    border-left: 5px solid var(--brand);
+    color: #562313;
 }
 
 table {
@@ -171,8 +225,8 @@ thead {
 }
 
 th {
-    background: #edf3fb;
-    color: #173b68;
+    background: var(--brand);
+    color: #ffffff;
     font-weight: 700;
 }
 
@@ -185,7 +239,7 @@ th, td {
 code {
     font-family: "Consolas", "BIZ UDGothic", "Meiryo", monospace;
     font-size: 9pt;
-    background: #eef3f8;
+    background: var(--brand-soft);
     border-radius: 3px;
     padding: 0.2mm 1mm;
     word-break: break-all;
@@ -196,7 +250,7 @@ pre {
     padding: 3.5mm 4mm;
     background: var(--code-bg);
     border: 1px solid var(--line);
-    border-left: 4px solid #8aa9d6;
+    border-left: 4px solid var(--brand);
     border-radius: 5px;
     overflow: visible;
     white-space: pre-wrap;
@@ -219,7 +273,7 @@ img {
     margin: 4mm auto 8mm;
     border: 1px solid var(--line);
     border-radius: 6px;
-    box-shadow: 0 2px 10px rgba(24, 48, 80, 0.08);
+    box-shadow: 0 2px 10px rgba(29, 57, 148, 0.12);
     object-fit: contain;
     break-inside: avoid;
 }
@@ -234,6 +288,12 @@ hr {
     background: transparent;
 }
 
+.blank-page {
+    break-before: page;
+    break-after: page;
+    min-height: 240mm;
+}
+
 @media print {
     body {
         -webkit-print-color-adjust: exact;
@@ -242,10 +302,31 @@ hr {
 }
 `;
 
+function logoDataUri() {
+    const bytes = fs.readFileSync(logoPath);
+    return `url("data:image/png;base64,${bytes.toString("base64")}")`;
+}
+
+function downloadLogo() {
+    fs.mkdirSync(tmpDir, { recursive: true });
+    if (fs.existsSync(logoPath)) {
+        return;
+    }
+    execFileSync(
+        "node",
+        [
+            "-e",
+            `fetch(${JSON.stringify(logoUrl)}).then(async r => { if (!r.ok) throw new Error(String(r.status)); const b = Buffer.from(await r.arrayBuffer()); require('fs').writeFileSync(${JSON.stringify(logoPath)}, b); })`,
+        ],
+        { cwd: root, stdio: "inherit" }
+    );
+}
+
 function runPandoc() {
     fs.mkdirSync(tmpDir, { recursive: true });
     fs.mkdirSync(outDir, { recursive: true });
-    fs.writeFileSync(cssPath, css, "utf8");
+    downloadLogo();
+    fs.writeFileSync(cssPath, css.replace("--guide-logo: none;", `--guide-logo: ${logoDataUri()};`), "utf8");
 
     execFileSync(
         "pandoc",
@@ -254,15 +335,11 @@ function runPandoc() {
             "--from=gfm",
             "--to=html5",
             "--standalone",
-            "--toc",
-            "--toc-depth=3",
             "--embed-resources",
             "--resource-path",
             root,
             "--metadata",
             "title=SPA開発入門 演習ガイド",
-            "--metadata",
-            "date=2026年6月26日",
             "--metadata",
             "lang=ja-JP",
             "--css",
@@ -274,6 +351,44 @@ function runPandoc() {
     );
 }
 
+async function insertBlankPages(page) {
+    const pageHeight = 1122.52;
+    for (let pass = 0; pass < 8; pass += 1) {
+        const inserted = await page.evaluate((pageHeight) => {
+            const chapters = [...document.querySelectorAll('h1[id^="演習"]')];
+            for (const chapter of chapters) {
+                const offset = chapter.getBoundingClientRect().top + window.scrollY;
+                const pageNumber = Math.floor(offset / pageHeight) + 1;
+                if (pageNumber % 2 === 1) {
+                    const blank = document.createElement("div");
+                    blank.className = "blank-page";
+                    blank.setAttribute("aria-hidden", "true");
+                    chapter.before(blank);
+                    return true;
+                }
+            }
+            return false;
+        }, pageHeight);
+        if (!inserted) {
+            return;
+        }
+        await page.evaluate(() => document.body.offsetHeight);
+    }
+}
+
+async function insertFixedBlankPages(page) {
+    await page.evaluate(() => {
+        const chapter = document.getElementById("演習4-spa開発");
+        if (!chapter) {
+            return;
+        }
+        const blank = document.createElement("div");
+        blank.className = "blank-page";
+        blank.setAttribute("aria-hidden", "true");
+        chapter.before(blank);
+    });
+}
+
 async function renderPdf() {
     const browser = await puppeteer.launch({ headless: "new" });
     try {
@@ -282,6 +397,8 @@ async function renderPdf() {
             waitUntil: "networkidle0",
         });
         await page.emulateMediaType("print");
+        await insertBlankPages(page);
+        await insertFixedBlankPages(page);
 
         await page.pdf({
             path: pdfPath,
@@ -290,7 +407,7 @@ async function renderPdf() {
             displayHeaderFooter: true,
             preferCSSPageSize: false,
             margin: {
-                top: "16mm",
+                top: "15mm",
                 right: "16mm",
                 bottom: "18mm",
                 left: "16mm",
