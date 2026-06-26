@@ -99,7 +99,10 @@ const confirmOverrideTrue = `
 (async () => {
   resetDatabases();
   
-  const browser = await puppeteer.launch({ headless: 'new' });
+  const browser = await puppeteer.launch({ 
+    headless: 'new',
+    args: ['--allow-file-access-from-files']
+  });
   const injectStyles = async (page) => {
     await page.evaluateOnNewDocument(() => {
         document.addEventListener('DOMContentLoaded', () => {

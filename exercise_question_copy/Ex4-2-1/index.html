@@ -25,7 +25,7 @@
             <tbody id="employeeList"></tbody>
         </table>
         <!-- 【手順1】Modalにid「detailModal」を指定してください。 -->
-        <div class="modal fade" id="_____" tabindex="-1">
+        <div class="modal fade" id="detailModal" tabindex="-1">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -84,18 +84,22 @@
             function showEmployeeDetail(id) {
                 // 【手順2】社員番号を含む詳細APIのURL http://localhost:3005/api/employees/${id}を呼び出してください
                 axios
-                    ._____(_____)
+                    .get(`http://localhost:3005/api/employees/${id}`)
                     .then((response) => {
                         // 【手順3】response.dataをemployeeへ代入してください。
-                        let employee = _____;
+                        let employee = response.data;
                         // 【手順4】取得した社員番号、氏名、給与、勤務地をModal内の各spanへidを参考にして置き換えてください。
-                        _____;
+                        document.getElementById('detailId').innerHTML = employee.id
+                        document.getElementById('detailName').innerHTML = employee.name
+                        document.getElementById('detailSalary').innerHTML = employee.salary
+                        document.getElementById('detailLocation').innerHTML = employee.location_name
                         // 画像表示処理は完成済みです。
                         let image = document.getElementById("detailImage");
                         image.style.display = employee.image_path ? "block" : "none";
                         image.src = employee.image_path || "";
                         // 【手順5】detailModalのBootstrap Modalを作成し表示してください。
-                        _____;
+                        let modal = new bootstrap.Modal(document.getElementById('detailModal'));
+                        modal.show();
                     })
                     .catch((error) => console.error("社員詳細の取得に失敗しました:", error));
             }

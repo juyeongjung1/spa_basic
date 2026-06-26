@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8" />
+        <title>引数と戻り値</title>
+    </head>
+
+    <body>
+        <script>
+            // 【手順1】月給monthlySalaryと賞与bonusを受け取る関数にしてください。
+            function calculateAnnualIncome(monthlySalary,bonus) {
+                // 【手順2】「月給×12＋賞与」の計算結果をreturnしてください。
+                
+                return monthlySalary * 12 + bonus;
+            }
+            // 【手順3】月給230000、賞与400000を渡し、戻り値をannualIncomeへ代入してください。
+            let annualIncome = calculateAnnualIncome(230000, 400000)
+            // 表示処理は完成済みです。
+            document.write(`年収見込額：${annualIncome}円`);
+        </script>
+    </body>
+</html>

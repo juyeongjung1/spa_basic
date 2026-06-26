@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Fetch API - 出勤時刻</title>
+    </head>
+
+    <body>
+        <h1>勤怠登録</h1>
+        <p id="showTime">出勤時刻は未登録です。</p>
+        <button id="workStartBtn">出勤する</button>
+        <script>
+            document.getElementById("workStartBtn").addEventListener("click", function () {
+                let result = document.getElementById("showTime");
+                // 【手順1】fetchでhttp://localhost:3002/currenttimeを呼び出してください。
+                fetch('http://localhost:3002/currenttime')
+                    // 【手順2】response.json()でJSONをJavaScriptのデータへ変換してください。
+
+                    .then(function(response){
+                        return response.json();
+                    })
+                    .then((data) => {
+                        // 【手順3】dataをConsoleへ出力してください。
+                        console.log(data);
+                        // 【手順4】data.timeを「出勤時刻：...」の形式で表示してください。
+                        result.innerHTML = `出勤時刻：${data.time}`;
+                    })
+                    .catch((error) => console.error("時刻の取得に失敗しました:", error));
+            });
+        </script>
+    </body>
+</html>

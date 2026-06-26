@@ -77,6 +77,9 @@ function createStaticServer(baseDir, port) {
       if (reqPath === '/' || reqPath.endsWith('/')) reqPath = '/index.html';
       
       let filePath = path.join(baseDir, reqPath);
+      if (reqPath.startsWith('/images/')) {
+        filePath = path.join(BASE_DIR, reqPath);
+      }
       console.log(`[Static Server ${port}] filePath resolved to: ${filePath}`);
       if (!fs.existsSync(filePath)) {
         const ext = path.extname(reqPath);
