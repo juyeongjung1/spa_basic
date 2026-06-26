@@ -32,24 +32,28 @@
                         <h2 class="modal-title fs-5">社員詳細</h2>
                         <button class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
-                    <div class="modal-body">
-                        <p>
-                            社員番号：
-                            <span id="detailId"></span>
-                        </p>
-                        <p>
-                            氏名：
-                            <span id="detailName"></span>
-                        </p>
-                        <p>
-                            給与：
-                            <span id="detailSalary"></span>
-                        </p>
-                        <p>
-                            勤務地：
-                            <span id="detailLocation"></span>
-                        </p>
-                        <img id="detailImage" alt="社員画像" width="120" />
+                    <div class="modal-body d-flex gap-3">
+                        <div>
+                            <img id="detailImage" alt="社員画像" width="120" style="object-fit: cover;" />
+                        </div>
+                        <div>
+                            <p class="mb-2">
+                                社員番号：
+                                <span id="detailId"></span>
+                            </p>
+                            <p class="mb-2">
+                                氏名：
+                                <span id="detailName"></span>
+                            </p>
+                            <p class="mb-2">
+                                給与：
+                                <span id="detailSalary"></span>
+                            </p>
+                            <p class="mb-0">
+                                勤務地：
+                                <span id="detailLocation"></span>
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
