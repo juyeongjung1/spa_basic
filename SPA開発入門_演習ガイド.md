@@ -1013,9 +1013,6 @@ Modalを閉じる時は、`bootstrap.Modal.getInstance(document.getElementById('
 例:
 
 - `http://localhost:3005/`
-- `http://localhost:3005/employees`
-- `http://localhost:3005/employees/new`
-- `http://localhost:3005/employees/1001`
 
 完成解答を確認する場合は、`exercise_sample\Ex4-3\api` で同じ手順を実行してください。
 
@@ -1032,6 +1029,8 @@ Modalを閉じる時は、`bootstrap.Modal.getInstance(document.getElementById('
 
 実装を進める前に、APIサーバーから現在の画面を開き、どのURLでどの表示が足りないのかを確認してから実装しましょう。
 
+`showPage(path)` は、現在のURLのパスを受け取り、どの画面表示関数を呼び出すかを決める関数です。リンクをクリックした時も、ブラウザのアドレス欄へURLを直接入力した時も、この関数を通して同じ画面切り替え処理を実行します。
+
 次のURLと表示内容を `showPage(path)` で対応させてください。
 
 | URL | 表示画面 | 表示関数 |
@@ -1045,7 +1044,8 @@ Modalを閉じる時は、`bootstrap.Modal.getInstance(document.getElementById('
 2. `navigation` のnavigateイベントを受け取ってください。
 3. 同一オリジンでintercept可能な移動だけを処理してください。
 4. `event.intercept` 内で `showPage` を呼び出してください。
-5. 社員詳細のURLから正規表現で社員番号を取り出してください。
+5. `showPage(path)` の中で、`/`、`/employees`、`/employees/new` に対応する表示関数を呼び出してください。
+6. 社員詳細のURLから社員番号を取り出す正規表現は完成済みなので、`result[1]` に社員番号が入ることを確認してください。
 
 #### 初心者向けヒント
 
@@ -1059,22 +1059,42 @@ document.addEventListener("DOMContentLoaded", function () {
 navigation.addEventListener("navigate", function (event) {
     let url = new URL(event.destination.url);
 
-    if (!event.canIntercept || url.origin !== window.location.origin) {
+    const canIntercept = url.origin === location.origin;
+    if (!canIntercept) {
         return;
     }
 
     event.intercept({
-        handler: function () {
+        handler() {
             showPage(url.pathname);
         },
     });
 });
 ```
 
-`showPage(path)` の中では、単純なURLは `if (path === "/employees")` のように比較し、社員詳細のように番号が変わるURLは正規表現で取り出します。
+`showPage(path)` の中では、単純なURLは `if (path === "/employees")` のように比較します。穴埋めでは、どのURLにどの表示関数を割り当てるべきかを意識してください。
 
 ```javascript
-let result = path.match(/^\/employees\/(\w+)$/);
+function showPage(path) {
+    if (path === "/" || path === "/index.html") {
+        showHome();
+        return;
+    }
+    if (path === "/employees" || path === "/employees/") {
+        showEmployeeList();
+        return;
+    }
+    if (path === "/employees/new" || path === "/employees/new/") {
+        showEmployeeRegister();
+        return;
+    }
+}
+```
+
+社員詳細のように番号が変わるURLは、正規表現で取り出します。この部分は演習ファイルに完成済みのコードとして用意しているため、穴埋めではなく動きを確認してください。
+
+```javascript
+let result = path.match(/^\/employees\/(\d+)$/);
 if (result) {
     showEmployeeDetail(result[1]);
     return;
@@ -1093,7 +1113,7 @@ if (result) {
 - [戻る]と[進む]で画面が正しく切り替わること
 - 社員一覧から詳細へ再読み込みなしで移動できること
 
-### 演習4.3.2 404画面を作る
+### 演習4.3.3 【オプション】新しいルートを追加する
 
 **参照テキスト**  
 4.3. Navigation APIを活用した本格 SPA（擬似遷移）
@@ -1104,27 +1124,7 @@ if (result) {
 **演習ファイル**  
 `exercise_question\Ex4-3\index.html`
 
-1. どのルートにも一致しない場合は「ページが見つかりません」と表示してください。
-2. 入力されたパスを表示してください。
-3. ホームと社員一覧へ戻るリンクを配置してください。
-
-#### 動作確認
-
-![演習4.3.2 動作確認](./images/4-3-2_not_found.png)
-
-- ブラウザのアドレス欄に `http://localhost:3005/invalid_path_test` を直接入力した際、上の画像のように「ページが見つかりません」と入力したパスが表示されること
-- 「ホーム」や「社員一覧」のリンクが正しく機能すること
-
-### 演習4.3.3 新しいルートを追加する
-
-**参照テキスト**  
-4.3. Navigation APIを活用した本格 SPA（擬似遷移）
-
-**参照ファイル**  
-`sample\Ex4-3\index.html`
-
-**演習ファイル**  
-`exercise_question\Ex4-3\index.html`
+この問題は穴埋めではなく、4.3.1で作ったルーティング処理を使って、新しい画面を自分で追加するオプション演習です。
 
 次の仕様で「このシステムについて」画面を追加してください。
 
@@ -1132,6 +1132,12 @@ if (result) {
 - メニュー名: このシステムについて
 - 表示内容: システム名と使用技術を3つ以上
 - 表示関数名: `showAbout`
+
+追加する時は、次の3点をそろえます。
+
+1. ナビゲーションに `/about` へのリンクを追加する。
+2. `showAbout` 関数を作成し、表示したいHTMLを `app` に入れる。
+3. `showPage(path)` に `/about` の分岐を追加し、`showAbout()` を呼び出す。
 
 #### 動作確認
 

@@ -56,99 +56,130 @@
                 <a href="/">ホーム</a>
                 <a href="/employees">社員一覧</a>
                 <a href="/employees/new">新規社員登録</a>
-                <a href="/about">このシステムについて</a>
             </nav>
         </header>
         <main id="app"></main>
         <footer>人事管理システム</footer>
         <script>
-            // 【手順1】初期表示時、現在のpathnameをshowPageへ渡してください。
             document.addEventListener("DOMContentLoaded", function () {
+                // 【手順1】初期表示時、現在のpathnameをshowPageへ渡してください。
                 _____;
             });
-            // 【手順2】Navigation APIのnavigateイベントを登録してください。
+
             navigation.addEventListener(_____, function (event) {
-                // 【手順3】移動先URLをURLオブジェクトへ変換してください。
+                // 【手順2】移動先URLをURLオブジェクトにしてください。
                 let url = _____;
-                // 【手順4】intercept不能または別オリジンなら処理を終了してください。
-                _____;
-                // 【手順5】通常遷移を置き換え、移動先pathnameをshowPageへ渡してください。
+
+                // 【手順3】同じオリジン内のページ遷移だけをSPAの画面切り替え対象にしてください。
+                const canIntercept = _____;
+                if (!canIntercept) {
+                    return;
+                }
+
+                // 【手順4】通常遷移を置き換え、移動先pathnameをshowPageへ渡してください。
                 event.intercept({
-                    handler: function () {
+                    handler() {
                         _____;
                     },
                 });
             });
 
+            // showPageは、現在のURLのパスを見て、どの画面表示関数を呼び出すかを決める関数です。
+            // たとえば「/employees」なら社員一覧、「/employees/new」なら新規登録画面を表示します。
+            // URLと関数の対応をここに集めることで、リンクをクリックした時も、URLを直接入力した時も同じ処理で画面を切り替えられます。
             function showPage(path) {
                 if (path === "/" || path === "/index.html") {
-                    showHome();
+                    // 【手順5】ホーム画面を表示する関数を呼び出してください。
+                    _____;
                     return;
                 }
                 if (path === "/employees" || path === "/employees/") {
-                    showEmployeeList();
+                    // 【手順6】社員一覧画面を表示する関数を呼び出してください。
+                    _____;
                     return;
                 }
                 if (path === "/employees/new" || path === "/employees/new/") {
-                    showEmployeeRegister();
+                    // 【手順7】新規社員登録画面を表示する関数を呼び出してください。
+                    _____;
                     return;
                 }
-                // 【手順6】/employees/1001の社員番号を正規表現で取り出してください。
-                let result = _____;
+
+                // /employees/1001 のようなURLでは、正規表現で社員番号部分を取り出します。
+                // この処理は完成済みなので、result[1] に社員番号が入ることを確認してください。
+                let result = path.match(/^\/employees\/(\d+)$/);
                 if (result) {
                     showEmployeeDetail(result[1]);
                     return;
                 }
-                // 【手順7】/aboutの場合にshowAboutを呼び出してください。
-                _____;
-                // 【手順8】該当しないパスと、ホーム・社員一覧へのリンクを含む404画面を表示してください。
-                _____;
+
+                // この演習では404画面は作らず、対応しないURLはホーム画面を表示します。
+                showHome();
             }
 
             function showHome() {
-                document.getElementById("app").innerHTML =
-                    "<h2>ホーム</h2><p>メニューから社員情報を管理できます。</p>";
-            }
-
-            function showEmployeeRegister() {
-                document.getElementById("app").innerHTML =
-                    "<h2>新規社員登録</h2><p>この演習では画面遷移を確認します。</p>";
-            }
-
-            function showAbout() {
-                document.getElementById("app").innerHTML =
-                    "<h2>このシステムについて</h2><p>使用技術：JavaScript、Express、SQLite、Axios</p>";
+                document.getElementById("app").innerHTML = `
+                    <h2>ホーム</h2>
+                    <p>社員管理SPAです。上のナビゲーションから画面を切り替えてください。</p>
+                `;
             }
 
             function showEmployeeList() {
-                axios.get("http://localhost:3005/api/employees").then((r) => {
-                    let rows = "";
-                    r.data.forEach(
-                        (e) =>
-                            (rows += `
-                    <tr>
-                        <td>${e.image_path ? '<img src="' + e.image_path + '" alt="' + e.name + 'の顔写真" width="48" height="48" style="object-fit: cover" />' : ""}</td>
-                        <td>${e.id}</td>
-                        <td><a href="/employees/${e.id}">${e.name}</a></td>
-                        <td>${e.salary}</td>
-                        <td>${e.location_name}</td>
-                    </tr>
-                `),
-                    );
-                    document.getElementById("app").innerHTML =
-                        `<h2>社員一覧</h2><table><thead><tr><th>顔写真</th><th>ID</th><th>氏名</th><th>給与</th><th>勤務地</th></tr></thead><tbody>${rows}</tbody></table>`;
+                axios.get("http://localhost:3005/api/employees").then((response) => {
+                    document.getElementById("app").innerHTML = `
+                    <h2>社員一覧</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>顔写真</th>
+                                <th>社員番号</th>
+                                <th>氏名</th>
+                                <th>給与</th>
+                                <th>勤務地</th>
+                            </tr>
+                        </thead>
+                        <tbody id="employeeList"></tbody>
+                    </table>
+                    `;
+
+                    let list = document.getElementById("employeeList");
+                    list.innerHTML = "";
+
+                    response.data.forEach((e) => {
+                        list.insertAdjacentHTML(
+                            "beforeend",
+                            `
+                            <tr>
+                                <td><img class="employee-photo" src="${e.image_path}" alt="${e.name}の顔写真"></td>
+                                <td>${e.id}</td>
+                                <td><a href="/employees/${e.id}">${e.name}</a></td>
+                                <td>${e.salary}</td>
+                                <td>${e.location_name || ""}</td>
+                            </tr>
+                            `
+                        );
+                    });
                 });
             }
 
+            function showEmployeeRegister() {
+                document.getElementById("app").innerHTML = `
+                    <h2>新規社員登録</h2>
+                    <p>この演習では画面遷移を確認します。</p>
+                `;
+            }
+
             function showEmployeeDetail(id) {
-                axios.get(`http://localhost:3005/api/employees/${id}`).then((r) => {
-                    let e = r.data;
+                axios.get(`http://localhost:3005/api/employees/${id}`).then((response) => {
+                    const e = response.data;
                     document.getElementById("app").innerHTML = `
                     <h2>社員詳細</h2>
-                    ${e.image_path ? '<p><img src="' + e.image_path + '" alt="' + e.name + 'の顔写真" width="120" style="object-fit: cover" /></p>' : ""}
-                    <p>${e.id} ${e.name} ${e.salary}円 ${e.location_name}</p>
+                    <img class="detail-photo" src="${e.image_path}" alt="${e.name}の顔写真">
+                    <p>社員番号: ${e.id}</p>
+                    <p>氏名: ${e.name}</p>
+                    <p>給与: ${e.salary}</p>
+                    <p>勤務地: ${e.location_name || ""}</p>
                     <a href="/employees">一覧へ戻る</a>
-                `;
+                    `;
                 });
             }
         </script>
