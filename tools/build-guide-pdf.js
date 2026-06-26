@@ -173,6 +173,13 @@ h2#予想所要時間 + p {
     break-inside: avoid;
 }
 
+h2[id^="演習11"],
+h2[id^="演習22"],
+h2[id^="演習32"],
+h2[id^="演習42"] {
+    break-before: page;
+}
+
 h3 {
     font-size: 13.2pt;
     margin: 9mm 0 4mm;
