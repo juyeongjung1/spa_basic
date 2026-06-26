@@ -11,6 +11,7 @@
         <table border="1">
             <thead>
                 <tr>
+                    <th>顔写真</th>
                     <th>ID</th>
                     <th>氏名</th>
                     <th>給与</th>
@@ -45,6 +46,7 @@
                         "beforeend",
                         `
                 <tr>
+                    <td>${e.image_path ? "<img src=\"" + e.image_path + "\" alt=\"" + e.name + "の顔写真\" width=\"48\" height=\"48\" style=\"object-fit: cover\" />" : ""}</td>
                     <td>${e.id}</td>
                     <td>${e.name}</td>
                     <td>${e.salary}</td>

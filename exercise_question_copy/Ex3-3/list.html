@@ -22,13 +22,12 @@
         </table>
         <script>
             // 【手順1】HTMLの読み込み完了時に処理するイベント名を指定してください。
-            document.addEventListener(_____, function () {
+            document.addEventListener('DOMContentLoaded', function () {
                 // 【手順2】GET方式で社員一覧API（http://localhost:3005/api/employees）を呼び出してください。
-                axios
-                    ._____(_____)
+                axios.get('http://localhost:3005/api/employees')
                     .then((response) => {
                         // 【手順3】response.dataをshowEmployeeListへ渡してください。
-                        _____;
+                        showEmployeeList(response.data)
                     })
                     .catch((error) => console.error("社員一覧の取得に失敗しました:", error));
             });
@@ -37,11 +36,14 @@
                 let employeeList = document.getElementById("employeeList");
                 employeeList.innerHTML = "";
                 // 【手順4】forEachで社員を1名ずつ処理してください。
-                employees._____((employee) => {
+                employees.forEach((employee) => {
                     // 【手順5】顔写真、id、name、salary、location_nameを持つ行を作成してください。
-                    let employeeHtml = _____;
+                    let employeeHtml = `<tr>
+                        <td>${employee.image_path ? "<img src=\"" + employee.image_path + "\" alt=\"" + employee.name + "の顔写真\" width=\"48\" height=\"48\" style=\"object-fit: cover\" />" : ""}</td>
+                        <td>${employee.id}</td><td>${employee.name}</td><td>${employee.salary}</td><td>${employee.location_name}</td>
+                        </tr>`;
                     // 【手順6】tbodyの末尾へ行を追加してください。
-                    _____;
+                    employeeList.insertAdjacentHTML('beforeend', employeeHtml);
                 });
             }
         </script>

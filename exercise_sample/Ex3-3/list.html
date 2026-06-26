@@ -11,6 +11,7 @@
         <table border="1">
             <thead>
                 <tr>
+                    <th>顔写真</th>
                     <th>社員番号</th>
                     <th>氏名</th>
                     <th>給与</th>
@@ -35,9 +36,10 @@
                 // 再表示時に行が重複しないよう、既存のtbodyを空にします。
                 employeeList.innerHTML = "";
                 employees.forEach((employee) => {
-                    // passwordとimage_pathは一覧に不要なので表示しません。
+                    // passwordは一覧に不要なので表示しません。
                     let employeeHtml = `
         <tr>
+            <td>${employee.image_path ? "<img src=\"" + employee.image_path + "\" alt=\"" + employee.name + "の顔写真\" width=\"48\" height=\"48\" style=\"object-fit: cover\" />" : ""}</td>
             <td>${employee.id}</td><td>${employee.name}</td>
             <td>${employee.salary}</td><td>${employee.location_name}</td>
         </tr>`;

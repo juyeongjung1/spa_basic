@@ -31,13 +31,14 @@
         <br />
         <label>
             画像パス
-            <input type="text" id="imagePath" />
+            <input type="text" id="imagePath" placeholder="../images/1001.png" />
         </label>
         <br />
         <button id="registerBtn">登録</button>
         <table border="1">
             <thead>
                 <tr>
+                    <th>顔写真</th>
                     <th>社員番号</th>
                     <th>氏名</th>
                     <th>給与</th>
@@ -86,7 +87,7 @@
                 employees.forEach((e) =>
                     list.insertAdjacentHTML(
                         "beforeend",
-                        `<tr><td>${e.id}</td><td>${e.name}</td><td>${e.salary}</td><td>${e.location_name}</td></tr>`,
+                        `<tr><td>${e.image_path ? "<img src=\"" + e.image_path + "\" alt=\"" + e.name + "の顔写真\" width=\"48\" height=\"48\" style=\"object-fit: cover\" />" : ""}</td><td>${e.id}</td><td>${e.name}</td><td>${e.salary}</td><td>${e.location_name}</td></tr>`,
                     ),
                 );
             }

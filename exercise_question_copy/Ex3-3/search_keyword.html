@@ -25,20 +25,22 @@
         </table>
         <script>
             document.getElementById("searchBtn").addEventListener("click", function () {
-                let keyword = document.getElementById("keyword").value;
-                // ?keyword=の後ろへ入力値を付け、クエリパラメータとして送ります。
+                // 【手順1】入力された検索キーワードを取得してください。
+                let keyword = document.getElementById('keyword').value;
+                // 【手順2】http://localhost:3005/api/employees にクエリパラメータkeywordを付けて呼び出してください。
                 axios
                     .get(`http://localhost:3005/api/employees?keyword=${keyword}`)
-                    .then((response) => showEmployeeList(response.data))
+                    .then((response) => {
+                        // 【手順3】検索結果をshowEmployeeListへ渡してください。
+                        showEmployeeList(response.data);
+                    })
                     .catch((error) => console.error("社員検索に失敗しました:", error));
             });
             document.getElementById("listBtn").addEventListener("click", function () {
-                // keywordを付けない場合、APIは全件検索を実行します。
-                axios
-                    .get("http://localhost:3005/api/employees")
-                    .then((response) => showEmployeeList(response.data));
+                // 【手順4】http://localhost:3005/api/employees を呼び出し、全社員を取得してください。
+                axios.get('http://localhost:3005/api/employees').then((response) => showEmployeeList(response.data));
             });
-
+            // 一覧描画は前の演習で学習済みのため完成済みです。
             function showEmployeeList(employees) {
                 let employeeList = document.getElementById("employeeList");
                 employeeList.innerHTML = "";
