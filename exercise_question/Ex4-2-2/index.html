@@ -13,7 +13,7 @@
     <body class="container py-4">
         <h1>社員一覧</h1>
         <!-- 【手順1】登録Modalを開くdata-bs-targetを指定してください。 -->
-        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="_____">
+        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#insert_modal">
             新規社員登録
         </button>
         <table class="table">
@@ -29,7 +29,7 @@
             <tbody id="employeeList"></tbody>
         </table>
         <!-- 【手順2】ボタンのdata-bs-targetと対応するidを指定してください。 -->
-        <div class="modal fade" id="_____" tabindex="-1">
+        <div class="modal fade" id="insert_modal" tabindex="-1">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -54,11 +54,15 @@
                             <span style="width: 90px">勤務地</span>
                             <input class="form-control" id="locationName" />
                         </label>
-                        <label class="d-flex align-items-center gap-2 mb-2">
-                            <span style="width: 90px">画像パス</span>
-                            <input class="form-control" id="imagePath" />
-                            <span>※ 例: ../images/1001.png</span>
-                        </label>
+                        <div class="mb-2">
+                            <label class="d-flex align-items-center gap-2 mb-1">
+                                <span style="width: 90px">画像パス</span>
+                                <input class="form-control" id="imagePath" />
+                            </label>
+                            <small class="text-muted d-block" style="margin-left: 98px;">
+                                ※ 例: ../images/1001.png
+                            </small>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button id="registerBtn" class="btn btn-primary">登録</button>
@@ -86,10 +90,19 @@
                     imagePath = document.getElementById("imagePath").value;
                 // 【手順3】POST http://localhost:3005/api/employees へ5項目を送信してください。
                 axios
-                    ._____(_____, _____)
+                    .post('http://localhost:3005/api/employees', 
+                        {
+                            password:password,
+                            name:name,
+                            salary:salary,
+                            locationName:locationName,
+                            imagePath:imagePath
+                        }
+                    )
                     .then((response) => {
                         // 【手順4】一覧を再描画し、registerModalを閉じてください。
-                        _____;
+                       showEmployeeList(response.data)
+                        bootstrap.Modal.getInstance(document.getElementById('registerModal')).hide();
                     })
                     .catch(
                         (error) =>
