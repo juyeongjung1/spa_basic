@@ -6,6 +6,7 @@ export function showEmployeeDetail(id) {
         let e = response.data;
         document.getElementById('app').innerHTML = `
             <h2>社員詳細</h2>
+            ${e.image_path ? '<p><img src="' + e.image_path + '" alt="' + e.name + 'の顔写真" width="120" style="object-fit: cover" /></p>' : ''}
             <p>${e.id} ${e.name} ${e.salary}円 ${e.location_name}</p>
             <button id="editBtn">編集</button>
             <button id="deleteBtn">削除</button>

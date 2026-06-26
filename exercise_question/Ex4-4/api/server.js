@@ -54,8 +54,8 @@ app.post('/api/employees', (req, res) => {
 app.put('/api/employees/:id', (req, res) => {
     const employee = req.body;
     db.run(
-        'UPDATE employee SET name = ?, salary = ?, location_name = ? WHERE id = ?',
-        [employee.name, employee.salary, employee.location_name, req.params.id],
+        'UPDATE employee SET name = ?, salary = ?, location_name = ?, image_path = ? WHERE id = ?',
+        [employee.name, employee.salary, employee.location_name, employee.image_path, req.params.id],
         (error) =>
             error
                 ? res.status(500).json({

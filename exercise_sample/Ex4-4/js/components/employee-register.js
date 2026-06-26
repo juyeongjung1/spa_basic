@@ -28,6 +28,7 @@ export const employeeRegister = {
         <div class="d-flex align-items-center gap-2 mb-2">
           <label for="image_path" style="width: 90px">画像パス</label>
           <input id="image_path" class="form-control">
+          <span>※ 例: ../images/1001.png</span>
         </div>
         <div>
           <button class="btn btn-primary">登録</button>

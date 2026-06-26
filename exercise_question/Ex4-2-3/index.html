@@ -13,6 +13,15 @@
     <body class="container py-4">
         <h1>社員一覧</h1>
         <table class="table">
+            <thead>
+                <tr>
+                    <th>顔写真</th>
+                    <th>ID</th>
+                    <th>氏名</th>
+                    <th>給与</th>
+                    <th>勤務地</th>
+                </tr>
+            </thead>
             <tbody id="employeeList"></tbody>
         </table>
         <div class="modal fade" id="detailModal" tabindex="-1">
@@ -87,6 +96,9 @@
                         "beforeend",
                         `
                 <tr>
+                    <td>
+                        ${e.image_path ? '<img src="' + e.image_path + '" alt="' + e.name + 'の顔写真" width="48" height="48" style="object-fit: cover" />' : ""}
+                    </td>
                     <td>${e.id}</td>
                     <td>
                         <a href="#" onclick="showEmployeeDetail(${e.id}); return false;">
@@ -108,19 +120,20 @@
                     document.getElementById("detailName").innerHTML = e.name;
                     document.getElementById("detailSalary").innerHTML = e.salary;
                     document.getElementById("detailLocation").innerHTML = e.location_name;
-                    // 【手順1】更新Modalの各入力欄へ現在の社員情報を設定してください。パスワードは空欄にします。
+                    // 【手順1】更新Modalへ現在の社員情報を設定してください。
+                    // updateIdには必ず社員番号を入れます。パスワードは空欄にし、氏名、給与、勤務地、画像パスを設定してください。
                     _____;
                     new bootstrap.Modal(document.getElementById("detailModal")).show();
                 });
             }
             document.getElementById("updateBtn").addEventListener("click", function () {
-                // 【手順2】更新入力値を取得し、PUT /api/employees/{id}へ送信してください。
+                // 【手順2】更新入力値を取得し、PUT http://localhost:3005/api/employees/${id} へ送信してください。
                 _____;
                 // 【手順3】成功後に一覧を再描画し、updateModalを閉じてください。
                 _____;
             });
             document.getElementById("deleteBtn").addEventListener("click", function () {
-                // 【手順4】detailIdから社員番号を取得し、DELETE APIを呼び出してください。
+                // 【手順4】detailIdから社員番号を取得し、DELETE http://localhost:3005/api/employees/${id} を呼び出してください。
                 _____;
                 // 【手順5】成功後に一覧を再描画し、detailModalを閉じてください。
                 _____;

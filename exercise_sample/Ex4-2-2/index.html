@@ -18,6 +18,7 @@
         <table class="table">
             <thead>
                 <tr>
+                    <th>顔写真</th>
                     <th>ID</th>
                     <th>氏名</th>
                     <th>給与</th>
@@ -54,6 +55,7 @@
                         <label class="d-flex align-items-center gap-2 mb-2">
                             <span style="width: 90px">画像パス</span>
                             <input class="form-control" id="imagePath" />
+                            <span>※ 例: ../images/1001.png</span>
                         </label>
                     </div>
                     <div class="modal-footer">
@@ -70,7 +72,7 @@
                 employees.forEach((e) =>
                     list.insertAdjacentHTML(
                         "beforeend",
-                        `<tr><td>${e.id}</td><td>${e.name}</td><td>${e.salary}</td><td>${e.location_name}</td></tr>`,
+                        `<tr><td>${e.image_path ? '<img src="' + e.image_path + '" alt="' + e.name + 'の顔写真" width="48" height="48" style="object-fit: cover" />' : ""}</td><td>${e.id}</td><td>${e.name}</td><td>${e.salary}</td><td>${e.location_name}</td></tr>`,
                     ),
                 );
             }

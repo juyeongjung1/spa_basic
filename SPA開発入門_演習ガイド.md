@@ -892,10 +892,12 @@ SELECT * FROM employee WHERE id = ?;
 
 > 参照テキストは商品情報を扱っていますが、本演習では社員情報へ置き換えます。使用する仕組みは、APIで1件を取得してModalへ表示する点で同じです。
 
+APIの実装をする前に、Live Serverで現在のHTMLの状態を確認し、どの部分が足りないのかを考えてから実装しましょう。
+
 1. 社員詳細Modalへid `detailModal` を指定してください。
-2. 社員番号、氏名、給与、勤務地、社員画像の表示先にidを指定してください。
+2. 社員番号、氏名、給与、勤務地、社員画像の表示先にidが指定されていることを確認してください。
 3. 一覧の氏名をリンクにし、クリック時に社員番号を詳細表示関数へ渡してください。
-4. GET `/api/employees/{id}` を呼び出してください。
+4. GET `http://localhost:3005/api/employees/${id}` を呼び出してください。
 5. 取得した社員情報をModalへ表示してください。
 6. `image_path` がある場合だけ社員画像を表示してください。
 7. BootstrapのModalインスタンスを作成し、表示してください。
@@ -923,17 +925,19 @@ SELECT * FROM employee WHERE id = ?;
 **演習ファイル**  
 `exercise_question\Ex4-2-2\index.html`、`exercise_question\Ex4-2-2\api\server.js`
 
+APIの実装をする前に、Live Serverで現在のHTMLの状態を確認し、どの部分が足りないのかを考えてから実装しましょう。
+
 1. [新規社員登録]ボタンと登録Modalを対応させてください。
-2. Modal内に5項目の入力欄と[登録]ボタンを配置してください。
-3. POST `/api/employees` で社員情報を送信してください。
-4. 登録成功後、社員一覧を再取得し、Modalを閉じてください。
+2. Modal内に5項目の入力欄、画像パスの入力例 `※ 例: ../images/1001.png`、[登録]ボタンが配置されていることを確認してください。
+3. POST `http://localhost:3005/api/employees` で社員情報を送信してください。
+4. 登録成功後、顔写真列を含む社員一覧を再取得し、Modalを閉じてください。
 5. 入力欄とエラーメッセージを初期状態へ戻してください。
 
 #### 初心者向けヒント
 
 登録Modalで使うidは、開くボタンの `data-bs-target` とModal本体の `id` を対応させます。例えばModalのidを `registerModal` にする場合、ボタン側は `data-bs-target="#registerModal"` と書きます。
 
-登録APIは第3章のPOST処理と同じ考え方です。`exercise_question\Ex4-2-2\api\server.js` では、第3章で作った登録APIを参考にし、必須チェックも含めてコピーしてください。
+登録APIは第3章のPOST処理と同じ考え方です。`exercise_question\Ex4-2-2\api\server.js` では、第3章で作った登録APIを参考にし、必須チェックも含めてコピーしてください。画像パスは `image_path` として送信します。
 
 登録後にModalを閉じる処理は、次の形です。
 
@@ -961,26 +965,28 @@ bootstrap.Modal.getInstance(document.getElementById('registerModal')).hide();
 **演習ファイル**  
 `exercise_question\Ex4-2-3\index.html`、`exercise_question\Ex4-2-3\api\server.js`
 
+APIの実装をする前に、Live Serverで現在のHTMLの状態を確認し、どの部分が足りないのかを考えてから実装しましょう。
+
 1. 社員詳細Modalへ[編集]と[削除]を配置してください。
-2. 編集Modalへ現在の社員情報を設定してください。
-3. PUT `/api/employees/{id}` で更新してください。
-4. DELETE `/api/employees/{id}` で削除してください。
+2. 編集Modalへ現在の社員情報を設定してください。特に hidden の更新用IDには必ず社員番号を設定し、パスワードは空欄にします。
+3. PUT `http://localhost:3005/api/employees/${id}` で更新してください。
+4. DELETE `http://localhost:3005/api/employees/${id}` で削除してください。
 5. 成功後は対象Modalを閉じ、社員一覧を再取得してください。
 
 #### 初心者向けヒント
 
 更新処理は、次の順番で考えると整理しやすくなります。
 
-1. 詳細APIで取得した社員情報を、詳細Modalと更新Modalの両方へ設定する。
+1. 詳細APIで取得した社員情報を、詳細Modalと更新Modalの両方へ設定する。更新Modalでは氏名、給与、勤務地、画像パスを現在値として入れ、パスワードは空欄にする。
 2. 更新ボタンを押したら、更新Modalの入力値を読み取る。
-3. `axios.put` で `/api/employees/{id}` へ送る。
+3. `axios.put` で `http://localhost:3005/api/employees/${id}` へ送る。
 4. 成功したら `showEmployeeList(response.data)` で一覧を再描画する。
 5. `updateModal` を `hide()` で閉じる。
 
 削除処理は、詳細Modalに表示している社員番号を使います。
 
 1. `detailId` から社員番号を取得する。
-2. `axios.delete` で `/api/employees/{id}` を呼び出す。
+2. `axios.delete` で `http://localhost:3005/api/employees/${id}` を呼び出す。
 3. 成功したら一覧を再描画する。
 4. `detailModal` を閉じる。
 
@@ -990,7 +996,7 @@ Modalを閉じる時は、`bootstrap.Modal.getInstance(document.getElementById('
 
 ![演習4.2.3 動作確認](./images/4-2-3_update_modal.png)
 
-- 編集Modalに選択社員の現在値が表示されること
+- 編集Modalに選択社員の現在値が表示されること。パスワードは空欄、氏名、給与、勤務地、画像パスは現在の値が表示されること
 - 更新・削除後に一覧が正しく更新されること
 
 ## 演習4.3 Navigation APIを活用したSPA
@@ -1023,6 +1029,8 @@ Modalを閉じる時は、`bootstrap.Modal.getInstance(document.getElementById('
 
 **演習ファイル**  
 `exercise_question\Ex4-3\index.html`
+
+実装を進める前に、APIサーバーから現在の画面を開き、どのURLでどの表示が足りないのかを確認してから実装しましょう。
 
 次のURLと表示内容を `showPage(path)` で対応させてください。
 
@@ -1078,9 +1086,9 @@ if (result) {
 #### 動作確認
 
 - ブラウザのアドレス欄に `http://localhost:3005/` を直接入力し、ホーム画面が表示されること
-- ブラウザのアドレス欄に `http://localhost:3005/employees` を直接入力し、社員一覧が表示されること
+- ブラウザのアドレス欄に `http://localhost:3005/employees` を直接入力し、顔写真列を含む社員一覧が表示されること
 - ブラウザのアドレス欄に `http://localhost:3005/employees/new` を直接入力し、新規社員登録画面が表示されること
-- ブラウザのアドレス欄に `http://localhost:3005/employees/1001` を直接入力し、社員詳細が表示されること
+- ブラウザのアドレス欄に `http://localhost:3005/employees/1001` を直接入力し、社員詳細と顔写真が表示されること
 - URLが変わっても共通レイアウトが残ること
 - [戻る]と[進む]で画面が正しく切り替わること
 - 社員一覧から詳細へ再読み込みなしで移動できること
@@ -1160,6 +1168,8 @@ if (result) {
 **演習ファイル**  
 `exercise_question\Ex4-4\index.html`、`exercise_question\Ex4-4\js`
 
+実装を進める前に、APIサーバーから現在の画面を開き、コンポーネント化する前後でどの表示や操作が足りないのかを確認してから実装しましょう。
+
 次の構成を参考に、画面表示処理を分割してください。
 
 ```text
@@ -1178,6 +1188,9 @@ js/
 2. 各表示関数を対応ファイルから `export` してください。
 3. `app.js` で必要な関数を `import` してください。
 4. `app.js` には画面遷移とルート判定の責務を残してください。
+5. `employee-list.js` では、社員番号の左に顔写真列を表示してください。
+6. `employee-register.js` では、画像パス入力欄の近くに `※ 例: ../images/1001.png` を表示してください。
+7. `employee-update-modal.js` では、画像パスを現在値として入力欄へ表示してください。更新画面では既存データが入るため、画像パス例や画像プレビューは不要です。
 
 #### 初心者向けヒント
 
@@ -1219,5 +1232,5 @@ export const employeeRegister = {
 
 - 登録画面は、ブラウザのアドレス欄に `http://localhost:3005/employees/new` を直接入力して確認すること
 - 更新モーダルは、ブラウザのアドレス欄に `http://localhost:3005/employees/1001` を直接入力し、社員詳細画面の更新ボタンから確認すること
-- 社員一覧は、ブラウザのアドレス欄に `http://localhost:3005/employees` を直接入力して確認すること
+- 社員一覧は、ブラウザのアドレス欄に `http://localhost:3005/employees` を直接入力し、顔写真列も含めて確認すること
 

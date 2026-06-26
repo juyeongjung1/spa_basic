@@ -31,6 +31,14 @@ export function openUpdateModal(employee) {
               value="${employee.location_name}"
             >
           </div>
+          <div class="d-flex align-items-center gap-2 mb-2">
+            <label for="update-image-path" style="width: 90px">画像パス</label>
+            <input
+              id="update-image-path"
+              class="form-control"
+              value="${employee.image_path || ''}"
+            >
+          </div>
         </div>
         <div class="modal-footer">
           <button class="btn btn-secondary" data-bs-dismiss="modal">閉じる</button>
@@ -48,6 +56,7 @@ export function openUpdateModal(employee) {
             name: document.querySelector('#update-name').value,
             salary: Number(document.querySelector('#update-salary').value),
             location_name: document.querySelector('#update-location').value,
+            image_path: document.querySelector('#update-image-path').value,
         };
         // PUTメソッドと社員IDを指定し、対象となる1件を更新します。
         await fetch(`http://localhost:3005/api/employees/${employee.id}`, {

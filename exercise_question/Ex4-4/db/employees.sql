@@ -1,7 +1,7 @@
 DROP TABLE IF EXISTS employee;
 
 CREATE TABLE employee (
-  id TEXT PRIMARY KEY,
+  id INTEGER PRIMARY KEY,
   password TEXT NOT NULL,
   name TEXT NOT NULL,
   salary INTEGER NOT NULL,
@@ -13,26 +13,26 @@ INSERT INTO
   employee
 VALUES
   (
-    'E001',
-    'pass001',
-    '山田 太郎',
-    320000,
-    '東京本社',
-    'images/e001.png'
+    1001,
+    'password',
+    '山田太郎',
+    230000,
+    '東京',
+    '../images/1001.png'
   ),
   (
-    'E002',
-    'pass002',
-    '佐藤 花子',
-    295000,
-    '大阪支社',
-    'images/e002.png'
+    1002,
+    'password',
+    '鈴木一郎',
+    260000,
+    '大阪',
+    '../images/1002.png'
   ),
   (
-    'E003',
-    'pass003',
-    '鈴木 一郎',
-    350000,
-    '名古屋支社',
-    'images/e003.png'
+    1003,
+    'password',
+    '田中花子',
+    300000,
+    '福岡',
+    '../images/1003.png'
   );
