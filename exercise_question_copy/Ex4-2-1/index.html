@@ -106,7 +106,10 @@
             document.addEventListener("DOMContentLoaded", () =>
                 axios
                     .get("http://localhost:3005/api/employees")
-                    .then((r) => showEmployeeList(r.data)),
+                    .then((r) => {
+                        showEmployeeList(r.data);
+                        console.log(r.data);
+                    })
             );
         </script>
     </body>
