@@ -22,10 +22,18 @@ function resetDatabases() {
   for (const p of paths) {
     const fullPath = path.join(BASE_DIR, p);
     try {
+      // プロセスロックを避けるため、一旦ファイルを削除する
+      if (fs.existsSync(fullPath)) {
+        fs.unlinkSync(fullPath);
+      }
+    } catch (e) {
+      console.warn(`Failed to delete db file before restore: ${p}`, e.message);
+    }
+    try {
       execSync(`git checkout -- "${fullPath}"`);
       console.log(`Reset: ${p}`);
     } catch (e) {
-      console.error(`Failed to reset database: ${p}`, e);
+      console.error(`Failed to reset database: ${p}`, e.message);
     }
   }
 }
@@ -55,7 +63,6 @@ function startServer(serverPath, port) {
       reject(err);
     });
 
-    // 念のため、3秒経ったら起動したものとみなしてresolveする
     setTimeout(() => resolve(proc), 3000);
   });
 }
@@ -132,17 +139,24 @@ const confirmOverrideTrue = `
     });
   };
 
+  let page;
+  
   // ==========================================
   // Task 1: Ex3-3 (一覧) & Ex3-3 (検索)
   // ==========================================
   let server3 = await startServer(path.join(BASE_DIR, 'Ex3-3/api/server.js'), 3005);
   try {
     // 3-3-1: 一覧表示
-    let page = await browser.newPage();
+    page = await browser.newPage();
+    page.on('console', msg => console.log('PAGE LOG:', msg.text()));
+    page.on('pageerror', err => console.log('PAGE ERROR:', err.toString()));
     await page.setViewport({ width: 1000, height: 800, deviceScaleFactor: 2 });
     await injectStyles(page);
     let fileUrl = 'file:///' + path.join(BASE_DIR, 'Ex3-3/list.html').replace(/\\/g, '/');
-    await page.goto(fileUrl, { waitUntil: 'networkidle0' });
+    await page.goto(fileUrl, { waitUntil: 'load', timeout: 10000 });
+    
+    // データが表示されるまで待つ
+    await page.waitForSelector('tbody tr', { timeout: 5000 });
     await new Promise(r => setTimeout(r, 500));
     await (await page.$('body')).screenshot({ path: path.join(OUT_DIR, '3-3-1_list.png') });
     console.log('Saved 3-3-1_list.png');
@@ -150,20 +164,37 @@ const confirmOverrideTrue = `
 
     // 3-3-2: キーワード検索
     page = await browser.newPage();
+    page.on('console', msg => console.log('PAGE LOG:', msg.text()));
+    page.on('pageerror', err => console.log('PAGE ERROR:', err.toString()));
     await page.setViewport({ width: 1000, height: 800, deviceScaleFactor: 2 });
     await injectStyles(page);
     fileUrl = 'file:///' + path.join(BASE_DIR, 'Ex3-3/search_keyword.html').replace(/\\/g, '/');
-    await page.goto(fileUrl, { waitUntil: 'networkidle0' });
+    await page.goto(fileUrl, { waitUntil: 'load', timeout: 10000 });
     
+    // 入力フォームが表示されるまで待つ
+    await page.waitForSelector('input[type="text"]', { timeout: 5000 });
+
     // 「山田」を入力して検索
     await page.focus('input[type="text"]');
     await page.keyboard.type('山田');
     await page.click('button'); // 検索ボタンをクリック
-    await new Promise(r => setTimeout(r, 500));
+    
+    // 検索結果がロードされるのを待つ (件数が絞り込まれるのを待つ)
+    await page.waitForFunction(() => {
+      const rows = document.querySelectorAll('tbody tr');
+      return rows.length === 1 && rows[0].innerText.includes('山田');
+    }, { timeout: 5000 });
+    await new Promise(r => setTimeout(r, 300));
     
     await (await page.$('body')).screenshot({ path: path.join(OUT_DIR, '3-3-2_search_keyword.png') });
     console.log('Saved 3-3-2_search_keyword.png');
     await page.close();
+  } catch (err) {
+    console.error('Error occurred in Ex3-3:', err);
+    if (page) {
+      await page.screenshot({ path: path.join(OUT_DIR, 'error_ch3_3.png') });
+      await page.close();
+    }
   } finally {
     server3.kill();
     await new Promise(r => setTimeout(r, 1500)); // ポート解放待ち
@@ -174,11 +205,16 @@ const confirmOverrideTrue = `
   // ==========================================
   let server4 = await startServer(path.join(BASE_DIR, 'Ex3-4/api/server.js'), 3005);
   try {
-    let page = await browser.newPage();
+    page = await browser.newPage();
+    page.on('console', msg => console.log('PAGE LOG:', msg.text()));
+    page.on('pageerror', err => console.log('PAGE ERROR:', err.toString()));
     await page.setViewport({ width: 1000, height: 800, deviceScaleFactor: 2 });
     await injectStyles(page);
     let fileUrl = 'file:///' + path.join(BASE_DIR, 'Ex3-4/add_data.html').replace(/\\/g, '/');
-    await page.goto(fileUrl, { waitUntil: 'networkidle0' });
+    await page.goto(fileUrl, { waitUntil: 'load', timeout: 10000 });
+    
+    // データが表示されるまで待つ
+    await page.waitForSelector('tbody tr', { timeout: 5000 });
     
     // 入力フォームに値を入力
     await page.focus('#password');
@@ -190,14 +226,26 @@ const confirmOverrideTrue = `
     await page.focus('#locationName');
     await page.keyboard.type('大阪');
     await page.focus('#imagePath');
-    await page.keyboard.type('/images/1002.png');
+    await page.keyboard.type('../images/1002.png'); // 新しい画像パスの例に合わせる
     
     await page.click('#registerBtn');
+    
+    // 追加された行が表示されるのを待つ (現在の3件から4件目になるのを待つ)
+    await page.waitForFunction(() => {
+      const rows = document.querySelectorAll('tbody tr');
+      return rows.length === 4;
+    }, { timeout: 5000 });
     await new Promise(r => setTimeout(r, 500));
     
     await (await page.$('body')).screenshot({ path: path.join(OUT_DIR, '3-4_add_data.png') });
     console.log('Saved 3-4_add_data.png');
     await page.close();
+  } catch (err) {
+    console.error('Error occurred in Ex3-4:', err);
+    if (page) {
+      await page.screenshot({ path: path.join(OUT_DIR, 'error_ch3_4.png') });
+      await page.close();
+    }
   } finally {
     server4.kill();
     await new Promise(r => setTimeout(r, 1500)); // ポート解放待ち
@@ -209,16 +257,21 @@ const confirmOverrideTrue = `
   let server5 = await startServer(path.join(BASE_DIR, 'Ex3-5/api/server.js'), 3005);
   try {
     // 3-5: 削除確認ダイアログの表示
-    let page = await browser.newPage();
+    page = await browser.newPage();
+    page.on('console', msg => console.log('PAGE LOG:', msg.text()));
+    page.on('pageerror', err => console.log('PAGE ERROR:', err.toString()));
     await page.setViewport({ width: 1000, height: 800, deviceScaleFactor: 2 });
     await injectStyles(page);
     await page.evaluateOnNewDocument(confirmOverrideShow);
     let fileUrl = 'file:///' + path.join(BASE_DIR, 'Ex3-5/delete.html').replace(/\\/g, '/');
-    await page.goto(fileUrl, { waitUntil: 'networkidle0' });
+    await page.goto(fileUrl, { waitUntil: 'load', timeout: 10000 });
+    
+    // データが表示されるまで待つ
+    await page.waitForSelector('tbody tr', { timeout: 5000 });
     
     // 最初の行の「削除」ボタンをクリック
     await page.click('tbody tr:first-child button');
-    await new Promise(r => setTimeout(r, 300));
+    await new Promise(r => setTimeout(r, 500));
     
     await (await page.$('body')).screenshot({ path: path.join(OUT_DIR, '3-5_delete_dialog.png') });
     console.log('Saved 3-5_delete_dialog.png');
@@ -226,18 +279,34 @@ const confirmOverrideTrue = `
 
     // 3-5: 実際に削除した結果
     page = await browser.newPage();
+    page.on('console', msg => console.log('PAGE LOG:', msg.text()));
+    page.on('pageerror', err => console.log('PAGE ERROR:', err.toString()));
     await page.setViewport({ width: 1000, height: 800, deviceScaleFactor: 2 });
     await injectStyles(page);
     await page.evaluateOnNewDocument(confirmOverrideTrue);
-    await page.goto(fileUrl, { waitUntil: 'networkidle0' });
+    await page.goto(fileUrl, { waitUntil: 'load', timeout: 10000 });
+    
+    // データが表示されるまで待つ
+    await page.waitForSelector('tbody tr', { timeout: 5000 });
     
     // 最初の行の「削除」ボタンをクリック
     await page.click('tbody tr:first-child button');
+    
+    // 行が削除されるのを待つ (3件から2件になるのを待つ)
+    await page.waitForFunction(() => {
+      return document.querySelectorAll('tbody tr').length === 2;
+    }, { timeout: 5000 });
     await new Promise(r => setTimeout(r, 500));
     
     await (await page.$('body')).screenshot({ path: path.join(OUT_DIR, '3-5_delete_result.png') });
     console.log('Saved 3-5_delete_result.png');
     await page.close();
+  } catch (err) {
+    console.error('Error occurred in Ex3-5:', err);
+    if (page) {
+      await page.screenshot({ path: path.join(OUT_DIR, 'error_ch3_5.png') });
+      await page.close();
+    }
   } finally {
     server5.kill();
     await new Promise(r => setTimeout(r, 1500)); // ポート解放待ち
@@ -248,14 +317,25 @@ const confirmOverrideTrue = `
   // ==========================================
   let server6 = await startServer(path.join(BASE_DIR, 'Ex3-6/api/server.js'), 3005);
   try {
-    let page = await browser.newPage();
+    page = await browser.newPage();
+    page.on('console', msg => console.log('PAGE LOG:', msg.text()));
+    page.on('pageerror', err => console.log('PAGE ERROR:', err.toString()));
     await page.setViewport({ width: 1000, height: 800, deviceScaleFactor: 2 });
     await injectStyles(page);
     let fileUrl = 'file:///' + path.join(BASE_DIR, 'Ex3-6/update.html').replace(/\\/g, '/');
-    await page.goto(fileUrl, { waitUntil: 'networkidle0' });
+    await page.goto(fileUrl, { waitUntil: 'load', timeout: 10000 });
+    
+    // データが表示されるまで待つ
+    await page.waitForSelector('tbody tr', { timeout: 5000 });
     
     // 最初の行の「更新」ボタンをクリックしてフォームに値を呼び出す
     await page.click('tbody tr:first-child button');
+    
+    // フォームに詳細データがロードされるまで待つ（画像パスが設定されるのを待つ）
+    await page.waitForFunction(() => {
+      const val = document.getElementById('updateImagePath').value;
+      return val !== '';
+    }, { timeout: 5000 });
     await new Promise(r => setTimeout(r, 200));
     
     // パスワード入力
@@ -271,11 +351,23 @@ const confirmOverrideTrue = `
     
     // 更新ボタンをクリック
     await page.click('#updateBtn');
+    
+    // 一覧の最初の行の勤務地が「北海道」に更新されるのを待つ
+    await page.waitForFunction(() => {
+      const firstRow = document.querySelector('tbody tr:first-child');
+      return firstRow && firstRow.innerText.includes('北海道');
+    }, { timeout: 5000 });
     await new Promise(r => setTimeout(r, 500));
     
     await (await page.$('body')).screenshot({ path: path.join(OUT_DIR, '3-6_update.png') });
     console.log('Saved 3-6_update.png');
     await page.close();
+  } catch (err) {
+    console.error('Error occurred in Ex3-6:', err);
+    if (page) {
+      await page.screenshot({ path: path.join(OUT_DIR, 'error_ch3_6.png') });
+      await page.close();
+    }
   } finally {
     server6.kill();
     await new Promise(r => setTimeout(r, 1500)); // ポート解放待ち
