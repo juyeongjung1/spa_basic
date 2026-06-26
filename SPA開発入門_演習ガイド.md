@@ -707,7 +707,7 @@ image_path
 
 画面側の入力欄IDは `locationName` のようなJavaScript向けの名前ですが、APIへ送るオブジェクトではデータベース列名に合わせて `location_name` を使います。
 
-新規登録画面の画像パス入力欄には、入力例として `placeholder="../images/1001.png"` を設定します。更新画面では既存データの `image_path` を入力欄へ表示するため、placeholderは不要です。
+新規登録画面の画像パス入力欄の近くには、コピーして使える入力例として `※ 例: ../images/1001.png` を表示します。placeholderにすると入力時に消えてしまうため、通常のテキストとして表示します。更新画面では既存データの `image_path` を入力欄へ表示するため、この例示は不要です。
 
 ```javascript
 {
