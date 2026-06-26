@@ -40,7 +40,6 @@ app.put('/api/employees/:id', (req, res) => {
     // 【手順5】URLパラメータから社員番号を取得してください。
     const id = req.params.id;
     // 【手順6】req.bodyから5項目を1つずつ取得してください。
-    // locationNameにはreq.body.location_name、imagePathにはreq.body.image_pathを代入する点に注意してください。
     const password = req.body.password;
     const name = req.body.name;
     const salary = req.body.salary;

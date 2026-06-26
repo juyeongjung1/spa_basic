@@ -48,8 +48,6 @@
             <input id="updateImagePath" />
         </label>
         <br />
-        <img id="updateImage" alt="社員画像" width="120" style="display: none" />
-        <br />
         <button id="updateBtn">更新</button>
         <p id="message"></p>
         <script>
@@ -80,6 +78,7 @@
                 axios.get(`http://localhost:3005/api/employees/${id}`)
                     .then((response) => {
                         let employee = response.data;
+                        // updateIdは更新APIのURLに使うため、必ず設定します。
                         document.getElementById("updateId").value = employee.id;
                         // 保存済みパスワードを画面へ表示しないため、再入力用に空欄とします。
                         document.getElementById("updatePassword").value = "";
@@ -88,9 +87,6 @@
                         document.getElementById("updateLocationName").value =
                             employee.location_name;
                         document.getElementById("updateImagePath").value = employee.image_path;
-                        let image = document.getElementById("updateImage");
-                        image.style.display = employee.image_path ? "block" : "none";
-                        image.src = employee.image_path || "";
                     })
                     .catch((error) => console.error("社員詳細の取得に失敗しました:", error));
             }

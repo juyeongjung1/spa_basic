@@ -48,8 +48,6 @@
             <input id="updateImagePath" />
         </label>
         <br />
-        <img id="updateImage" alt="社員画像" width="120" style="display: none" />
-        <br />
         <button id="updateBtn">更新</button>
         <p id="message"></p>
         <script>
@@ -67,7 +65,7 @@
                     <td>${e.salary}</td>
                     <td>${e.location_name}</td>
                     <td>
-                        <!-- 【手順1】更新ボタンから、対象社員の社員番号をsetUpdateFormへ渡してください。 -->
+                        <!-- 【手順1】[更新]ボタンから社員番号を更新フォーム設定関数 setUpdateForm へ渡してください。 -->
                         <button onclick="_____">更新</button>
                     </td>
                 </tr>
@@ -77,30 +75,29 @@
             }
 
             function setUpdateForm(id) {
-                // 【手順2】主キー検索APIで、対象社員の詳細情報を取得してください。
-                axios._____(_____)
+                // 【手順2】主キー検索APIで、対象社員の詳細情報を取得する処理を確認してください。
+                axios.get(`http://localhost:3005/api/employees/${id}`)
                     .then((response) => {
-                        // 【手順3】response.dataから社員情報を取り出してください。
-                        let employee = _____;
-                        // 【手順4】取得した社員情報を各入力欄へ設定してください。パスワードは空欄にします。
-                        _____;
-                        // 【手順5】image_pathがある場合だけ社員画像を表示してください。
+                        let employee = response.data;
+                        // 【手順3】取得した社員情報を各入力欄へ設定してください。
+                        // updateIdには必ずemployee.idを設定します。ここが空だと更新時のidが取得できません。
+                        // updatePasswordは空欄にし、updateName、updateSalary、updateLocationName、updateImagePathに現在値を設定します。
                         _____;
                     })
                     .catch((error) => console.error("社員詳細の取得に失敗しました:", error));
             }
             document.getElementById("updateBtn").addEventListener("click", function () {
-                // 【手順6】更新フォームの社員番号と5項目を取得してください。
+                // 【手順4】更新フォームの社員番号と5項目を取得してください。
                 let id = _____;
                 let password = _____;
                 let name = _____;
                 let salary = _____;
                 let locationName = _____;
                 let imagePath = _____;
-                // 【手順7】PUT http://localhost:3005/api/employees/${id} へ5項目を送信してください。
+                // 【手順5】PUT `http://localhost:3005/api/employees/${id}` へ5項目を送信してください。
                 axios._____(_____, _____)
                     .then((response) => {
-                        // 【手順8】最新一覧を再描画してください。
+                        // 【手順6】最新一覧を再描画してください。
                         _____;
                         document.getElementById("message").innerHTML = "更新しました。";
                     })

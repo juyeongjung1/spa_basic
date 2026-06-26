@@ -42,7 +42,6 @@ app._____(_____, (req, res) => {
     // 【手順5】URLパラメータから社員番号を取得してください。
     const id = _____;
     // 【手順6】req.bodyから5項目を1つずつ取得してください。
-    // locationNameにはreq.body.location_name、imagePathにはreq.body.image_pathを代入する点に注意してください。
     const password = req.body._____;
     const name = req.body._____;
     const salary = req.body._____;
