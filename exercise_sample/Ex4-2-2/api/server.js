@@ -18,10 +18,14 @@ app.get('/api/employees', (req, res) =>
 );
 // 第3章の登録APIと同じ責務です。Modal化してもAPIの設計は変わりません。
 app.post('/api/employees', (req, res) => {
-    const { password, name, salary, location_name, image_path } = req.body;
+    const password = req.body.password;
+    const name = req.body.name;
+    const salary = req.body.salary;
+    const locationName = req.body.location_name;
+    const imagePath = req.body.image_path;
     const sql =
         'INSERT INTO employee (password,name,salary,location_name,image_path) VALUES (?,?,?,?,?)';
-    const params = [password, name, salary, location_name, image_path];
+    const params = [password, name, salary, locationName, imagePath];
     db.run(sql, params, (err) => {
         if (err) {
             res.status(500).json({

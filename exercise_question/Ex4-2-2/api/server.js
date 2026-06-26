@@ -18,7 +18,11 @@ app.get('/api/employees', (req, res) =>
 );
 // 【手順1】第3章の社員登録APIを参考にPOST /api/employeesを完成させてください。
 app._____(_____, (req, res) => {
-    const { _____ } = req.body;
+    const password = req.body._____;
+    const name = req.body._____;
+    const salary = req.body._____;
+    const locationName = req.body._____;
+    const imagePath = req.body._____;
     const sql = _____;
     const params = _____;
     db._____(sql, params, (err) => {
