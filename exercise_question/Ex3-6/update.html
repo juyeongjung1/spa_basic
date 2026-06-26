@@ -47,13 +47,12 @@
             <input id="updateImagePath" />
         </label>
         <br />
+        <img id="updateImage" alt="社員画像" width="120" style="display: none" />
+        <br />
         <button id="updateBtn">更新</button>
         <p id="message"></p>
         <script>
-            let employeeData = [];
-
             function showEmployeeList(employees) {
-                employeeData = employees;
                 let list = document.getElementById("employeeList");
                 list.innerHTML = "";
                 employees.forEach((e) =>
@@ -76,33 +75,37 @@
             }
 
             function setUpdateForm(id) {
-                // 【手順2】findで社員番号が一致する社員を取得してください。
-                let employee = _____;
-                // 【手順3】取得した社員情報を各入力欄へ設定してください。パスワードは空欄にします。
-                _____;
+                // 【手順2】主キー検索APIで、対象社員の詳細情報を取得してください。
+                axios._____(_____)
+                    .then((response) => {
+                        // 【手順3】response.dataから社員情報を取り出してください。
+                        let employee = _____;
+                        // 【手順4】取得した社員情報を各入力欄へ設定してください。パスワードは空欄にします。
+                        _____;
+                        // 【手順5】image_pathがある場合だけ社員画像を表示してください。
+                        _____;
+                    })
+                    .catch((error) => console.error("社員詳細の取得に失敗しました:", error));
             }
             document.getElementById("updateBtn").addEventListener("click", function () {
-                // 【手順4】更新フォームの社員番号と5項目を取得してください。
+                // 【手順6】更新フォームの社員番号と5項目を取得してください。
                 let id = _____;
                 let password = _____;
                 let name = _____;
                 let salary = _____;
                 let locationName = _____;
                 let imagePath = _____;
-                // 【手順5】PUT http://localhost:3005/api/employees/${id} へ5項目を送信してください。
-                axios
-                    ._____(_____, _____)
+                // 【手順7】PUT http://localhost:3005/api/employees/${id} へ5項目を送信してください。
+                axios._____(_____, _____)
                     .then((response) => {
-                        // 【手順6】最新一覧を再描画してください。
+                        // 【手順8】最新一覧を再描画してください。
                         _____;
                         document.getElementById("message").innerHTML = "更新しました。";
                     })
                     .catch((error) => console.error("社員更新に失敗しました:", error));
             });
             document.addEventListener("DOMContentLoaded", () =>
-                axios
-                    .get("http://localhost:3005/api/employees")
-                    .then((r) => showEmployeeList(r.data)),
+                axios.get("http://localhost:3005/api/employees").then((r) => showEmployeeList(r.data)),
             );
         </script>
     </body>

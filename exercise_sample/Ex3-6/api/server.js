@@ -16,6 +16,24 @@ app.get('/api/employees', (req, res) =>
         res.json(rows);
     }),
 );
+app.get('/api/employees/:id', (req, res) => {
+    const id = req.params.id;
+    db.get('SELECT * FROM employee WHERE id = ?', [id], (err, row) => {
+        if (err) {
+            res.status(500).json({
+                error: 'Database error',
+            });
+            return;
+        }
+        if (!row) {
+            res.status(404).json({
+                error: '社員が見つかりません',
+            });
+            return;
+        }
+        res.json(row);
+    });
+});
 app.put('/api/employees/:id', (req, res) => {
     const id = req.params.id;
     const password = req.body.password;
